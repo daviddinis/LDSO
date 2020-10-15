@@ -1,16 +1,19 @@
 stages:
-    -build
-    -test
+    - build
+    - test
 
 build:
     stage: build
-    -script: 
-        - echo "Building project!"
+    script:
+        - echo "Building"
         - mkdir build
         - touch build/info.txt
+    artifacts:
+        paths:
+            - build/
 
 test:
     stage: test
     script:
-        - echo "Testing project!"
-        - test: -f "build/info.txt"
+        - echo "Testing"
+        - test -f "build/info.txt"
