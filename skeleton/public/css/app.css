@@ -85,7 +85,6 @@ main > header span {
 #content > form {
   margin: 0 auto;
   padding: 1em;
-  max-width: 20em;
   border: 1px solid #d2afe7;
 }
 #content > form .error {
@@ -125,7 +124,6 @@ main > header span {
   }
   #content form {
     margin: 0;
-    max-width: 25em;
   }
   article.card {
     margin: 0;
