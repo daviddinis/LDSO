@@ -1,6 +1,3 @@
-variables:
-  - DOCKER_COMPOSE_PATH: "./skeleton/docker-compose.yml"
-
 stages:
   - build
 
@@ -14,7 +11,7 @@ docker-build-master:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - cd "$DOCKER_COMPOSE_PATH"
+    - cd ./skeleton
     - apk add --no-cache docker-compose
     - docker-compose build
     - docker-compose up  -d 
