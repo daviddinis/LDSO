@@ -137,6 +137,6 @@ INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES
 
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-01-01', 20000, 2000.00, NULL, NULL, NULL, 1);
 
-INSERT INTO drivers (name, email, drivers_license, id_card) VALUES ('Jane Doe', NULL, NULL, NULL);
+INSERT INTO drivers (name, email, drivers_license, id_card, company_id) VALUES ('Jane Doe', NULL, NULL, NULL, 1);
 
 INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-01', NULL, 1, 1);

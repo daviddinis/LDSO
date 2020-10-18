@@ -19,8 +19,9 @@ class DriverController extends Controller
      */
     public function index()
     {
-        //if (!Auth::check()) return redirect('/login');
-        return view('pages.addDriver');
+        if (!Auth::check()) return redirect('/login');
+        $drivers = Driver::orderBy('name','asc')->get();
+        return view('pages.driverList')->with('drivers', $drivers);
     }
 
     /**
@@ -30,7 +31,7 @@ class DriverController extends Controller
      */
     public function create()
     {
-        //if (!Auth::check()) return redirect('/login');
+        if (!Auth::check()) return redirect('/login');
         return view('pages.addDriver');
     }
 
@@ -45,10 +46,10 @@ class DriverController extends Controller
         $driver = new Driver;
         $driver->name = $request->input('name');
         $driver->email = $request->input('email');
-        $driver->license = $request->input('license');
-        //$driver->company = User::find(Auth::user()->id)->company;
+        $driver->drivers_license = $request->input('license');
+        $driver->company_id = User::find(Auth::user()->id)->company_id;
         $driver->save();
-        return redirect('/');
+        return redirect('/driver');
     }
 
     /**
