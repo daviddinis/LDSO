@@ -22,7 +22,7 @@ docker-build:
     # Composer and DB setup
     - echo "Running Docker exec commands..."
     - docker-compose exec -T app bash -c "composer install"
-    - docker-compose exec -T app bash -c "php artisan cache:config"
+    - docker-compose exec -T app bash -c "php artisan config:cache"
     - docker-compose exec -T app bash -c "php artisan db:seed"
 
 docker-test:
