@@ -1,4 +1,3 @@
-$ more .gitlab/merge_request_templates/default.md
 **1. Describe briefly what this MR will do / why we need it:**
 -
 -
@@ -11,11 +10,12 @@ $ more .gitlab/merge_request_templates/default.md
 - [ ] I have written at least one test for this feature.
 - [ ] I don't believe that there are any conflicts with the `master` branch.
 
-
 **3. Which issue or User Story does this PR relate to? (optional)**
 
+(If you were working on a US please put it here, e.g "see issue/US/bug #...")
 
 **4. CHANGELOG/Release Notes (optional)**
 
+(This is to make it easier to write our CHANGELOG later)
 
 Thank you for submitting a MR, you're very cool xoxo
