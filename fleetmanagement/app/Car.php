@@ -11,4 +11,20 @@ class Car extends Model
     public function company() {
         return $this->belongsTo('App\Company');
     }
+
+    public function taxes() {
+        return $this->hasMany('App\Tax');
+    }
+
+    public function maintenances() {
+        return $this->hasMany('App\Maintenance');
+    }
+
+    public function inspections() {
+        return $this->hasMany('App\Inspection');
+    }
+
+    public function insurances() {
+        return $this->hasMany('App\Insurance');
+    }
 }
