@@ -13,7 +13,7 @@ docker-build:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     # Setup docker-compose
-    - cd ./skeleton
+    - cd ./fleetmanagement
     - apk add --no-cache docker-compose
     # Build containers
     - echo "Starting build..."
@@ -30,7 +30,7 @@ docker-test:
   services:
     - docker:dind
   script:
-    - cd ./skeleton
+    - cd ./fleetmanagement
     - echo "Running tests"
     # Start phpunit
     # TODO need to upgrade phpunit to run tests
