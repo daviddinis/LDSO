@@ -27,4 +27,8 @@ class Car extends Model
     public function insurances() {
         return $this->hasMany('App\Insurance');
     }
+
+    public function drivers() {
+        return $this->belongsToMany('App\Driver')->withPivot('start_date', 'end_date');
+    }
 }
