@@ -43,6 +43,12 @@ class DriverController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required|string|max:255|regex:/^[a-zA-Z_-]*$/',
+            'email' => 'string|email|max:255',
+            'drivers_license' => 'string|min:6|regex:/^[a-zA-Z0-9_-]*$/',
+        ]);
+
         $driver = new Driver;
         $driver->name = $request->input('name');
         $driver->email = $request->input('email');
@@ -84,6 +90,12 @@ class DriverController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'name' => 'required|string|max:255|regex:/^[a-zA-Z_-]*$/',
+            'email' => 'string|email|max:255',
+            'drivers_license' => 'string|min:6|regex:/^[a-zA-Z0-9_-]*$/',
+        ]);
+
         $driver = Driver::find($id);
         $driver->name = $request->input('name');
         $driver->email = $request->input('email');
