@@ -1,19 +1,37 @@
 stages:
-    - build
-    - test
+  - build
+  - test
 
-build:
-    stage: build
-    script:
-        - echo "Building"
-        - mkdir build
-        - touch build/info.txt
-    artifacts:
-        paths:
-            - build/
+# This file is a template, and might need editing before it works on your project.
+docker-build:
+  # Official docker image.
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    # Setup docker-compose
+    - cd ./fleetmanagement
+    - apk add --no-cache docker-compose
+    # Build containers
+    - echo "Starting build..."
+    - docker-compose build
+    - docker-compose up  -d 
+    # Composer and DB setup
+    - echo "Running Docker exec commands..."
+    - docker-compose exec -T app bash -c "composer install"
+    - docker-compose exec -T app bash -c "php artisan config:cache"
+    - docker-compose exec -T app bash -c "php artisan db:seed"
 
-test:
-    stage: test
-    script:
-        - echo "Testing"
-        - test -f "build/info.txt"
+docker-test:
+  stage: test
+  services:
+    - docker:dind
+  script:
+    - cd ./fleetmanagement
+    - echo "Running tests"
+    # Start phpunit
+    # TODO need to upgrade phpunit to run tests
+    # - vendor/bin/phpunit
