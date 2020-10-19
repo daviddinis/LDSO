@@ -23,7 +23,7 @@ class CarController extends Controller
     public function create(Request $request)
     {
         $car = new Car();
-        $car->brand = $request->input('brand');
+        $car->make = $request->input('brand');
         $car->model = $request->input('model');
         $car->license_plate = $request->input('plate');
         $car->company_id = User::find(Auth::user()->id)->company;

@@ -9,10 +9,16 @@ class Company extends Model
     public $timestamps  = false;
 
 
-    public function cars() {
+    public function cars()
+    {
         return $this->hasMany('App\Car');
-      }
-      public function users() {
+    }
+    public function driver()
+    {
+        return $this->hasMany('App\Driver');
+    }
+    public function users()
+    {
         return $this->hasMany('App\Users');
-      }
+    }
 }
