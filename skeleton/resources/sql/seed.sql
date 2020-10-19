@@ -125,7 +125,8 @@ CREATE TABLE car_driver (
 
 INSERT INTO companies (company_name, name, email, password) VALUES ('FEUP', 'FEUP', 'feup@fe.up.pt', 'feup123');
 
-INSERT INTO users (name, email, password, company_id) VALUES ('John Doe', 'johndoe@fe.up.pt', 'john123', 1);
+INSERT INTO users (name, email, password, company_id) VALUES ('John Doe', 'johndoe@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+ 1); -- Password is 1234. Generated using Hash::make('1234')
 
 INSERT INTO cars (date_acquired, make, model, license_plate, image, value, kilometers, company_id) VALUES ('2000-01-01', 'AUDI', 'A3', '1234AB', NULL, NULL, NULL, 1);
 

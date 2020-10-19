@@ -71,7 +71,8 @@ class DriverController extends Controller
      */
     public function edit($id)
     {
-        //
+        $driver = Driver::find($id);
+        return view('pages.editDriver')->with('driver', $driver);
     }
 
     /**
@@ -83,7 +84,13 @@ class DriverController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $driver = Driver::find($id);
+        $driver->name = $request->input('name');
+        $driver->email = $request->input('email');
+        $driver->drivers_license = $request->input('drivers_license');
+        $driver->company_id = User::find(Auth::user()->id)->company_id;
+        $driver->save();
+        return redirect('/driver');
     }
 
     /**
@@ -94,6 +101,8 @@ class DriverController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $driver = Driver::find($id);
+        $driver->delete();
+        return redirect('/driver');
     }
 }
