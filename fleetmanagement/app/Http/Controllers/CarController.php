@@ -26,28 +26,28 @@ class CarController extends Controller
         $car->make = $request->input('brand');
         $car->model = $request->input('model');
         $car->license_plate = $request->input('plate');
-        $car->company_id = User::find(Auth::user()->id)->company;
+        $car->company_id = User::find(Auth::user()->id)->company->id;
         $car->date_acquired = $request->input('date');
+        $car->value = 0;
 
 
-        if ($request->input('image') != NULL) {
+        if ($request->hasFile('image')) {
             request()->validate([
 
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
             ]);
-            $imageName = $car->id . '.' . request()->image->getClientOriginalExtension();
+            $imageName = $request->input('plate') . '.' . request()->image->getClientOriginalExtension();
             request()->image->move(public_path('img'), $imageName);
-            $car->image + $imageName;
+            $car->image = $imageName;
         }
 
         if ($request->input('mileage') != NULL) {
             $car->kilometers = $request->input('mileage');
         }
 
-        if ($request->input('value') != NULL) {
-            $car->value = $request->input('value');
-        }
+
+
         $car->save();
         return redirect('/');
     }
