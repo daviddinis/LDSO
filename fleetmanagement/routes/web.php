@@ -36,4 +36,4 @@ Route::post('register', 'Auth\RegisterController@register');
 Route::resource('driver', 'DriverController');
 
 // Car
-Route::resource('car/{id}', 'CarController');
+Route::resource('car', 'CarController');

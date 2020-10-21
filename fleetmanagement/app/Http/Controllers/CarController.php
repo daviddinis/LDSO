@@ -13,11 +13,11 @@ use App\User;
 class CarController extends Controller
 {
 
-    public function index($id)
+    public function index()
     {
         if (!Auth::check()) return redirect('/login');
-        $car = Car::find($id);
-        return view('pages.car')->with('car', $car);
+        $cars = Car::get();
+        return view('pages.cars')->with('cars', $cars);
     }
 
     public function form()
@@ -58,5 +58,10 @@ class CarController extends Controller
         $car->save();
         return redirect('/');
 
+    }
+
+    public function show($id) {
+        $car = Car::find($id);
+        return view('pages.car')->with('car', $car);
     }
 }
