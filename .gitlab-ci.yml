@@ -2,7 +2,6 @@ stages:
   - build-test
   - lint
 
-# This file is a template, and might need editing before it works on your project.
 docker-build-test:
   # Official docker image.
   stage: build-test
