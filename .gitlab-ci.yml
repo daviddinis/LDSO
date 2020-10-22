@@ -25,6 +25,10 @@ docker-build:
     - docker-compose exec -T app bash -c "composer install"
     - docker-compose exec -T app bash -c "php artisan config:cache"
     - docker-compose exec -T app bash -c "php artisan db:seed"
+  artifacts:
+    paths:
+      - compiled.txt
+    expire_in: 60 minutes
 
 php-linter:
   stage: lint
@@ -41,8 +45,6 @@ laravel-test:
   script:
     - cd ./fleetmanagement
     - echo "Running tests..."
-    - echo "Not yet implemented!"
     # Start phpunit
-    # TODO need to upgrade phpunit to run tests
-    # - vendor/bin/phpunit
+    - docker-compose exec -T app bash -c "vendor/bin/phpunit ./tests"
 
