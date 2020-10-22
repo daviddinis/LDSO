@@ -1,13 +1,12 @@
 stages:
-  - build
+  - build-test
   - lint
-  - test
 
 # This file is a template, and might need editing before it works on your project.
-docker-build:
+docker-build-test:
   # Official docker image.
+  stage: build-test
   image: docker:latest
-  stage: build
   services:
     - docker:dind
   before_script:
@@ -25,6 +24,12 @@ docker-build:
     - docker-compose exec -T app bash -c "composer install"
     - docker-compose exec -T app bash -c "php artisan config:cache"
     - docker-compose exec -T app bash -c "php artisan db:seed"
+    # Run php artisan tests
+    - echo "Running tests..."
+    - docker-compose exec -T app bash -c "vendor/bin/phpunit ./tests"
+  allow_failure: false
+  artifacts:
+    expire_in: 60 minutes
 
 php-linter:
   stage: lint
@@ -33,16 +38,6 @@ php-linter:
     - cd ./fleetmanagement
     - echo "Running linter..."
     - parallel-lint --colors .
-
-laravel-test:
-  stage: test
-  services:
-    - docker:dind
-  script:
-    - cd ./fleetmanagement
-    - echo "Running tests..."
-    - echo "Not yet implemented!"
-    # Start phpunit
-    # TODO need to upgrade phpunit to run tests
-    # - vendor/bin/phpunit
-
+  allow_failure: true
+  artifacts:
+    expire_in: 60 minutes
