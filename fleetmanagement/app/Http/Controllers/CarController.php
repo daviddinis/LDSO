@@ -69,7 +69,7 @@ class CarController extends Controller
         }
 
         $car->save();
-        return redirect('/');
+        return redirect('/car');
     }
 
     /**

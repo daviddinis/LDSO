@@ -2,30 +2,74 @@
 
 
 @section('content')
-<form class="text-black w-25 d-flex flex-column align-items-center"  enctype="multipart/form-data" method="POST" action="{{route('car.store')}}">
-    {{ csrf_field() }}
-    <div class="form-group d-flex flex-column align-items-end">
-    <label class="form-group ">Brand:<input id="brand" name="brand" class="" required></label>
-    <label class="form-group  ">Model:<input id="model" name="model" class="" required></label>
-    <label class="form-group ">Plate:<input id="plate" name="plate" class="" required></label>
-    <label class="form-group ">Acquired in:<input id="date" name="date" type="date" class="" required></label>
-    <label class="form-group">Mileage:<input id="mileage" name="mileage" class=""></label>
-
-
-    </div>
-
-    <div class="file-field form-group">
-        <div class="d-flex justify-content-end">
-            <img src="https://www.lizdrive.pt/wp-content/themes/webspark-ford-es-theme/images/placeholder-ford.webp" class="rounded-circle z-depth-1-half avatar-pic " width=80 height="80" alt="Placeholder avatar">
-            <div class="mt-2 ml-2 d-flex flex-column ">
-                <span>Add photo</span>
-                <input class="" id="image" name="image" type="file">
+<div class="container-md">
+    <form method="POST" action="{{route('car.store')}}" enctype="multipart/form-data">
+        {{ csrf_field() }}
+        <div class="row" style="margin-top: 5%">
+            <div class="col-md-2"></div>
+            <div class="col">
+                <h1>Add Car</h1>
             </div>
         </div>
-    </div>
-
-
-    <button type=" submit" class="text-white ml-auto" >Submit</button>
-</form>
+        <br>
+        <div class="row form-group">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <label for="name">Brand</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="brand" name="brand" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="name">Model</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="model" name="model" required>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row form-group">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <label for="name">Plate</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="plate" name="plate" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="name">Date Acquired</label>
+                <div class="input-group">
+                    <input type="date" class="form-control" id="date" name="date" required>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row form-group">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <label for="name">Mileage</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="mileage" name="mileage">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="name">Photo</label>
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="photo" id="photo">
+                        <label class="custom-file-label" for="photo">Choose file</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row form-group" style="margin-bottom: 5%">
+            <div class="col-md-2"></div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary btn-lg">Add</button>
+            </div>
+        </div>
+    </form>
+</div>
 
 @endsection
