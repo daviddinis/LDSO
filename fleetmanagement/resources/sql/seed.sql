@@ -121,12 +121,12 @@ CREATE TABLE car_driver (
 -----------------------------------------
 
 INSERT INTO companies (company_name) VALUES ('FEUP');
-
+INSERT INTO companies (company_name) VALUES ('FEUP2');
 INSERT INTO users (name, email, password, company_id) VALUES ('John Doe', 'johndoe@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
  1); -- Password is 1234. Generated using Hash::make('1234')
 
 INSERT INTO cars (date_acquired, make, model, license_plate, image, value, kilometers, company_id) VALUES ('2000-01-01', 'AUDI', 'A3', '1234AB', NULL, NULL, NULL, 1);
-
+INSERT INTO cars (date_acquired, make, model, license_plate, image, value, kilometers, company_id) VALUES ('2000-01-01', 'AUDI', 'A3', '1zxczc', NULL, NULL, NULL, 2);
 INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 1);
 
 INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 1);
@@ -137,4 +137,8 @@ INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, 
 
 INSERT INTO drivers (name, email, drivers_license, id_card, company_id) VALUES ('Jane Doe', NULL, NULL, NULL, 1);
 
-INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-01', NULL, 1, 1);
+INSERT INTO drivers (name, email, drivers_license, id_card, company_id) VALUES ('john', NULL, NULL, NULL, 1);
+
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-01', '2020-01-02', 1, 1);
+
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-5-05', NULL, 1, 2);
