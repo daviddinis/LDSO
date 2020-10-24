@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
 
-@section('content') 
-<form class="text-black w-25 d-flex flex-column align-items-center"  enctype="multipart/form-data" method="post" action="{{route('makeCar')}}">
-    {{ method_field('PUT') }}
+@section('content')
+<form class="text-black w-25 d-flex flex-column align-items-center"  enctype="multipart/form-data" method="POST" action="{{route('car.store')}}">
     {{ csrf_field() }}
     <div class="form-group d-flex flex-column align-items-end">
     <label class="form-group ">Brand:<input id="brand" name="brand" class="" required></label>
