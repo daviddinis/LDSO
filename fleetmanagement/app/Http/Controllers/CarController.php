@@ -20,7 +20,8 @@ class CarController extends Controller
     public function index()
     {
         if (!Auth::check()) return redirect('/login');
-        $cars = Car::get();
+        $cars = Car::where('company_id', '=', User::find(Auth::user()->id)->company->id)->get();
+
         return view('pages.cars')->with('cars', $cars);
     }
 
