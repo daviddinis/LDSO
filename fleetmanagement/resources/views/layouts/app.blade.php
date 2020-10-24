@@ -11,9 +11,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/milligram.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('css/myapp.css') }}" />
+    {{-- <link href="{{ asset('css/milligram.min.css') }}" rel="stylesheet"> --}}
+    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> --}}
+    {{-- <link rel="stylesheet" href="{{ asset('css/myapp.css') }}" /> --}}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
 
     <script type="text/javascript">
         // Fix for Firefox autofocus CSS bug
@@ -25,13 +26,16 @@
   <body>
     <main>
       <header>
-        <h1><a href="{{ url('/cards') }}">Thingy!</a></h1>
+        @include('layouts.header')
+        {{-- <h1><a href="{{ url('/cards') }}">Thingy!</a></h1>
         @if (Auth::check())
         <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
-        @endif
+        @endif --}}
       </header>
       <section id="content">
+        <div class="container">
         @yield('content')
+        </div>
       </section>
     </main>
   </body>
