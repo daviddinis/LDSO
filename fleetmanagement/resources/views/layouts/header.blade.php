@@ -13,7 +13,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Cars</a>
+        <a class="nav-link" href="{{route('car.index')}}">Cars</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{route('driver.index')}}">Drivers</a>
