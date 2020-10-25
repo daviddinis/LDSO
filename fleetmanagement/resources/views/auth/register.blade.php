@@ -59,6 +59,12 @@
                 <button type="submit" class="btn btn-primary btn-lg">Register</button>
             </div>
         </div>
+        <div class="row form-group" style="margin-bottom: 5%">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <h6>Already have an account? <a href="{{route('login')}}">Login</a> now!</h6>
+            </div>
+        </div>
     </form>
 </div>
 @endsection
