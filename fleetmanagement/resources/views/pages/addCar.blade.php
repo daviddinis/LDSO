@@ -2,7 +2,7 @@
 
 
 @section('content')
-<div class="container-md">
+<div class="container-md" >
     <form method="POST" action="{{route('car.store')}}" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="row" style="margin-top: 5%">
@@ -56,7 +56,7 @@
                 <label for="name">Photo</label>
                 <div class="input-group mb-3">
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" name="photo" id="photo">
+                        <input type="file" class="custom-file-input" name="image" id="image">
                         <label class="custom-file-label" for="photo">Choose file</label>
                     </div>
                 </div>
