@@ -9,11 +9,12 @@
                 <strong>Name:</strong> {{$driver->name}} <br>
                 <strong>Email:</strong> {{$driver->email}} <br>
                 <strong>Driver License:</strong> {{$driver->drivers_license}} <br>
-                <button onclick="window.location.href='/driver/{{$driver->id}}/edit'"> Edit </button>
+                <strong>Identification Card:</strong> {{$driver->id_card}} <br>
+                <button onclick="window.location.href='/driver/{{$driver->id}}/edit'"> Edit </button> <br> <br>
                 <form class="text-black mw-50" method="post" action="{{route('driver.destroy', $driver->id)}}" >
                     {{ method_field('DELETE') }}
                     {{ csrf_field() }}
-                    <button type=" submit" class="btn bg-mydarkgreen text-white mt-1 ml-auto">Delete</button>
+                    <button class="" type=" submit">Delete</button>
                 </form>
         @endforeach
 @endif

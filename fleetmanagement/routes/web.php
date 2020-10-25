@@ -15,9 +15,8 @@ Route::get('/', 'Auth\LoginController@home');
 // Cards
 Route::get('cards', 'CardController@list');
 Route::get('cards/{id}', 'CardController@show');
-Route::get('addCar', 'CarController@form');
+
 // API
-Route::put('api/car', 'CarController@create') ->name('makeCar');
 Route::put('api/cards', 'CardController@create');
 Route::delete('api/cards/{card_id}', 'CardController@delete');
 Route::put('api/cards/{card_id}/', 'ItemController@create');
@@ -36,4 +35,4 @@ Route::post('register', 'Auth\RegisterController@register');
 Route::resource('driver', 'DriverController');
 
 // Car
-Route::resource('car/{id}', 'CarController');
+Route::resource('car', 'CarController');
