@@ -56,7 +56,7 @@
         <div class="row form-group" style="margin-bottom: 5%">
             <div class="col-md-2"></div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary btn-lg">Create</button>
+                <button type="submit" class="btn btn-primary btn-lg">Register</button>
             </div>
         </div>
     </form>
