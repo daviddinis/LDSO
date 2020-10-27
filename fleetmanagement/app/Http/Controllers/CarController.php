@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 use App\Car;
+use App\CarDriver;
 use App\Company;
 use App\Driver;
 use App\User;
@@ -120,5 +121,23 @@ class CarController extends Controller
         $car = Car::find($id);
         $car->delete();
         return redirect('/car');
+    }
+
+    /**
+     * Assign driver to car
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function assign(Request $request, $id)
+    {
+        $cardriver = new CarDriver();
+        $cardriver->car_id = $id;
+        $cardriver->driver_id = $request['driver_id'];
+        $cardriver->start_date = $request['start_date'];
+        $cardriver->end_date = $request['end_date'];
+        $cardriver->save();
+
+        return redirect()->route('car.show', $id);
     }
 }
