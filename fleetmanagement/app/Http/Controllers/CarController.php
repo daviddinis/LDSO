@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Car;
 use App\Company;
+use App\Driver;
 use App\User;
 
 class CarController extends Controller
@@ -82,7 +83,7 @@ class CarController extends Controller
     {
         if (!Auth::check()) return redirect('/login');
         $car = Car::find($id);
-        return view('pages.car')->with('car', $car);
+        return view('pages.car', ['car' => $car, 'drivers' => Driver::all()]);
     }
 
     /**
