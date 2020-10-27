@@ -36,7 +36,6 @@ Route::resource('driver', 'DriverController');
 
 // Car
 Route::resource('car', 'CarController');
-// Route::post('assign/{id}', 'CarController@assign')->name('assign');
 
 // CarDriver
 Route::resource('cardriver', 'CarDriverController');

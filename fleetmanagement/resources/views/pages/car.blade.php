@@ -70,7 +70,15 @@
 
         <div class="row" style="margin-bottom: 5%;">
             <div class="col">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assignDriverModal">Assign new driver</button>
+                @if (strpos(last_used_by($car), 'available'))
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assignDriverModal">Assign new driver</button>
+                @else
+                    <form action="{{route('cardriver.destroy', $car->drivers->first()->pivot->id)}}" method="POST">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                        <button type="submit" class="btn btn-danger">Remove driver</button>
+                    </form>
+                @endif
             </div>
         </div>
 

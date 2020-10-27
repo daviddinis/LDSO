@@ -30,7 +30,7 @@ class Car extends Model
     }
 
     public function drivers() {
-        return $this->belongsToMany('App\Driver')->withPivot('start_date', 'end_date');
+        return $this->belongsToMany('App\Driver')->withPivot('id', 'start_date', 'end_date');
     }
 
     public function issues(){
