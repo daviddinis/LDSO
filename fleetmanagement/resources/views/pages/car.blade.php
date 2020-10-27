@@ -39,20 +39,41 @@
 
 
 <div class="jumbotron">
-    <h1 class="display-3">{{$car->make}} {{$car->model}} </h1>
-    <p>{{$car->license_plate}}</p>
-    <p class="lead">Total cost: @php echo sum_costs($car->taxes) + sum_costs($car->maintenances) + sum_costs($car->inspections) + sum_costs($car->insurances); @endphp €</p>
-    <hr class="my-4">
-
-    <div style="margin-bottom:5%;">
-        <h4>
-        @php echo last_used_by($car); @endphp
-        </h4>
-        <!-- TODO does nothing currently -->
-        <button type="button" class="btn btn-primary">Assign new driver</button>
-    </div>
-
     <div class="container">
+        <div class="row">
+            <div class="col-auto mr-auto">
+                <h1 class="display-3">{{$car->make}} {{$car->model}} </h1>
+                <br>
+                <p>{{$car->license_plate}}</p>
+                <br>
+                <p class="lead">Total cost: @php echo sum_costs($car->taxes) + sum_costs($car->maintenances) + sum_costs($car->inspections) + sum_costs($car->insurances); @endphp €</p>                
+            </div>
+            <div class="col-md-auto">
+                @if(isset($car->image))
+                    <img style="border:1px solid black" src="{{ asset('img/' . $car->image) }}" alt="tag">
+                @endif
+            </div>
+            </div>
+    </div>
+    <hr class="my-4">
+    
+    <div class="container">
+
+        <div class="row" style="margin-top:5%;">
+            <div class="col">
+            <h4>
+                @php echo last_used_by($car); @endphp
+            </h4>
+            </div>
+            <!-- TODO does nothing currently -->
+        </div>
+
+        <div class="row" style="margin-bottom: 5%;">
+            <div class="col">
+                <button type="button" class="btn btn-primary">Assign new driver</button> 
+            </div>
+        </div>
+
         <div class="row">
             <div class="col">
                 <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
