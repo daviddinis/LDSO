@@ -75,7 +75,7 @@
         </div>
 
         <!-- Modal -->
-        <form method="POST" action="{{route('assign', $car->id)}}">
+        <form method="POST" action="{{route('cardriver.store')}}">
             {{ csrf_field() }}
             <div class="modal fade" id="assignDriverModal" tabindex="-1" role="dialog" aria-labelledby="assignDriverModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -113,6 +113,7 @@
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="car_id" value="{{$car->id}}">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
