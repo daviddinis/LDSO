@@ -28,12 +28,12 @@
 
             if($dates->end_date !== null)
             {
-                if(date($dates->end_date) < date('Y-m-d')) return '<span class="badge badge-warning">Last used by ' . $last_driver->name . ' between ' . $dates->start_date . ' and ' . $dates->end_date . '</span>';
-                else return '<span="badge badge-danger">In use by ' . $last_driver->name . ' from ' . $dates->start_date . ' until ' . $dates->end_date . "</span>";
+                if(date($dates->end_date) < date('Y-m-d')) return '<span class="badge badge-pill badge-warning">Last used by ' . $last_driver->name . ' between ' . $dates->start_date . ' and ' . $dates->end_date . '</span>';
+                else return '<span="badge badge-pill badge-danger">In use by ' . $last_driver->name . ' from ' . $dates->start_date . ' until ' . $dates->end_date . "</span>";
             }
-            else return '<span class="badge badge-danger">In use by ' . $last_driver->name . ' from ' . $dates->start_date . '</span>';
+            else return '<span class="badge badge-pill badge-danger">In use by ' . $last_driver->name . ' from ' . $dates->start_date . '</span>';
         }
-        else return '<span class="badge badge-success">Car is available!</span>';        
+        else return '<span class="badge badge-pill badge-success">Car is available!</span>';        
     }
  @endphp
 
@@ -130,10 +130,15 @@
         </div>
 
         <div class="row justify-content-end" style="margin-top:20%;">
+            
+            <div class="col col-md-auto">
+                <button type="button" class="btn btn-primary">Settings</button>
+            </div>
             <!-- TODO does not work currently -->
             <div class="col col-md-auto">
                 <button type="button" class="btn btn-danger">Delete car</button>
             </div>
+            
         </div>
 
     </div>
