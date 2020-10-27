@@ -2,6 +2,12 @@
 
     <div class="card-header">
         <a href="/car/{{ $car->id }}">{{ $car->make }} {{ $car->model }}</a>
+        <form style="float:right" method="post" action="{{route('car.destroy', $car->id)}}" >
+                    {{ method_field('DELETE') }}
+                    {{ csrf_field() }}
+                    <button onclick="return confirm('Are you sure?')" class="btn btn-secondary btn-sm rounded-circle ">
+            <i class="fa fa-trash"></i></button>
+        </form>
     </div>
     <div class="card-body">
         {{ $car->license_plate }}
@@ -21,6 +27,4 @@
         </li>
         <li class="list-group-item">{{$car->currentDriver()}}</li>
     </ul>
-   
-
 </div>
