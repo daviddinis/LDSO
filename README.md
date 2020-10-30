@@ -16,7 +16,7 @@ Please see the wiki page,  [Setup project](https://gitlab.com/feup-tbs/ldso2021/
 
 * André Mori (up201700493@fe.up.pt)
 
-* David Dinis - Surrogate (up201706766@fe.up.pt)
+* David Dinis - Surrogate PO (up201706766@fe.up.pt)
 
 * Gustavo Tavares (up201700129@fe.up.pt)
 
@@ -28,4 +28,4 @@ Please see the wiki page,  [Setup project](https://gitlab.com/feup-tbs/ldso2021/
 
 * Ricardo Pereira (ei01020@fe.up.pt)
 
-* William Hjelm - Team Leader (up202001854@fe.up.pt)
+* William Hjelm - Scrum Master (up202001854@fe.up.pt)
