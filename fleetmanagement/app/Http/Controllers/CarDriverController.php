@@ -38,6 +38,14 @@ class CarDriverController extends Controller
     public function store(Request $request)
     {
         $cardriver = new CarDriver();
+
+        $request->validate([
+            'car_id' => 'required',
+            'driver_id' => 'required',
+            'start_date' => 'required|date|after_or_equal:today',
+            'end_date' => 'nullable|date|after:start_date'
+        ]);
+
         $cardriver->car_id = $request['car_id'];
         $cardriver->driver_id = $request['driver_id'];
         $cardriver->start_date = $request['start_date'];

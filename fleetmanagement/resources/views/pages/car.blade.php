@@ -4,6 +4,19 @@
 
 @section('content')
 
+@if ($errors->any())
+    <br>
+    <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h2>Error</h2>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 
 @php
     // Function to add all costs from each category (tax, inspection, etc.)
@@ -113,11 +126,11 @@
                             <div class="col-1"></div>
                             <div class="col-5">
                                 <label for="start_date">Starting:</label>
-                                <input type="date" name="start_date" id="start_date" required>
+                                <input type="date" name="start_date" min="{{ date('Y-m-d') }}" value="{{ date('Y-m-d') }}" id="start_date" required>
                             </div>
                             <div class="col-5">
                                 <label for="end_date">Ending:</label>
-                                <input type="date" name="end_date" id="end_date">
+                                <input type="date" name="end_date" id="end_date" min="{{ (new DateTime('tomorrow'))->format('Y-m-d')}}">
                             </div>
                         </div>
                     </div>
