@@ -176,7 +176,7 @@
                 </div>
             </div>
             <div class="col">
-                <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
+                <div class=" card text-white bg-primary mb-3" style="max-width: 40rem; ">
                     <div class="card-header">Taxes</div>
                     <div class="card-body">
                         @if(count($car->taxes) !== 0)
