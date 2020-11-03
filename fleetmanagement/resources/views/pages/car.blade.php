@@ -205,8 +205,8 @@
 
         <div class="row justify-content-end" style="margin-top:20%;">
 
-            <div class="col col-md-auto">
-                <button type="button" class="btn btn-primary">Settings</button>
+            <div class="col col-md-auto" id="carSettingsButton">
+                <button class="btn btn-primary"><a class="button" href="/car/{{$car->id}}/settings">Settings</a></button>
             </div>
             <!-- TODO does not work currently -->
             <div class="col col-md-auto">

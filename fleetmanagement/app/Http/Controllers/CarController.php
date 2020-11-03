@@ -132,4 +132,9 @@ class CarController extends Controller
     {
 
     }
+
+    public function showEditCar($id){
+        $car = Car::find($id);
+        return view('pages.editCar', ['car'=>$car]);
+    }
 }

@@ -26,6 +26,7 @@ Route::resource('driver', 'DriverController');
 
 // Car
 Route::resource('car', 'CarController');
+Route::get('car/{id}/settings', 'CarController@showEditCar');
 
 // CarDriver
 Route::resource('cardriver', 'CarDriverController');
