@@ -52,6 +52,8 @@ CREATE TABLE cars (
     make VARCHAR NOT NULL,
     model VARCHAR NOT NULL,
     license_plate VARCHAR NOT NULL,
+    yellow_alert INTEGER DEFAULT 30,
+    red_alert INTEGER DEFAULT 15,
     image VARCHAR, -- optional
     value FLOAT, -- optional
     kilometers INTEGER, -- optional
