@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'EditCarAlerts')
+@section('title', 'Car Settings')
 
 @section('styles')
 <link href="{{ asset('css/carAlerts.css') }}" rel="stylesheet">
@@ -54,7 +54,7 @@ return timeToEvent(date("Y-m-d"), $eventDate, $alertTolerance);
                 <p>{{$car->make}} {{$car->model}} - {{$car->license_plate}}</p>
             </a></li>
 
-        <li class="breadcrumb-item active">Alerts</li>
+        <li class="breadcrumb-item active">Settings</li>
     </ol>
 
     <div class="container">
