@@ -42,7 +42,7 @@
             if($dates->end_date !== null)
             {
                 if(date($dates->end_date) < date('Y-m-d')) return '<span class="badge badge-pill badge-warning">Last used by ' . $last_driver->name . ' between ' . $dates->start_date . ' and ' . $dates->end_date . '</span>';
-                else return '<span="badge badge-pill badge-danger">In use by ' . $last_driver->name . ' from ' . $dates->start_date . ' until ' . $dates->end_date . "</span>";
+                else return '<span class="badge badge-pill badge-danger">In use by ' . $last_driver->name . ' from ' . $dates->start_date . ' until ' . $dates->end_date . "</span>";
             }
             else return '<span class="badge badge-pill badge-danger">In use by ' . $last_driver->name . ' from ' . $dates->start_date . '</span>';
         }
@@ -98,8 +98,8 @@
         <!-- Modal -->
         <form method="POST" action="{{route('cardriver.store')}}">
             {{ csrf_field() }}
-            <div class="modal fade" id="assignDriverModal" tabindex="-1" role="dialog" aria-labelledby="assignDriverModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+            <div class="modal fade" style="padding-top: 3%" id="assignDriverModal" tabindex="-1" role="dialog" aria-labelledby="assignDriverModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="assignDriverModalLabel">Assign Driver</h5>
@@ -108,11 +108,11 @@
                         </button>
                     </div>
                     <div class="modal-body container">
-                        <div class="row" style="padding-left: 3%">
+                        <div class="row">
                             <div class="col-1"></div>
                             <label for="driver_id">Select a driver or create a new one <a href="{{route('driver.create')}}">here</a>:</label>
                         </div>
-                        <div class="row" style="padding-left: 3%">
+                        <div class="row" style="padding-left: 5%">
                             <div class="col-1"></div>
                             <select name="driver_id" id="driver_id" required>
                                 <option value=""></option>
@@ -128,6 +128,10 @@
                                 <label for="start_date">Starting:</label>
                                 <input type="date" name="start_date" min="{{ date('Y-m-d') }}" value="{{ date('Y-m-d') }}" id="start_date" required>
                             </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-1"></div>
                             <div class="col-5">
                                 <label for="end_date">Ending:</label>
                                 <input type="date" name="end_date" id="end_date" min="{{ (new DateTime('tomorrow'))->format('Y-m-d')}}">
