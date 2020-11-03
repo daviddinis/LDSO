@@ -132,7 +132,9 @@
         <div class="row justify-content-end" style="margin-top:20%;">
             
             <div class="col col-md-auto">
-                <button type="button" class="btn btn-primary">Settings</button>
+                <a href="{{route('alerts', ['id' => $car->id])}}" class="btn btn-primary">Settings</a>
+
+
             </div>
             <!-- TODO does not work currently -->
             <div class="col col-md-auto">
