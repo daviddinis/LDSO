@@ -140,7 +140,7 @@ class CarController extends Controller
         $maintenance = $this->getCurrentMaintenance($car);
         $maintenanceDate = $maintenance != null ? $maintenance->date : null;
 
-        return view('pages.manageCarAlerts', [
+        return view('pages.carSettings', [
             'car' => $car, 'taxDate' => $taxDate,
             'inspectionDate' => $inspectionDate, 'insuranceDate' => $insuranceDate,
             'maintenanceDate' => $maintenanceDate
