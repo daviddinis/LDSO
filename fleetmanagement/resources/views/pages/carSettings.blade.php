@@ -49,8 +49,7 @@ return timeToEvent(date("Y-m-d"), $eventDate, $alertTolerance);
 <div class="jumbotron carSettingsSection">
 
     <ol class="breadcrumb">
-
-        <li class="breadcrumb-item"><a href="{{route('car.show', ['id' => $car->id])}}">
+        <li class="breadcrumb-item"><a href="{{route('car.show', $car->id)}}">
                 <p>{{$car->make}} {{$car->model}} - {{$car->license_plate}}</p>
             </a></li>
 
