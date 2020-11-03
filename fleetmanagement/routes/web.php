@@ -26,3 +26,6 @@ Route::resource('driver', 'DriverController');
 
 // Car
 Route::resource('car', 'CarController');
+
+// CarDriver
+Route::resource('cardriver', 'CarDriverController');
