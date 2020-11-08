@@ -40,6 +40,12 @@ function setupAlertsComparisonValidator(){
         }
     }
 
+    function setupOverdueValues(old_value, new_value) {
+
+        let overdue_values = document.querySelectorAll('.daysOverdue')
+        findAndUpdateAlertValues(overdue_values, old_value, new_value)
+    }
+
     function updateYellowValues(old_value, new_value) {
 
         let yellow_values = document.querySelectorAll('.daysYellow')
@@ -66,12 +72,18 @@ function setupAlertsComparisonValidator(){
         let alert_value_difference = this
 
         let value = alertValueElement.innerHTML
-        let value_num_string = value.replace(/\s/g, '').replace('days', '')
+        let value_num_string = value.replace(/\s/g, '').replace('(', '-').replace(/[^0-9\-]/g, '')
         let num_value = parseInt(value_num_string)
 
         let new_alert_value = num_value + alert_value_difference
 
-        alertValueElement.innerHTML = new_alert_value.toString() + ' days'
+        let days_string = new_alert_value.toString() + ' days'
+        if (new_alert_value < 0)
+            days_string = days_string.replace('-', '(') + ' ago)'
+        else days_string = days_string
+        alertValueElement.innerHTML = days_string
+
+        updateExpiredAlertsDisplay(alertValueElement, new_alert_value)
     }
 
     //checks if the new value respects the current max and min
@@ -79,12 +91,15 @@ function setupAlertsComparisonValidator(){
         return new_value >= parseInt(input.getAttribute("min")) && new_value <= parseInt(input.getAttribute("max"))
     }
 
+    setupOverdueValues(0, 0) //change overdue values in case there are negative values
 
     let r_input = document.querySelector('#r-input')
+    updateRedValues(parseInt(r_input.value), parseInt(r_input.value)) //do initial update in case there are negative values
     let y_input = document.querySelector('#y-input')
+    updateYellowValues(parseInt(y_input.value), parseInt(y_input.value))//do initial update in case there are negative values
 
-    r_input.addEventListener('input', handleRedInput)
-    y_input.addEventListener('input', handleYellowInput)
+    r_input.addEventListener('input', handleRedInput) //setup update for input changes
+    y_input.addEventListener('input', handleYellowInput)//setup update for input changes
 
     let redYellowDifference = 10
 
@@ -116,6 +131,23 @@ function setupAlertsComparisonValidator(){
         updateYellowValues(parseInt(event.target.defaultValue), this.value)
         event.target.defaultValue = event.target.value
 
+    }
+
+    function updateExpiredAlertsDisplay(alertValueElement, alertValue) {
+        let color = alertValueElement.backgroundColor;         
+        if (alertValueElement.classList.contains('daysYellow'))
+            color = getComputedStyle(document.documentElement)
+                .getPropertyValue('--warning'); 
+        else if (alertValueElement.classList.contains('daysRed'))
+            color = getComputedStyle(document.documentElement)
+            .getPropertyValue('--danger');
+        // else return
+
+        if (parseInt(alertValue) < 0)
+            color = getComputedStyle(document.documentElement)
+                .getPropertyValue('--gray');
+        
+        alertValueElement.parentNode.parentNode.style.backgroundColor = color
     }
 }
 
