@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container-md">
-    <form method="POST" action="{{ route('register') }}">
         {{ csrf_field() }}
         <div class="row" style="margin-top: 5%" id="carSettingsTitle">
                 <h1>Settings</h1>
@@ -23,6 +22,9 @@
                         @endif
                     </div>
                 </div>
+                <div class="col col-md-auto" id="settingsEditButton">
+                    <button class="btn btn-primary"><a class="button" href="/car/{{$car->id}}/settings" >Edit</a></button>
+                </div>
             </div>
             <div class="col">
                 <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
@@ -35,6 +37,9 @@
                             <p class="card-text">No recorded<br>insurances!</p>
                         @endif
                     </div>
+                </div>
+                <div class="col col-md-auto" id="settingsEditButton">
+                    <button class="btn btn-primary"><a class="button" href="/car/{{$car->id}}/settings" >Edit</a></button>
                 </div>
             </div>
             <div class="col">
@@ -49,6 +54,9 @@
                         @endif
                     </div>
                 </div>
+                <div class="col col-md-auto" id="settingsEditButton">
+                    <button class="btn btn-primary"><a class="button" href="/car/{{$car->id}}/settings/taxes" >Edit</a></button>
+                </div>
             </div>
             <div class="col">
                 <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
@@ -62,9 +70,11 @@
                         @endif
                     </div>
                 </div>
+                <div class="col col-md-auto" id="settingsEditButton">
+                    <button class="btn btn-primary"><a class="button" href="/car/{{$car->id}}/settings" >Edit</a></button>
+                </div>
             </div>
         </div>
 
-    </form>
 </div>
 @endsection

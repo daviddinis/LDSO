@@ -25,7 +25,7 @@
   width: 100%;
 }
 
-/*#settingsEditButton a{
+#settingsEditButton a{
   color: white;
 }
 
@@ -36,7 +36,7 @@
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-}*/
+}
 
 #carCards{
   margin-top: 10rem;
