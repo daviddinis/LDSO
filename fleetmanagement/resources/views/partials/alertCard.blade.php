@@ -18,12 +18,12 @@
                 @if($eventDate!= null)
                 @foreach($alertTimes as $type => $time)
 
-                <div class="alertTimes col-12 col-sm-12	col-md-12 col-lg-4 col-xl-4">
+                <div class="alertTimes col-12 col-sm-12	col-md-12 col-lg-12 col-xl-12">
                     <div class="alertTimeCategory row align-items-start">
-                        <div class="time-type col-6 col-lg-12 col-xl-12">
+                        <div class="time-type col-6 col-lg-6 col-xl-6">
                             {{$type}}
                         </div>
-                        <div class="time-value col-6 col-lg-12 col-xl-12 days{{$type}}">
+                        <div class="time-value col-6 col-lg-6 col-xl-6 days{{$type}}">
 
                             {{currentTimeToEvent($eventDate, $time)}}
                         </div>
