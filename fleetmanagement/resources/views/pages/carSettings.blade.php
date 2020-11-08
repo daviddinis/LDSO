@@ -81,51 +81,49 @@ return timeToEvent(date("Y-m-d"), $eventDate, $alertTolerance);
         </div>
 
         <div id="alert-button-div" style="margin-top:5%; margin-bottom:5%;">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editAlertsModal">Edit Alerts</button>
+        </div>
 
-            <div class="dropdown">
-                <button id="alerts-edit-button" class="dropbtn btn btn-primary" style="min-width: 200px;">
-                    Edit Alerts
-                </button>
-                <div id="myDropdown" class="dropdown-content">
-                    <form id="alerts-form" class="dropdown-item" action="{{route('editAlerts', ['id' => $car->id])}}" method="post">
-                        {{ csrf_field() }}
+        <div id="editAlertsModal"class="modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Manage Car Alerts</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                         <form id="alerts-form" action="{{route('editAlerts', ['id' => $car->id])}}" method="post">
+                             {{ csrf_field() }}
 
-                        <div class="yellow-alert-segment">
-                            <label for="yellow-input">Yellow Alert:</label>
-                            <div class="form-group">
-                                <input id="yellow-input" name="yellow" type="number" value="{{$car->yellow_alert}}" min="{{$car->red_alert + 1}}" max="365" step="1" required>days
-                            </div>
-                        </div>
-
-
-                        <div class="red-alert-segment">
-                            <label for="red-input">Red Alert:</label>
-
-                            <div class="form-group">
-                                <input id="red-input" name="red" type="number" value="{{$car->red_alert}}" min="1" max="{{$car->yellow_alert - 1}}" step="1" required>days
-                            </div>
-                        </div>
+                             <div class="form-group">
+                                 <label for="yellow-input">Yellow Alert</label>
+                                 <div>
+                                    <input id="yellow-input" class="form-control" name="yellow" type="number" value="{{$car->yellow_alert}}" min="{{$car->red_alert + 1}}" max="365" step="1" required>
+                                 </div>
+                             </div>
 
 
-                        {{-- <div class="row justify-content-end"><input class="btn btn-primary col-5" type="submit" value="Submit"></div> --}}
-                    </form>
+                             <div class="form-group">
+                                 <label for="red-input">Red Alert</label>
+
+                                 <div>
+                                    <input id="red-input" class="form-control" name="red" type="number" value="{{$car->red_alert}}" min="1" max="{{$car->yellow_alert - 1}}" step="1" required>
+
+                                 </div>
+                             </div>
+                         </form>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" form="alerts-form" value="Save Changes" />
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Preview</button>
+                    </div>
                 </div>
             </div>
-
         </div>
-
-
-
 
         @include('partials.alertCards')
-
-        <div class="row justify-content-end mr-xl-3">
-             <div class="col-auto col-md-auto">
-                 <input type="submit" class="btn btn-primary" form="alerts-form" value="Save Changes" />
-             </div>
-        </div>
-
-
 
     </div>
 </div>
