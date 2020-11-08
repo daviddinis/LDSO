@@ -6,8 +6,8 @@ let alertsButton = document.querySelector('#alerts-edit-button')
 
 let alertsForm = document.querySelector('#alerts-form')
 
-let yellow_input = alertsForm.querySelector('input[name="yellow"]')
-let red_input = alertsForm.querySelector('input[name="red"]')
+// let yellow_input = alertsForm.querySelector('input[name="yellow"]')
+// let red_input = alertsForm.querySelector('input[name="red"]')
 
 // let invisible_elems = document.querySelectorAll('.invisible')
 
@@ -15,41 +15,8 @@ setupAlertsComparisonValidator()
 
 //sets up alert values js validation, so the yellow alert is always bigger than red
 function setupAlertsComparisonValidator(){
-    
-
-    yellow_input.addEventListener('change', updateRedMax)
-    red_input.addEventListener('change', updateYellowMin)
 
     setupCustomInputMessages()
-
-    //updates red input's max value to current yellow value, also updating display values
-    function updateRedMax(event){
-
-        let yellow_value = parseInt(event.target.value)      
-        if (isNewValueValid(yellow_value, yellow_input)) {
-            red_input.setAttribute("max", yellow_value - 1)
-            updateYellowValues(parseInt(event.target.defaultValue), yellow_value)
-            event.target.defaultValue = event.target.value
-        }
-        else event.target.value = event.target.defaultValue
-    }
-
-    //updates yellow input's min value to current red value, also updating display values
-    function updateYellowMin(event) {
-
-        let red_value = parseInt(event.target.value)
-
-        if (isNewValueValid(red_value, red_input)) {
-
-            yellow_input.setAttribute("min", red_value + 1)
-            updateRedValues(parseInt(event.target.defaultValue), red_value)
-            event.target.defaultValue = event.target.value
-        }
-        else event.target.value = event.target.defaultValue
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-    })
 
     //sets up custom messages when the user tries to insert a red alert bigger than the yellow alert...
     //... or a yellow alert that's smaller than the red alert
@@ -111,4 +78,45 @@ function setupAlertsComparisonValidator(){
     function isNewValueValid(new_value, input){
         return new_value >= parseInt(input.getAttribute("min")) && new_value <= parseInt(input.getAttribute("max"))
     }
+
+
+    let r_input = document.querySelector('#r-input')
+    let y_input = document.querySelector('#y-input')
+
+    r_input.addEventListener('input', handleRedInput)
+    y_input.addEventListener('input', handleYellowInput)
+
+    let redYellowDifference = 10
+
+    function handleRedInput(event) {
+
+        this.value = Math.min(this.value, this.parentNode.childNodes[5].value - redYellowDifference);
+        let value = (this.value / parseInt(this.max)) * 100
+        var children = this.parentNode.childNodes[1].childNodes;
+        children[1].style.width = value + '%'; //inverse-left
+        children[5].style.left = value + '%'; //range left
+        let fixed_sign_val = value - 2
+        children[7].style.left = value + '%'; children[11].style.left = fixed_sign_val + '%'; //thumb and sign
+        children[11].childNodes[1].innerHTML = this.value; //sign value
+
+        updateRedValues(parseInt(event.target.defaultValue), this.value)
+        event.target.defaultValue = event.target.value
+    }
+
+    function handleYellowInput(event) {
+
+        this.value = Math.max(this.value, this.parentNode.childNodes[3].value - (-redYellowDifference));
+        let value = (this.value / parseInt(this.max)) * 100
+        var children = this.parentNode.childNodes[1].childNodes;
+        children[3].style.width = (100 - value) + '%'; //inverse-right
+        children[5].style.right = (100 - value) + '%'; //range right
+        children[9].style.left = value + '%'; children[13].style.left = value + '%'; //thumb and sign
+        children[13].childNodes[1].innerHTML = this.value;//sign value
+
+        updateYellowValues(parseInt(event.target.defaultValue), this.value)
+        event.target.defaultValue = event.target.value
+
+    }
 }
+
+
