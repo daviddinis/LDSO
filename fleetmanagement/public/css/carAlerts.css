@@ -61,7 +61,6 @@
 
 /* formatting all the alert times boxes */
 .alertTimes:nth-child(1), .alertTimes:nth-child(2), .alertTimes:nth-child(3) {
-  border-radius: 10%;
   border: #0079a1 3px solid;
   text-align: center;
 }
@@ -79,6 +78,10 @@
 /* coloring overdue alert box */
 .alertTimes:nth-child(3) {
   background-color: var(--dark);
+}
+
+.modal-body p {
+  text-align: center;
 }
 
 /* double slider  */

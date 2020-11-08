@@ -103,7 +103,9 @@ return timeToEvent(date("Y-m-d"), $eventDate, $alertTolerance);
                         <form id="alerts-form" action="{{route('editAlerts', ['id' => $car->id])}}" method="post">
                             {{ csrf_field() }}
 
-                            <p style="font-size=.825rem;">Yellow and Red Alert Times (number of days before being overdue)</p>
+                            <p style="font-size=.825rem;">Yellow and Red Alert's Times</p>
+                            <p>(number of days before being overdue)</p>
+
                             <div slider id="slider-distance">
                                 
                                 <div>
