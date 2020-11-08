@@ -11,6 +11,12 @@
 @php
 //array whose keys are the alert type and whose values are the respective alert time in days
 $alertTimez = array('Yellow' => $car->yellow_alert, 'Red' => $car->red_alert, 'Overdue' => 0);
+$max_alert_time = 365;
+$red_position_percentage = $car->red_alert / $max_alert_time * 100;
+$yellow_position_percentage = $car->yellow_alert / $max_alert_time * 100;
+
+
+
 
 //returns alert date string in format Y-m-d
 //$eventdate -> event date, $alertTolerance -> alert time in days (date used to notify x days before the event)
@@ -81,10 +87,10 @@ return timeToEvent(date("Y-m-d"), $eventDate, $alertTolerance);
         </div>
 
         <div id="alert-button-div" style="margin-top:5%; margin-bottom:5%;">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editAlertsModal">Edit Alerts</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editAlertsModal">Edit Alerts</button>
         </div>
 
-        <div id="editAlertsModal"class="modal">
+        <div id="editAlertsModal" class="modal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -94,26 +100,40 @@ return timeToEvent(date("Y-m-d"), $eventDate, $alertTolerance);
                         </button>
                     </div>
                     <div class="modal-body">
-                         <form id="alerts-form" action="{{route('editAlerts', ['id' => $car->id])}}" method="post">
-                             {{ csrf_field() }}
+                        <form id="alerts-form" action="{{route('editAlerts', ['id' => $car->id])}}" method="post">
+                            {{ csrf_field() }}
 
-                             <div class="form-group">
-                                 <label for="yellow-input">Yellow Alert</label>
-                                 <div>
-                                    <input id="yellow-input" class="form-control" name="yellow" type="number" value="{{$car->yellow_alert}}" min="{{$car->red_alert + 1}}" max="365" step="1" required>
-                                 </div>
-                             </div>
+                            <p style="font-size=.825rem;">Yellow and Red Alert Times (number of days before being overdue)</p>
+                            <div slider id="slider-distance">
+                                
+                                <div>
+                                    <div inverse-left style="width:{{$red_position_percentage}}%;"></div>
+                                    <div inverse-right style="width:{{100 - $yellow_position_percentage}}%;"></div>
+                                    <div range style="left:{{$red_position_percentage}}%;right:{{100 - $yellow_position_percentage}}%;"></div>
 
 
-                             <div class="form-group">
-                                 <label for="red-input">Red Alert</label>
 
-                                 <div>
-                                    <input id="red-input" class="form-control" name="red" type="number" value="{{$car->red_alert}}" min="1" max="{{$car->yellow_alert - 1}}" step="1" required>
 
-                                 </div>
-                             </div>
-                         </form>
+                                    <span thumb style="left:{{$red_position_percentage}}%;"></span>
+                                    <span thumb style="left:{{$yellow_position_percentage}}%;"></span>
+
+
+                                    <div id="r-sign" sign style="left:{{$red_position_percentage-2}}%;">
+
+                                        <span id="value">{{$car->red_alert}}</span>
+                                    </div>
+                                    <div id="y-sign" sign style="left:{{$yellow_position_percentage}}%;">
+
+                                        <span id="value">{{$car->yellow_alert}}</span>
+
+                                    </div>
+                                </div>
+                                <input id="r-input" name="red" type="range" value="{{$car->red_alert}}" max="{{$max_alert_time}}" min="1" step="1" />
+
+                                <input id="y-input" name="yellow" type="range" value="{{$car->yellow_alert}}" max="{{$max_alert_time}}" min="1" step="1" />
+
+                            </div>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <input type="submit" class="btn btn-primary" form="alerts-form" value="Save Changes" />
