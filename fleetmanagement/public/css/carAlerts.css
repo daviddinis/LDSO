@@ -30,9 +30,9 @@
 
 /* determines the alert card's max width */
 .alertCard > .card{
-  max-width: 25rem;
+  width: 100%;
+  height: 100%;
 }
-
 /* changes the time value and time type's (yellow, red, overdue) font size in the alert cards */
 .time-type, .time-value {
   font-size: 0.9em;
@@ -157,6 +157,11 @@ div[slider] > input[type=range]:focus::-webkit-slider-runnable-track {
   border: transparent;
 }
 
+div[slider] > input[type=range]:focus::-moz-range-track{
+  background: transparent;
+  border: transparent;
+}
+
 div[slider] > input[type=range]:focus {
   outline: none;
 }
@@ -171,7 +176,21 @@ div[slider] > input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
 }
 
+div[slider] > input[type=range]::-moz-range-thumb {
+  pointer-events: all;
+  width: 28px;
+  height: 28px;
+  border-radius: 0px;
+  border: 0 none;
+  background: red;
+  -moz-appearance: none;
+}
+
 div[slider] > input[type=range]::-webkit-slider-thumb:hover {
+  cursor: pointer;
+}
+
+div[slider] > input[type=range]::-moz-range-thumb:hover {
   cursor: pointer;
 }
 
