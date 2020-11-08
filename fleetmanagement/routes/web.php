@@ -29,3 +29,7 @@ Route::resource('car', 'CarController');
 
 // CarDriver
 Route::resource('cardriver', 'CarDriverController');
+
+// Route::get('/debug-sentry', function () {
+//     throw new Exception('My first Sentry error!');
+// });
