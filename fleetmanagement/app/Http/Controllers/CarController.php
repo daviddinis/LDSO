@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Car;
 use App\Company;
+use App\Driver;
 use App\User;
 
 class CarController extends Controller
@@ -83,7 +84,7 @@ class CarController extends Controller
     {
         if (!Auth::check()) return redirect('/login');
         $car = Car::find($id);
-        return view('pages.car')->with('car', $car);
+        return view('pages.car', ['car' => $car, 'drivers' => Driver::all()]);
     }
 
     /**
@@ -121,7 +122,6 @@ class CarController extends Controller
         $car->delete();
         return redirect('/car');
     }
-
 
     public function showManageAlerts($id)
     {
@@ -195,5 +195,13 @@ class CarController extends Controller
     {
 
         return $car->maintenances()->orderBy('date', 'desc')->first();
+    /**
+     * Assign driver to car
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function assign(Request $request, $id)
+    {
     }
 }

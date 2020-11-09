@@ -2,7 +2,6 @@
 -- Drop
 -----------------------------------------
 DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS cards CASCADE;
 DROP TABLE IF EXISTS items CASCADE;
 DROP TABLE IF EXISTS companies CASCADE;
 DROP TABLE IF EXISTS cars CASCADE;
@@ -30,21 +29,6 @@ CREATE TABLE users (
     company_id INTEGER NOT NULL REFERENCES companies ON DELETE CASCADE,
     remember_token VARCHAR
 );
-
---------------------- REMOVE LATER -------------------------------
-CREATE TABLE cards (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR NOT NULL,
-    user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE
-);
-
-CREATE TABLE items (
-    id SERIAL PRIMARY KEY,
-    card_id INTEGER NOT NULL REFERENCES cards ON DELETE CASCADE,
-    description VARCHAR NOT NULL,
-    done BOOLEAN NOT NULL DEFAULT FALSE
-);
-------------------------------------------------------------------
 
 CREATE TABLE cars (
     id SERIAL PRIMARY KEY,

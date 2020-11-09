@@ -1,12 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#">iFleet</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="navTitle">
+  <a class="navbar-brand" id="fleetTitle" href="#">iFleet</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarColor01">
     @if (Auth::check())
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto" id="navbarOptions">
       <li class="nav-item active">
         <a class="nav-link" href="#">Dashboard
           <span class="sr-only">(current)</span>
