@@ -133,11 +133,6 @@ class CarController extends Controller
 
     }
 
-    public function showEditCar($id){
-        $car = Car::find($id);
-        return view('pages.editCar', ['car'=>$car]);
-    }
-
     public function showCarTaxes($id){
         $car = Car::find($id);
         return view('pages.taxes', ['car'=>$car]);
