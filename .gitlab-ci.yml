@@ -64,8 +64,8 @@ deploy-staging:
       $STAGING_DB_ROOT_PWD \
       $STAGING_PGADMIN_USER \
       $STAGING_PGADMIN_PWD
-#  only:
-#    - staging
+  only:
+    - staging
 
 deploy-prod:
   stage: deploy-prod
@@ -88,5 +88,5 @@ deploy-prod:
       $PROD_DB_ROOT_PWD \
       $PROD_PGADMIN_USER \
       $PROD_PGADMIN_PWD
-#  only:
-#    - master
+  only:
+    - master

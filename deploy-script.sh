@@ -71,16 +71,23 @@ then
 fi
 
 echo "Cloning new repo"
-git clone --single-branch --branch feature/cicd-deploy https://$GITLAB_ACCESS_USER:$GITLAB_ACCESS_TOKEN@gitlab.com/feup-tbs/ldso2021/t1g3.git
-cd t1g3/fleetmanagement
+git clone --single-branch --branch feature/development https://$GITLAB_ACCESS_USER:$GITLAB_ACCESS_TOKEN@gitlab.com/feup-tbs/ldso2021/t1g3.git
 
-# In prod we do not want to drop the DB or insert test values
-# so we replace the seed script
-if [[ "$DEPLOY_VERSION" == "production" ]];
+# Decide what branch to pull
+if [[ "$DEPLOY_VERSION" == "staging" ]]; 
 then
+    git clone --single-branch --branch staging https://$GITLAB_ACCESS_USER:$GITLAB_ACCESS_TOKEN@gitlab.com/feup-tbs/ldso2021/t1g3.git
+elif [[ "$DEPLOY_VERSION" == "production" ]];
+then
+    git clone --single-branch --branch master https://$GITLAB_ACCESS_USER:$GITLAB_ACCESS_TOKEN@gitlab.com/feup-tbs/ldso2021/t1g3.git
+
+    # In prod we do not want to drop the DB or insert test values
+    # so we replace the seed script
     echo "Changing seed script..."
-    cp -f ./resources/sql/seed_production.sql ./resources/sql/seed.sql
+    cp -f ./t1g3/fleetmanagement/resources/sql/seed_production.sql ./t1g3/fleetmanagement/resources/sql/seed.sql
 fi
+
+cd t1g3/fleetmanagement
 
 echo "Updating secrets..."
 
