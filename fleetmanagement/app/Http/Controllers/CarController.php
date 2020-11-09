@@ -195,6 +195,8 @@ class CarController extends Controller
     {
 
         return $car->maintenances()->orderBy('date', 'desc')->first();
+    }
+    
     /**
      * Assign driver to car
      *
