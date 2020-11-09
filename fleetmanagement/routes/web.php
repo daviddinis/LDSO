@@ -24,6 +24,10 @@ Route::post('register', 'Auth\RegisterController@register');
 // Driver
 Route::resource('driver', 'DriverController');
 
+// Car Alerts
+Route::get('car/{id}/settings', 'CarController@showManageAlerts')->name('alerts');
+Route::post('car/{id}/settings', 'CarController@editAlerts')->name('editAlerts');
+
 // Car
 Route::resource('car', 'CarController');
 

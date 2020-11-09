@@ -1,0 +1,266 @@
+.carSettingsSection{
+  /* width: 60%; */
+}
+
+.carSettingsSection > header{
+  font-size: 2em;
+}
+
+.alertCardsSection {
+  /* border: 1px solid gray; */  
+}
+
+/* #content > section {
+  margin-left: 10%;
+} */
+
+/* centers the edit alerts button */
+#alert-button-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* centers the cards contents */
+.alertCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* determines the alert card's max width */
+.alertCard > .card{
+  width: 100%;
+  height: 100%;
+}
+/* changes the time value and time type's (yellow, red, overdue) font size in the alert cards */
+.time-type, .time-value {
+  font-size: 0.9em;
+}
+
+/* aligns the text and changes the font size of the alert section's header */
+.alerts-header {
+  text-align: center;
+  font-size: 2em;
+}
+
+/* centers the overdue date text and value */
+.card-title > .row > div{
+  text-align: center;
+}
+
+/* used to hide objects, without "removing" them from the page */
+.invisible{
+  visibility: hidden;
+}
+
+/* used to hide objects, "removing" them from the page */
+.hidden{
+  display: none;
+}
+
+/* formatting all the alert times boxes */
+.alertTimes:nth-child(1), .alertTimes:nth-child(2), .alertTimes:nth-child(3) {
+  border: #0079a1 3px solid;
+  text-align: center;
+}
+
+/* coloring yellow alert box and the respective input background */
+.alertTimes:nth-child(1), .yellow-alert-segment {
+  background-color: var(--warning);
+}
+
+/* coloring red alert box and the respective input background */
+.alertTimes:nth-child(2), .red-alert-segment{
+  background-color: var(--danger);
+}
+
+/* coloring overdue alert box */
+.alertTimes:nth-child(3) {
+  background-color: var(--dark);
+}
+
+.modal-body p {
+  text-align: center;
+}
+
+/* double slider  */
+/* adapted from Himabindu's reply in https://stackoverflow.com/questions/4753946/html5-slider-with-two-inputs-possible */
+
+[slider] {
+  width: 100% ;
+  position: relative;
+  height: 2rem;
+  margin: 45px 0 10px 0;
+}
+
+[slider] > div {
+  position: absolute;
+  left: 13px;
+  right: 15px;
+  height: 8px;
+}
+[slider] > div > [inverse-left] {
+  position: absolute;
+  left: 0;
+  height: 8px;
+  border-radius: 10px;
+  background-color: var(--dark);
+  margin: 0 7px;
+}
+
+[slider] > div > [inverse-right] {
+  position: absolute;
+  right: 0;
+  height: 8px;
+  border-radius: 10px;
+  background-color: var(--yellow);
+  margin: 0 7px;
+}
+
+
+[slider] > div > [range] {
+  position: absolute;
+  left: 0;
+  height: 8px;
+  border-radius: 14px;
+  background-color: var(--danger);
+}
+
+[slider] > div > [thumb] {
+  position: absolute;
+  top: -7px;
+  z-index: 2;
+  height: 20px;
+  width: 20px;
+  text-align: left;
+  margin-left: -11px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  background-color: var(--blue);
+  border-radius: 50%;
+  outline: none;
+}
+
+[slider] > input[type=range] {
+  position: absolute;
+  pointer-events: none;
+  -webkit-appearance: none;
+  z-index: 3;
+  height: 14px;
+  top: -2px;
+  width: 100%;
+  opacity: 0;
+}
+
+div[slider] > input[type=range]:focus::-webkit-slider-runnable-track {
+  background: transparent;
+  border: transparent;
+}
+
+div[slider] > input[type=range]:focus::-moz-range-track{
+  background: transparent;
+  border: transparent;
+}
+
+div[slider] > input[type=range]:focus {
+  outline: none;
+}
+
+div[slider] > input[type=range]::-webkit-slider-thumb {
+  pointer-events: all;
+  width: 28px;
+  height: 28px;
+  border-radius: 0px;
+  border: 0 none;
+  background: red;
+  -webkit-appearance: none;
+}
+
+div[slider] > input[type=range]::-moz-range-thumb {
+  pointer-events: all;
+  width: 28px;
+  height: 28px;
+  border-radius: 0px;
+  border: 0 none;
+  background: red;
+  -moz-appearance: none;
+}
+
+div[slider] > input[type=range]::-webkit-slider-thumb:hover {
+  cursor: pointer;
+}
+
+div[slider] > input[type=range]::-moz-range-thumb:hover {
+  cursor: pointer;
+}
+
+div[slider] > input[type=range]::-ms-fill-lower {
+  background: transparent;
+  border: 0 none;
+}
+
+div[slider] > input[type=range]::-ms-fill-upper {
+  background: transparent;
+  border: 0 none;
+}
+
+div[slider] > input[type=range]::-ms-tooltip {
+  display: none;
+}
+
+[slider] > div > [sign] {
+  opacity: 1;
+  position: absolute;
+  margin-left: -11px;
+  top: -39px;
+  z-index:3;
+  background-color: var(--warning);
+  color: #fff;
+  width: 28px;
+  height: 28px;
+  border-radius: 28px;
+  -webkit-border-radius: 28px;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  text-align: center;
+}
+
+[slider] > div > [sign]:after {
+  position: absolute;
+  content: '';
+  left: 0;
+  border-radius: 16px;
+  top: 19px;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top-width: 16px;
+  border-top-style: solid;
+  /* border-top-color: blue; */
+}
+
+#r-sign {
+  background-color: var(--danger);
+}
+
+#y-sign {
+  background-color: var(--warning);
+}
+
+#r-sign:after {
+  border-top-color: var(--danger);
+}
+
+#y-sign:after {
+  border-top-color: var(--warning);
+}
+
+[slider] > div > [sign] > span {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+[slider]:hover > div > [sign] {
+  opacity: 1;
+}

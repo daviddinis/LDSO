@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 use App\Car;
 use App\Company;
@@ -122,6 +123,80 @@ class CarController extends Controller
         return redirect('/car');
     }
 
+    public function showManageAlerts($id)
+    {
+        if (!Auth::check()) return redirect('/login');
+        $car = Car::findOrFail($id);
+
+        $tax = $this->getCurrentTax($car);
+        $taxDate = $tax != null ? $tax->expiration_date : null;
+
+        $inspection = $this->getCurrentInspection($car);
+        $inspectionDate = $inspection != null ? $inspection->expiration_date : null;
+
+        $insurance = $this->getCurrentInsurance($car);
+        $insuranceDate = $insurance != null ? $insurance->expiration_date : null;
+
+        $maintenance = $this->getCurrentMaintenance($car);
+        $maintenanceDate = $maintenance != null ? $maintenance->date : null;
+
+        return view('pages.carSettings', [
+            'car' => $car, 'taxDate' => $taxDate,
+            'inspectionDate' => $inspectionDate, 'insuranceDate' => $insuranceDate,
+            'maintenanceDate' => $maintenanceDate
+        ]);
+    }
+
+    //updates the car alert settings?
+    public function editAlerts(Request $request, $id)
+    {
+
+        //update alert settings TODO:implement it
+        $validator = Validator::make($request->all(), [
+            'yellow' => 'required|integer|min:1|max:365|gt:red',
+            'red' => 'required|integer|min:1|max:365|lt:yellow'
+        ]);
+
+        $validator->validate();
+
+        $car = Car::findOrFail($id);
+
+        $input_yellow = $request->input('yellow');
+        $input_red = $request->input('red');
+
+        if ($car->yellow_alert  != $input_yellow && $input_yellow != null)
+            $car->yellow_alert = $input_yellow;
+        if ($car->red_alert  != $input_red && $input_red != null)
+            $car->red_alert = $input_red;
+        $car->save();
+
+        return redirect()->back();
+    }
+
+    private function getCurrentTax($car)
+    {
+
+        return $car->taxes()->orderBy('date', 'desc')->first();
+    }
+
+    private function getCurrentInspection($car)
+    {
+
+        return $car->inspections()->orderBy('date', 'desc')->first();
+    }
+
+    private function getCurrentInsurance($car)
+    {
+
+        return $car->insurances()->orderBy('date', 'desc')->first();
+    }
+
+    private function getCurrentMaintenance($car)
+    {
+
+        return $car->maintenances()->orderBy('date', 'desc')->first();
+    }
+    
     /**
      * Assign driver to car
      *
@@ -130,6 +205,5 @@ class CarController extends Controller
      */
     public function assign(Request $request, $id)
     {
-
     }
 }
