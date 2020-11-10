@@ -27,9 +27,10 @@ class MaintenanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
+        return view('pages.addMaintenance', ['car_id' => $id]);
     }
 
     /**
@@ -38,9 +39,36 @@ class MaintenanceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         //
+        $this->validate($request, [
+            'date' => 'required|date',
+            'next_maintenance_date' => 'nullable|date|after:date',
+            'value' => 'required|min:0',
+            'mileage' => 'required|min:0',
+            'observations' => 'nullable|string|max:255',
+            'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,pdf,txt'
+        ]);
+
+        $maintenance = new Maintenance;
+        $maintenance->date = $request['date'];
+        $maintenance->next_maintenance_date = $request['next_maintenance_date'];
+        $maintenance->value = $request['value'];
+        $maintenance->kilometers = $request['mileage'];
+        $maintenance->obs = $request['observations'];
+        $maintenance->car_id = $id;
+
+         if ($request->hasFile('file')) {
+            $car = Car::find($id);
+            $fileName = 'maintenance_' . $id . '_' . count($car->maintenances) . '.' . request()->file->getClientOriginalExtension();
+            request()->file->move(public_path('file/maintenance/'), $fileName);
+            $maintenance->file = 'file/maintenance/' . $fileName;
+        }
+
+        $maintenance->save();
+
+        return redirect()->route('maintenance.find', $id);
     }
 
     /**

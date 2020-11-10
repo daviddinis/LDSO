@@ -32,11 +32,14 @@
                     <td>{{$maintenance->value}}€</td>
                     <td>@if($maintenance->next_maintenance_date != null){{$maintenance->next_maintenance_date}} @else N/A @endif</td>
                     <td>@if($maintenance->obs != null){{$maintenance->obs}} @else N/A @endif</td>
-                    <td>@if($maintenance->file != null){{$maintenance->file}} @else N/A @endif</td>
+                    <td><a href="{{ Storage::url($maintenance->file) }}" style="color: white" download="{{substr($maintenance->file, 17)}}">@if($maintenance->file != null)Download File @else N/A @endif</a></td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+    <a href="{{route('maintenance.create', $car->id)}}" class="btn btn-primary btn-lg rounded-circle " style="position:absolute;bottom:30px;right:30px;">
+        <i class="fa fa-plus"></i>
+    </a>
 
 @endsection
