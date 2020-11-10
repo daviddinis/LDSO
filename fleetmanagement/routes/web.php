@@ -34,6 +34,9 @@ Route::resource('car', 'CarController');
 // CarDriver
 Route::resource('cardriver', 'CarDriverController');
 
+// Maintenance
+Route::get('car/{id}/maintenances', 'MaintenanceController@index')->name('maintenance.find'); // id for car's id and id2 for maintenance's id
+
 // Route::get('/debug-sentry', function () {
 //     throw new Exception('My first Sentry error!');
 // });
