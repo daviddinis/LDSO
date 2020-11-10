@@ -73,7 +73,7 @@
         </table>
         <br>
         <div class="col col-md-auto" id="settingsEditButton">
-            <button class="btn btn-primary"><a class="button" >Add Tax</a></button>
+            <button class="btn btn-primary"><a class="button" href="/car/{{$car->id}}/taxes/add">Add Tax</a></button>
         </div>
 </div>
 @endsection

@@ -29,6 +29,8 @@ Route::resource('car', 'CarController');
 Route::get('car/{id}/taxes', 'CarController@showCarTaxes');
 Route::get('car/{car_id}/taxes/tax/{id}', 'CarController@showTax');
 Route::get('car/{id}/taxes/edit', 'CarController@showEditCarTaxes');
+Route::get('car/{id}/taxes/add', 'CarController@showAddTaxForm')->name('add_tax_form');
+Route::post('car/{id}/taxes/add', 'CarController@addTax')->name('add_tax');
 
 // CarDriver
 Route::resource('cardriver', 'CarDriverController');
