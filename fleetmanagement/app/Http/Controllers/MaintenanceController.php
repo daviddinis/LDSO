@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Car;
 use App\Maintenance;
 
 
@@ -16,7 +17,8 @@ class MaintenanceController extends Controller
     public function index($id)
     {
         $maintenances = Maintenance::get()->where('car_id', '=', $id);
-        return view('pages.maintenances')->with('maintenances', $maintenances);
+        return view('pages.maintenances', ['car' => Car::find($id),
+                                            'maintenances' => $maintenances]);
 
     }
 
