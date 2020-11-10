@@ -27,6 +27,7 @@ Route::resource('driver', 'DriverController');
 // Car
 Route::resource('car', 'CarController');
 Route::get('car/{id}/taxes', 'CarController@showCarTaxes');
+Route::get('car/{car_id}/taxes/tax/{id}', 'CarController@showTax');
 Route::get('car/{id}/taxes/edit', 'CarController@showEditCarTaxes');
 
 // CarDriver

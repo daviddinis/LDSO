@@ -187,6 +187,7 @@
                         @endif
                     </div>
                 </div>
+                <br>
                 <div class="col col-md-auto" id="settingsEditButton">
                     <button class="btn btn-primary"><a class="button" href="/car/{{$car->id}}/taxes" >Edit</a></button>
                 </div>
@@ -209,7 +210,7 @@
         <div class="row justify-content-end" style="margin-top:20%;">
 
             <div class="col col-md-auto" id="carSettingsButton">
-                <button class="btn btn-primary"><a class="button" href="/car/{{$car->id}}">Settings</a></button>
+                <button class="btn btn-primary"><a class="button" >Settings</a></button>
             </div>
             <!-- TODO does not work currently -->
             <div class="col col-md-auto">

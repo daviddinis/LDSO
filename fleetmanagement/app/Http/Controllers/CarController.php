@@ -10,6 +10,7 @@ use App\Car;
 use App\Company;
 use App\Driver;
 use App\User;
+use App\Tax;
 
 class CarController extends Controller
 {
@@ -140,5 +141,11 @@ class CarController extends Controller
     public function showEditCarTaxes($id){
         $car = Car::find($id);
         return view('pages.editCarTaxes', ['car'=>$car]);
+    }
+
+    public function showTax($car_id,$id){
+        $car = Car::find($car_id);
+        $tax = Tax::find($id);
+        return view('pages.tax', ['car'=>$car], ['tax'=>$tax]);
     }
 }

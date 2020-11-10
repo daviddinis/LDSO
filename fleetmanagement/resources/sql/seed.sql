@@ -128,6 +128,8 @@ INSERT INTO users (name, email, password, company_id) VALUES ('John Doe', 'johnd
 INSERT INTO cars (date_acquired, make, model, license_plate, image, value, kilometers, company_id) VALUES ('2000-01-01', 'AUDI', 'A3', '1234AB', NULL, NULL, NULL, 1);
 INSERT INTO cars (date_acquired, make, model, license_plate, image, value, kilometers, company_id) VALUES ('2000-01-01', 'AUDI', 'A3', '1zxczc', NULL, NULL, NULL, 2);
 INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-02-15', '2020-12-31', 500, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-09-08', '2021-04-15', 83, NULL, NULL, 1);
 
 INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 1);
 
