@@ -17,27 +17,14 @@ CREATE TABLE IF NOT EXISTS users (
     remember_token VARCHAR
 );
 
---------------------- REMOVE LATER -------------------------------
-CREATE TABLE IF NOT EXISTS cards (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR NOT NULL,
-    user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS items (
-    id SERIAL PRIMARY KEY,
-    card_id INTEGER NOT NULL REFERENCES cards ON DELETE CASCADE,
-    description VARCHAR NOT NULL,
-    done BOOLEAN NOT NULL DEFAULT FALSE
-);
-------------------------------------------------------------------
-
 CREATE TABLE IF NOT EXISTS cars (
     id SERIAL PRIMARY KEY,
     date_acquired DATE NOT NULL,
     make VARCHAR NOT NULL,
     model VARCHAR NOT NULL,
     license_plate VARCHAR NOT NULL,
+    yellow_alert INTEGER DEFAULT 30,
+    red_alert INTEGER DEFAULT 15,
     image VARCHAR, -- optional
     value FLOAT, -- optional
     kilometers INTEGER, -- optional
