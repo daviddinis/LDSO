@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 use App\Car;
 use App\Company;
@@ -151,25 +152,26 @@ class CarController extends Controller
 
     public function showAddTaxForm($id){
         $car = Car::find($id);
-        return view('pages.addTax', ['car'=>$car]);
+        $tax = Tax::find($id);
+        return view('pages.addTax', ['car'=>$car], ['tax'=>$tax]);
     }
 
-    public function addTax(Request $request, $id){
-    $car = Car::find($id);
-    $last_id = DB::table('taxes')->where('car_id',$id)->latest('id')->first()->id;
-    $tax = new Tax();
+    public function addTax(Request $request,$id){
+        $car = Car::find($id);
+        $last_id = DB::table('taxes')->where('car_id',$id)->latest('id')->first()->id;
+        $tax = new Tax();
 
-    $this->authorize('create', $tax);      
-    DB::transaction(function() use($request, $tax, $last_id){
-      $tax->car_id = $id;
+        $this->authorize('create', $tax);      
+        DB::transaction(function() use($request, $tax, $last_id){
+        $tax->car_id = $id;
 
-      $tax->date = $request->date;
-      $tax->expiration_date = $request->expiration_date;
-      $tax->value = $request->tax_value;
-      $tax->file = $request->file;
-      $tax->obs = $request->obs;
-      $tax->save();
-    });
-    return redirect()->route('taxes', [$tax]);
-}
+        $tax->date = $request->date;
+        $tax->expiration_date = $request->expiration_date;
+        $tax->value = $request->tax_value;
+        $tax->file = $request->file;
+        $tax->obs = $request->obs;
+        $tax->save();
+        });
+        return redirect()->url('car/'. $car->id . '/taxes');
+    }
 }

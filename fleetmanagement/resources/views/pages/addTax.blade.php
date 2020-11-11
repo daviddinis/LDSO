@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-md">
-    <form action={{ action('CarController@addTax') }} method="POST" id="add_tax_form">
+    <form action="{{url('car/'. $car->id . '/taxes')}}" method="POST" >
         {{ csrf_field() }}
         <div class="row" style="margin-top: 5%">
             <div class="col-md-2"></div>
@@ -57,12 +57,10 @@
             </div>
         </div>
         <br>
-        <div class="container">
-        <div class="row">
-            <div class="col text-center" id="button-add-post">
-                <button type="submit">  <a href="/car/{{$car->id}}/taxes/add" class="btn btn-primary" >Edit profile</a></button>
-               
-            </div>
+        <br>
+        <div class="field">
+        <div class="control">
+            <button type="submit" class="button is-link is-outlined">Publish</button>
         </div>
     </div>
     </form>
