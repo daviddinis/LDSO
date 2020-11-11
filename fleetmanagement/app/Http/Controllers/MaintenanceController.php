@@ -16,7 +16,7 @@ class MaintenanceController extends Controller
      */
     public function index($id)
     {
-        $maintenances = Maintenance::get()->where('car_id', '=', $id);
+        $maintenances = Maintenance::get()->where('car_id', '=', $id)->sortByDesc('date');
         return view('pages.maintenances', ['car' => Car::find($id),
                                             'maintenances' => $maintenances]);
 
@@ -88,10 +88,11 @@ class MaintenanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($car_id, $maintenance_id)
     {
-        $maintenance = Maintenance::find($id);
-        return view('pages.editMaintenance')->with('maintenance', $maintenance);
+        $car = Car::find($car_id);
+        $maintenance = Maintenance::find($maintenance_id);
+        return view('pages.editMaintenance', ['car' => $car, 'maintenance' => $maintenance]);
     }
 
     /**
@@ -101,7 +102,7 @@ class MaintenanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $car_id, $maintenance_id)
     {
         $this->validate($request, [
             'date' => 'required|date',
@@ -112,23 +113,23 @@ class MaintenanceController extends Controller
             'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,pdf,txt'
         ]);
 
-        $maintenance = Maintenance::find($id);
+        $maintenance = Maintenance::find($maintenance_id);
         $maintenance->date = $request->input('date');
         $maintenance->next_maintenance_date = $request->input('next_maintenance_date');
         $maintenance->value = $request->input('value');
         $maintenance->kilometers = $request->input('mileage');
         $maintenance->obs = $request->input('observations');
-        
+
          if ($request->hasFile('file')) {
-            $car = Car::find($id);
-            $fileName = 'maintenance_' . $id . '_' . count($car->maintenances) . '.' . request()->file->getClientOriginalExtension();
+            $car = Car::find($car_id);
+            $fileName = 'maintenance_' . $maintenance_id . '_' . count($car->maintenances) . '.' . request()->file->getClientOriginalExtension();
             request()->file->move(public_path('file/maintenance/'), $fileName);
             $maintenance->file = 'file/maintenance/' . $fileName;
         }
 
         $maintenance->save();
 
-        return redirect()->route('maintenance.find', $maintenance->car_id);
+        return redirect()->route('maintenance.find', $car_id);
     }
 
     /**
@@ -137,9 +138,9 @@ class MaintenanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($car_id, $maintenance_id)
     {
-        $maintenance = Maintenance::find($id);
+        $maintenance = Maintenance::find($maintenance_id);
         $maintenance->delete();
         return back();
     }

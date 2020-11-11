@@ -34,14 +34,14 @@
                     <td>@if($maintenance->next_maintenance_date != null){{$maintenance->next_maintenance_date}} @else N/A @endif</td>
                     <td>@if($maintenance->obs != null){{$maintenance->obs}} @else N/A @endif</td>
                     <td>@if($maintenance->file != null) <a href="{{ asset($maintenance->file) }}" style="color: white" download="{{substr($maintenance->file, 17)}}">Download File</a> @else N/A @endif </td>
-                    <td>    
-                        <form style="margin-left: 10px; float: right;" method="post" action="{{route('maintenance.destroy', $maintenance->id)}}" >
+                    <td>
+                        <form style="margin-left: 10px; float: right;" method="post" action="{{route('maintenance.destroy', [$car->id, $maintenance->id])}}" >
                             {{ method_field('DELETE') }}
                             {{ csrf_field() }}
-                            <button onclick="return confirm('Are you sure?')" class="btn btn-secondary btn-sm rounded-circle "><i class="fa fa-trash"></i></button> 
+                            <button onclick="return confirm('Are you sure?')" class="btn btn-secondary btn-sm rounded-circle "><i class="fa fa-trash"></i></button>
                         </form>
 
-                        <a href= {{route('maintenance.edit', $maintenance)}} class="btn btn-info btn-sm rounded-circle" style="float:right"><i class="fa fa-pencil"></i></a> 
+                        <a href= {{route('maintenance.edit', [$car->id, $maintenance])}} class="btn btn-info btn-sm rounded-circle" style="float:right"><i class="fa fa-pencil"></i></a>
                     </td>
                 </tr>
                 @endforeach

@@ -38,9 +38,9 @@ Route::resource('cardriver', 'CarDriverController');
 Route::get('car/{id}/maintenances', 'MaintenanceController@index')->name('maintenance.find'); // id for car's id
 Route::get('car/{id}/maintenances/create', 'MaintenanceController@create')->name('maintenance.create'); // id for car's id
 Route::post('car/{id}/maintenances/store', 'MaintenanceController@store')->name('maintenance.store'); // id for car's id
-Route::get('maintenances/{id}/edit', 'MaintenanceController@edit')->name('maintenance.edit');
-Route::put('maintenances/{id}/update', 'MaintenanceController@update')->name('maintenance.update');
-Route::delete('maintenances/{id}/delete', 'MaintenanceController@destroy')->name('maintenance.destroy');
+Route::get('car/{car_id}/maintenances/{maintenance_id}/edit', 'MaintenanceController@edit')->name('maintenance.edit');
+Route::put('car/{car_id}/maintenances/{maintenance_id}/update', 'MaintenanceController@update')->name('maintenance.update');
+Route::delete('car/{car_id}/maintenances/{maintenance_id}/delete', 'MaintenanceController@destroy')->name('maintenance.destroy');
 
 // Route::get('/debug-sentry', function () {
 //     throw new Exception('My first Sentry error!');

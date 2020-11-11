@@ -18,7 +18,7 @@
 
 @section('content')
 <div class="container-md">
-    <form method="POST" action="{{route('maintenance.update', $maintenance->id)}}">
+    <form method="POST" action="{{route('maintenance.update', [$car->id, $maintenance->id])}}">
         {{ method_field('PUT') }}
         {{ csrf_field() }}
         <div class="row" style="margin-top: 5%">
@@ -82,7 +82,7 @@
         <div class="row form-group" style="margin-bottom: 5%">
             <div class="col-md-2"></div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary btn-lg">Add</button>
+                <button type="submit" class="btn btn-primary btn-lg">Update</button>
             </div>
         </div>
     </form>
