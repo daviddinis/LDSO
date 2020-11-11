@@ -90,7 +90,8 @@ class MaintenanceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $maintenance = Maintenance::find($id);
+        return view('pages.editMaintenance')->with('maintenance', $maintenance);
     }
 
     /**
@@ -102,7 +103,32 @@ class MaintenanceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'date' => 'required|date',
+            'next_maintenance_date' => 'nullable|date|after:date',
+            'value' => 'required|min:0',
+            'mileage' => 'required|min:0',
+            'observations' => 'nullable|string|max:255',
+            'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,pdf,txt'
+        ]);
+
+        $maintenance = Maintenance::find($id);
+        $maintenance->date = $request->input('date');
+        $maintenance->next_maintenance_date = $request->input('next_maintenance_date');
+        $maintenance->value = $request->input('value');
+        $maintenance->kilometers = $request->input('mileage');
+        $maintenance->obs = $request->input('observations');
+        
+         if ($request->hasFile('file')) {
+            $car = Car::find($id);
+            $fileName = 'maintenance_' . $id . '_' . count($car->maintenances) . '.' . request()->file->getClientOriginalExtension();
+            request()->file->move(public_path('file/maintenance/'), $fileName);
+            $maintenance->file = 'file/maintenance/' . $fileName;
+        }
+
+        $maintenance->save();
+
+        return redirect()->route('maintenance.find', $maintenance->car_id);
     }
 
     /**
@@ -113,6 +139,8 @@ class MaintenanceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $maintenance = Maintenance::find($id);
+        $maintenance->delete();
+        return back();
     }
 }
