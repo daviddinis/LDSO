@@ -18,7 +18,7 @@
 
 @section('content')
 <div class="container-md">
-    <form method="POST" action="{{route('maintenance.update', [$car->id, $maintenance->id])}}">
+    <form method="POST" action="{{route('maintenance.update', [$car->id, $maintenance->id])}}" enctype="multipart/form-data">
         {{ method_field('PUT') }}
         {{ csrf_field() }}
         <div class="row" style="margin-top: 5%">
@@ -70,11 +70,8 @@
             </div>
             <div class="col-md-4">
                 <label for="name">File</label>
-                <div class="input-group mb-3">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" name="file" id="file" value="{{$maintenance->file}}">
-                        <label class="custom-file-label" for="file">Choose file</label>
-                    </div>
+                <div class="input-group">
+                    <input type="file" class="form-control" id="file" name="file" value="{{$maintenance->file}}">
                 </div>
             </div>
         </div>
@@ -85,6 +82,7 @@
                 <button type="submit" class="btn btn-primary btn-lg">Update</button>
             </div>
         </div>
+    </div>
     </form>
 </div>
 

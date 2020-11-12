@@ -67,14 +67,11 @@
             </div>
             <div class="col-md-4">
                 <label for="name">File</label>
-                <div class="input-group mb-3">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" name="file" id="file">
-                        <label class="custom-file-label" for="file">Choose file</label>
-                    </div>
+                <div class="input-group">
+                    <input type="file" class="form-control" id="file" name="file">
+                </div>
                 </div>
             </div>
-        </div>
         <br>
         <div class="row form-group" style="margin-bottom: 5%">
             <div class="col-md-2"></div>
@@ -82,6 +79,8 @@
                 <button type="submit" class="btn btn-primary btn-lg">Add</button>
             </div>
         </div>
+    </div>
+
     </form>
 </div>
 

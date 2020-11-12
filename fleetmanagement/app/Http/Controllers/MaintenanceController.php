@@ -48,7 +48,7 @@ class MaintenanceController extends Controller
             'value' => 'required|min:0',
             'mileage' => 'required|min:0',
             'observations' => 'nullable|string|max:255',
-            'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,pdf,txt'
+            'file' => 'nullable|mimes:pdf,jpeg,png,jpg,gif,svg,txt'
         ]);
 
         $maintenance = new Maintenance;
@@ -110,7 +110,7 @@ class MaintenanceController extends Controller
             'value' => 'required|min:0',
             'mileage' => 'required|min:0',
             'observations' => 'nullable|string|max:255',
-            'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,pdf,txt'
+            'file' => 'nullable|mimes:pdf,jpeg,png,jpg,gif,svg,txt'
         ]);
 
         $maintenance = Maintenance::find($maintenance_id);
