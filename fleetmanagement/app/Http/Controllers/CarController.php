@@ -135,43 +135,4 @@ class CarController extends Controller
 
     }
 
-    public function showCarTaxes($id){
-        $car = Car::find($id);
-        return view('pages.taxes', ['car'=>$car]);
-    }
-    public function showEditCarTaxes($id){
-        $car = Car::find($id);
-        return view('pages.editCarTaxes', ['car'=>$car]);
-    }
-
-    public function showTax($car_id,$id){
-        $car = Car::find($car_id);
-        $tax = Tax::find($id);
-        return view('pages.tax', ['car'=>$car], ['tax'=>$tax]);
-    }
-
-    public function showAddTaxForm($id){
-        $car = Car::find($id);
-        $tax = Tax::find($id);
-        return view('pages.addTax', ['car'=>$car], ['tax'=>$tax]);
-    }
-
-    public function addTax(Request $request,$id){
-        $car = Car::find($id);
-        $last_id = DB::table('taxes')->where('car_id',$id)->latest('id')->first()->id;
-        $tax = new Tax();
-
-        $this->authorize('create', [$car, $tax]);      
-        DB::transaction(function() use($request, $tax, $last_id){
-        $tax->car_id = $id;
-
-        $tax->date = $request->date;
-        $tax->expiration_date = $request->expiration_date;
-        $tax->value = $request->tax_value;
-        $tax->file = $request->file;
-        $tax->obs = $request->obs;
-        $tax->save();
-        });
-        return redirect()->url('car/'. $car->id . '/taxes');
-    }
 }

@@ -34,7 +34,7 @@
         <div class="row form-group">
             <div class="col-md-2"></div>
             <div class="col-md-4">
-            <h5>File: {{$tax->file}}</h5>
+            <h5>File: @if($tax->file != null) <a href="{{ asset($tax->file) }}" style="color: black" download="{{substr($tax->file, 17)}}">Download File</a> @else N/A @endif</h5>
             </div>
         </div>
         <br>

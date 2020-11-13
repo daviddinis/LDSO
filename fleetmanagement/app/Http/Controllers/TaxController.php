@@ -85,11 +85,11 @@ class TaxController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($car_id, $maintenance_id)
+    public function edit($car_id, $tax_id)
     {
         $car = Car::find($car_id);
-        $maintenance = Maintenance::find($maintenance_id);
-        return view('pages.editMaintenance', ['car' => $car, 'maintenance' => $maintenance]);
+        $tax = Tax::find($tax_id);
+        return view('pages.editCarTaxes', ['car' => $car, 'tax' => $tax]);
     }
 
     /**
@@ -99,34 +99,32 @@ class TaxController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $car_id, $maintenance_id)
+    public function update(Request $request, $car_id, $tax_id)
     {
         $this->validate($request, [
             'date' => 'required|date',
-            'next_maintenance_date' => 'nullable|date|after:date',
+            'expiration_date' => 'required|date|after:date',
             'value' => 'required|min:0',
-            'mileage' => 'required|min:0',
-            'observations' => 'nullable|string|max:255',
-            'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,pdf,txt'
+            'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,pdf,txt',
+            'obs' => 'nullable|string|max:255',
         ]);
 
-        $maintenance = Maintenance::find($maintenance_id);
-        $maintenance->date = $request->input('date');
-        $maintenance->next_maintenance_date = $request->input('next_maintenance_date');
-        $maintenance->value = $request->input('value');
-        $maintenance->kilometers = $request->input('mileage');
-        $maintenance->obs = $request->input('observations');
+        $tax = Tax::find($tax_id);
+        $tax->date = $request->input('date');
+        $tax->expiration_date = $request->input('expiration_date');
+        $tax->value = $request->input('value');
+        $tax->obs = $request->input('obs');
 
          if ($request->hasFile('file')) {
             $car = Car::find($car_id);
-            $fileName = 'maintenance_' . $maintenance_id . '_' . count($car->maintenances) . '.' . request()->file->getClientOriginalExtension();
-            request()->file->move(public_path('file/maintenance/'), $fileName);
-            $maintenance->file = 'file/maintenance/' . $fileName;
+            $fileName = 'tax_' . $tax_id . '_' . count($car->taxes) . '.' . request()->file->getClientOriginalExtension();
+            request()->file->move(public_path('file/tax/'), $fileName);
+            $tax->file = 'file/tax/' . $fileName;
         }
 
-        $maintenance->save();
+        $tax->save();
 
-        return redirect()->route('maintenance.find', $car_id);
+        return redirect()->route('tax.find', $car_id);
     }
 
     /**
@@ -135,10 +133,16 @@ class TaxController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($car_id, $maintenance_id)
+    public function destroy($car_id, $tax_id)
     {
-        $maintenance = Maintenance::find($maintenance_id);
-        $maintenance->delete();
+        $tax = Tax::find($tax_id);
+        $tax->delete();
         return back();
+    }
+
+    public function showTax($car_id,$id){
+        $car = Car::find($car_id);
+        $tax = Tax::find($id);
+        return view('pages.tax', ['car'=>$car], ['tax'=>$tax]);
     }
 }

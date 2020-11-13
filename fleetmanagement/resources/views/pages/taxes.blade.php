@@ -42,7 +42,7 @@
     <div class="row form-group">
         <div class="col-md-2"></div>
         <div class="col-md-4">
-        <h5>File: {{$car->taxes->last()->file}}</h5>
+        <h5>File: @if($car->taxes->last()->file != null) <a href="{{ asset($car->taxes->last()->file) }}" style="color: black" download="{{substr($car->taxes->last()->file, 17)}}">Download File</a> @else N/A @endif</h5>
         </div>
     </div>
     <br>
@@ -75,6 +75,15 @@
                 <td>{{$tax->value}}€</td>
                 <td>@if($tax->file != null) <a href="{{ asset($tax->file) }}" style="color: white" download="{{substr($tax->file, 17)}}">Download File</a> @else N/A @endif </td>
                 <td>@if($tax->obs != null){{$tax->obs}} @else N/A @endif</td>
+                <td>
+                    <form style="margin-left: 10px; float: right;" method="post" action="{{route('tax.destroy', [$car->id, $tax->id])}}" >
+                        {{ method_field('DELETE') }}
+                        {{ csrf_field() }}
+                        <button onclick="return confirm('Are you sure?')" class="btn btn-secondary btn-sm rounded-circle "><i class="fa fa-trash"></i></button>
+                    </form>
+
+                    <a href= {{route('tax.edit', [$car->id, $tax])}} class="btn btn-info btn-sm rounded-circle" style="float:right"><i class="fa fa-pencil"></i></a>
+                </td>
             </tr>
             @endforeach
         </tbody>
