@@ -52,9 +52,9 @@ return timeToEvent(date("Y-m-d"), $eventDate, $alertTolerance);
 
 @section('content')
 
-<div class="jumbotron carSettingsSection">
+<div class="jumbotron carSettingsSection" style="padding-top: 3%">
 
-    <ol class="breadcrumb">
+    <ol class="breadcrumb" style="border-width: 0">
         <li class="breadcrumb-item"><a href="{{route('car.show', $car->id)}}">
                 <p>{{$car->make}} {{$car->model}} - {{$car->license_plate}}</p>
             </a></li>
@@ -107,7 +107,7 @@ return timeToEvent(date("Y-m-d"), $eventDate, $alertTolerance);
                             <p>(number of days before being overdue)</p>
 
                             <div slider id="slider-distance">
-                                
+
                                 <div>
                                     <div inverse-left style="width:{{$red_position_percentage}}%;"></div>
                                     <div inverse-right style="width:{{100 - $yellow_position_percentage}}%;"></div>
