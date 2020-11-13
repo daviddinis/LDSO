@@ -1,6 +1,8 @@
 stages:
   - build-test
   - lint
+  - deploy-staging
+  - deploy-prod
 
 docker-build-test:
   # Official docker image.
@@ -40,3 +42,51 @@ php-linter:
   allow_failure: true
   artifacts:
     expire_in: 60 minutes
+
+deploy-staging:
+  stage: deploy-staging
+  image: alpine
+  before_script:
+    - apk add openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$STAGING_SSH_ACCESS_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - echo "Deploying to staging..."
+    - ssh -o StrictHostKeyChecking=no $STAGING_ACCESS_URL "bash -s" < ./deploy-script.sh \
+      "staging" \
+      $GITLAB_ACCESS_USER \
+      $GITLAB_ACCESS_TOKEN \
+      $STAGING_DB_HOST \
+      $STAGING_DB_NAME \
+      $STAGING_DB_ROOT_USER \
+      $STAGING_DB_ROOT_PWD \
+      $STAGING_PGADMIN_USER \
+      $STAGING_PGADMIN_PWD
+  only:
+    - staging
+
+deploy-prod:
+  stage: deploy-prod
+  image: alpine
+  before_script:
+    - apk add openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$PROD_SSH_ACCESS_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - echo "Deploying to staging..."
+    - ssh -o StrictHostKeyChecking=no $PROD_ACCESS_URL "bash -s" < ./deploy-script.sh \
+      "production" \
+      $GITLAB_ACCESS_USER \
+      $GITLAB_ACCESS_TOKEN \
+      $PROD_DB_HOST \
+      $PROD_DB_NAME \
+      $PROD_DB_ROOT_USER \
+      $PROD_DB_ROOT_PWD \
+      $PROD_PGADMIN_USER \
+      $PROD_PGADMIN_PWD
+  only:
+    - master
