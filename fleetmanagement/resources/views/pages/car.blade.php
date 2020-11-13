@@ -150,17 +150,19 @@
 
         <div class="row">
             <div class="col">
-                <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
-                    <div class="card-header">Maintenances</div>
-                    <div class="card-body">
-                        @if(count($car->maintenances) !== 0)
-                            <h4 class="card-title">Total: {{count($car->maintenances)}} @if(count($car->maintenances))@endif</h4>
-                            <p class="card-text">Latest: {{ $car->maintenances->first()->date}}</p>
-                        @else
-                            <p class="card-text">No recorded<br>maintenances!</p>
-                        @endif
+                <a href="{{route('maintenance.find', $car->id)}}">
+                    <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
+                        <div class="card-header">Maintenances</div>
+                        <div class="card-body">
+                            @if(count($car->maintenances) !== 0)
+                                <h4 class="card-title">Total: {{count($car->maintenances)}} @if(count($car->maintenances))@endif</h4>
+                                <p class="card-text">Latest: {{ $car->maintenances->first()->date}}</p>
+                            @else
+                                <p class="card-text">No recorded<br>maintenances!</p>
+                            @endif
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col">
                 <a href="{{route('insurance.find', $car->id)}}">
