@@ -176,21 +176,19 @@
                 </div>
             </div>
             <div class="col">
+            <a href="{{route('tax.find', $car->id)}}">
                 <div class=" card text-white bg-primary mb-3" style="max-width: 40rem; ">
                     <div class="card-header">Taxes</div>
-                    <div class="card-body">
-                        @if(count($car->taxes) !== 0)
-                            <h4 class="card-title">Total: {{count($car->taxes)}} @if(count($car->taxes))@endif</h4>
-                            <p class="card-text">Latest: {{$car->taxes->first()->date}}</p>
-                        @else
-                            <p class="card-text">No recorded<br>taxes!</p>
-                        @endif
+                        <div class="card-body">
+                            @if(count($car->taxes) !== 0)
+                                <h4 class="card-title">Total: {{count($car->taxes)}} @if(count($car->taxes))@endif</h4>
+                                <p class="card-text">Latest: {{$car->taxes->first()->date}}</p>
+                            @else
+                                <p class="card-text">No recorded<br>taxes!</p>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <br>
-                <div class="col col-md-auto" id="settingsEditButton">
-                    <button class="btn btn-primary"><a class="button" href="/car/{{$car->id}}/taxes" >Edit</a></button>
-                </div>
+                </a>
             </div>
             <div class="col">
                 <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">

@@ -161,7 +161,7 @@ class CarController extends Controller
         $last_id = DB::table('taxes')->where('car_id',$id)->latest('id')->first()->id;
         $tax = new Tax();
 
-        $this->authorize('create', $tax);      
+        $this->authorize('create', [$car, $tax]);      
         DB::transaction(function() use($request, $tax, $last_id){
         $tax->car_id = $id;
 

@@ -26,11 +26,11 @@ Route::resource('driver', 'DriverController');
 
 // Car
 Route::resource('car', 'CarController');
-Route::get('car/{id}/taxes', 'CarController@showCarTaxes');
-Route::get('car/{car_id}/taxes/tax/{id}', 'CarController@showTax');
-Route::get('car/{id}/taxes/edit', 'CarController@showEditCarTaxes');
-Route::get('car/{id}/taxes/add', 'CarController@showAddTaxForm');
-Route::post('car/{id}/taxes', 'CarController@addTax');
+
+// Tax
+Route::get('car/{id}/taxes', 'TaxController@index')->name('tax.find');
+Route::get('car/{id}/maintenances/create', 'TaxController@create')->name('tax.create'); 
+Route::post('car/{id}/maintenances/store', 'TaxController@store')->name('tax.store'); 
 
 // CarDriver
 Route::resource('cardriver', 'CarDriverController');
