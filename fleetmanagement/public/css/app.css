@@ -14,34 +14,6 @@
   color: white;
 }
 
-#carSettingsTitle h1{
-  left: 0;
-  line-height: 200px;
-  margin-top: -400px;
-  margin-bottom: 100rem;
-  position: absolute;
-  text-align: center;
-  top: 50%;
-  width: 100%;
-}
-
-#settingsEditButton a{
-  color: white;
-}
-
-#settingsEditButton{
-  margin-top: 5rem;
-  margin: 0;
-  position: absolute;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-
-#carCards{
-  margin-top: 10rem;
-}
-
 #tax_button a{
   color: white;
 }
