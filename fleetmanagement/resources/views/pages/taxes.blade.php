@@ -18,6 +18,7 @@
         </div>
     </div>
     <br>
+    @if(count($car->taxes) !== 0)
     <div class="row form-group">
         <div class="col-md-2"></div>
         <div class="col-md-8">
@@ -53,6 +54,43 @@
         </div>
     </div>
     <br>
+    @else
+    <div class="row form-group">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <h5><strong>Date of the most recent tax: </strong> N/A</h5>
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+        <h5><strong>Expiration date of the tax: </strong>N/A</h5>
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+        <h5><strong>Tax value:</strong>N/A</h5>
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+        <h5><strong>File:</strong> N/A</h5>
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+        <h5><strong>Observations: </strong>N/A</h5>
+        </div>
+    </div>
+    <br>
+    @endif
 
     <table class="table table-hover">
         <thead>
