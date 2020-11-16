@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Car;
 use App\Tax;
 
+use DateTime;
 
 class TaxController extends Controller
 {
@@ -16,10 +17,21 @@ class TaxController extends Controller
      */
     public function index($id)
     {
-        $taxes = Tax::get()->where('car_id', '=', $id)->sortByDesc('date');
-        return view('pages.taxes', ['car' => Car::find($id),
-                                            'taxes' => $taxes]);
 
+        $taxes = Tax::get()->where('car_id', '=', $id)->sortByDesc('date');
+        $activeTax = $taxes->first();
+                                    
+        $yellowAlert = Car::find($id)->yellow_alert ?? 30;
+        $redAlert = Car::find($id)->red_alert ?? 15;
+
+        $activeDaysLeft = (new DateTime($activeTax->expiration_date ?? now()))->diff(now())->format('%a');
+
+        return view('pages.taxes', ['car' => Car::find($id), 
+        'taxes' => $taxes, 
+        'activeTax' => $activeTax, 
+        'activeDaysLeft' => $activeDaysLeft,
+        'yellowAlert' => $yellowAlert, 
+        'redAlert' => $redAlert]);
     }
     /**
      * Show the form for creating a new resource.
