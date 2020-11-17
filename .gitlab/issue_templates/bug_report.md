@@ -27,3 +27,17 @@ logs, and code as it's very hard to read otherwise.)
 # Possible fixes
 
 (If you can, link to the line of code that might be responsible for the problem)
+
+# Altered Acceptance test
+(Please provide a link to the )
+
+(Please describe the acceptance test that will fix this bug, see example)
+
+```gherkin
+Bugfix: Something doesn't work
+
+  # Describe modified ac that fixes the bug
+  Scenario: Given that ...
+    When I ...
+    Then ...
+```

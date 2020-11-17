@@ -1,17 +1,92 @@
 stages:
-  - build
+  - build-test
+  - lint
+  - deploy-staging
+  - deploy-prod
 
-# This file is a template, and might need editing before it works on your project.
-docker-build-master:
+docker-build-test:
   # Official docker image.
+  stage: build-test
   image: docker:latest
-  stage: build
   services:
     - docker:dind
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - cd ./skeleton
+    # Setup docker-compose
+    - cd ./fleetmanagement
     - apk add --no-cache docker-compose
+    # Build containers
+    - echo "Starting build..."
     - docker-compose build
     - docker-compose up  -d 
+    # Composer and DB setup
+    - echo "Running Docker exec commands..."
+    - docker-compose exec -T app bash -c "composer install"
+    - docker-compose exec -T app bash -c "php artisan config:cache"
+    - docker-compose exec -T app bash -c "php artisan db:seed"
+    # Run php artisan tests
+    - echo "Running tests..."
+    - docker-compose exec -T app bash -c "vendor/bin/phpunit ./tests"
+  allow_failure: false
+  artifacts:
+    expire_in: 60 minutes
+
+php-linter:
+  stage: lint
+  image: pipelinecomponents/php-linter:latest
+  script:
+    - cd ./fleetmanagement
+    - echo "Running linter..."
+    - parallel-lint --colors .
+  allow_failure: true
+  artifacts:
+    expire_in: 60 minutes
+
+deploy-staging:
+  stage: deploy-staging
+  image: alpine
+  before_script:
+    - apk add openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$STAGING_SSH_ACCESS_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - echo "Deploying to staging..."
+    - ssh -o StrictHostKeyChecking=no $STAGING_ACCESS_URL "bash -s" < ./deploy-script.sh \
+      "staging" \
+      $GITLAB_ACCESS_USER \
+      $GITLAB_ACCESS_TOKEN \
+      $STAGING_DB_HOST \
+      $STAGING_DB_NAME \
+      $STAGING_DB_ROOT_USER \
+      $STAGING_DB_ROOT_PWD \
+      $STAGING_PGADMIN_USER \
+      $STAGING_PGADMIN_PWD
+  only:
+    - staging
+
+deploy-prod:
+  stage: deploy-prod
+  image: alpine
+  before_script:
+    - apk add openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$PROD_SSH_ACCESS_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - echo "Deploying to staging..."
+    - ssh -o StrictHostKeyChecking=no $PROD_ACCESS_URL "bash -s" < ./deploy-script.sh \
+      "production" \
+      $GITLAB_ACCESS_USER \
+      $GITLAB_ACCESS_TOKEN \
+      $PROD_DB_HOST \
+      $PROD_DB_NAME \
+      $PROD_DB_ROOT_USER \
+      $PROD_DB_ROOT_PWD \
+      $PROD_PGADMIN_USER \
+      $PROD_PGADMIN_PWD
+  only:
+    - master
