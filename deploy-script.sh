@@ -71,7 +71,6 @@ then
 fi
 
 echo "Cloning new repo"
-git clone --single-branch --branch feature/development https://$GITLAB_ACCESS_USER:$GITLAB_ACCESS_TOKEN@gitlab.com/feup-tbs/ldso2021/t1g3.git
 
 # Decide what branch to pull
 if [[ "$DEPLOY_VERSION" == "staging" ]]; 
