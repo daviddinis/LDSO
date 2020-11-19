@@ -50,6 +50,15 @@ Route::get('car/{car_id}/maintenances/{maintenance_id}/edit', 'MaintenanceContro
 Route::put('car/{car_id}/maintenances/{maintenance_id}/update', 'MaintenanceController@update')->name('maintenance.update');
 Route::delete('car/{car_id}/maintenances/{maintenance_id}/delete', 'MaintenanceController@destroy')->name('maintenance.destroy');
 
+// Inspection
+Route::get('car/{id}/inspections', 'InspectionController@index')->name('inspection.find'); // id for car's id
+Route::get('car/{id}/inspections/create', 'InspectionController@create')->name('inspection.create'); // id for car's id
+Route::post('car/{id}/inspections/store', 'InspectionController@store')->name('inspection.store'); // id for car's id
+Route::get('car/{car_id}/inspections/{inspection_id}/edit', 'InspectionController@edit')->name('inspection.edit');
+Route::put('car/{car_id}/inspections/{inspection_id}/update', 'InspectionController@update')->name('inspection.update');
+Route::delete('car/{car_id}/inspections/{inspection_id}/delete', 'InspectionController@destroy')->name('inspection.destroy');
+
+
 // Route::get('/debug-sentry', function () {
 //     throw new Exception('My first Sentry error!');
 // });
