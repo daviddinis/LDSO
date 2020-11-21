@@ -24,7 +24,14 @@ class TaxController extends Controller
         $yellowAlert = Car::find($id)->yellow_alert ?? 30;
         $redAlert = Car::find($id)->red_alert ?? 15;
 
-        $activeDaysLeft = (new DateTime($activeTax->expiration_date ?? now()))->diff(now())->format('%a');
+        if((new DateTime($activeTax->expiration_date ?? now())) >= (new DateTime()) ){
+            $activeDaysLeft = (new DateTime($activeTax->expiration_date ?? now()) )->diff((new DateTime()))->format('%a') + 1;
+        }
+        else{
+            $activeDaysLeft = -(new DateTime($activeTax->expiration_date ?? now()) )->diff((new DateTime()))->format('%a');
+        }
+
+        
 
         return view('pages.taxes', ['car' => Car::find($id), 
         'taxes' => $taxes, 
