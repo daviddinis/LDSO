@@ -5,7 +5,7 @@
     @else
 <tr class="">
     @endif
-    <th scope="row">{{ $car->make }} {{ $car->model }}</th>
+    <th scope="row"><a href="/car/{{ $car->id }}">{{ $car->make }} {{ $car->model }}</a></th>
     <td>{{ $car->license_plate }}</td>
     <td>
         @if($car->issues() == 0)
