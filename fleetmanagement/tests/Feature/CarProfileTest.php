@@ -76,7 +76,7 @@ class CarProfileTest extends TestCase
     {
         // Gives more descriptive errors
         $this->withoutExceptionHandling();
-=
+        
         // id 1 is johndoe@fe.up.pt
         $user1 = User::factory()->make(['id' => 1, 'company_id' => 1]);
         
