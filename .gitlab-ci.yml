@@ -12,6 +12,7 @@ docker-build-test:
     - docker:dind
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - apt-get install zip unzip
   script:
     # Setup docker-compose
     - cd ./fleetmanagement
@@ -27,10 +28,12 @@ docker-build-test:
     - docker-compose exec -T app bash -c "php artisan db:seed"
     # Run php artisan tests
     - echo "Running tests..."
-    - docker-compose exec -T app bash -c "vendor/bin/phpunit ./tests"
+    - docker-compose exec -T app bash -c "vendor/bin/phpunit --coverage-html /reports"
+    - zip -r reports/ coverage-report.zip
   allow_failure: false
   artifacts:
     expire_in: 60 minutes
+    paths: coverage-report.zip
 
 php-linter:
   stage: lint
