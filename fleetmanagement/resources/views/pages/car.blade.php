@@ -180,27 +180,30 @@ if(date($dates->end_date) < date('Y-m-d')) return '<span class="badge badge-pill
                                 @endif
                             </div>
                         </div>
-                    </a>
-                </div>
-                <div class="col">
-                    <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
-                        <div class="card-header">Taxes</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+            <a href="{{route('tax.find', $car->id)}}">
+                <div class=" card text-white bg-primary mb-3" style="max-width: 40rem; ">
+                    <div class="card-header">Taxes</div>
                         <div class="card-body">
                             @if(count($car->taxes) !== 0)
-                            <h4 class="card-title">Total: {{count($car->taxes)}} @if(count($car->taxes))@endif</h4>
-                            <p class="card-text">Latest: {{$car->taxes->first()->date}}</p>
+                                <h4 class="card-title">Total: {{count($car->taxes)}} @if(count($car->taxes))@endif</h4>
+                                <p class="card-text">Latest: {{$car->taxes->first()->date}}</p>
                             @else
-                            <p class="card-text">No recorded<br>taxes!</p>
+                                <p class="card-text">No recorded<br>taxes!</p>
                             @endif
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <a href="{{route('inspection.find', $car->id)}}">
-                        <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
-                            <div class="card-header">Inspections</div>
-                            <div class="card-body">
-                                @if(count($car->inspections) !== 0)
+                </a>
+            </div>
+            <div class="col">
+                <a href="{{route('inspection.find', $car->id)}}">
+                    <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
+                        <div class="card-header">Inspections</div>
+                        <div class="card-body">
+                            @if(count($car->inspections) !== 0)
                                 <h4 class="card-title">Total: {{count($car->inspections)}} @if(count($car->inspections))@endif</h4>
                                 <p class="card-text">Latest: {{$car->inspections->first()->date}}</p>
                                 @else
