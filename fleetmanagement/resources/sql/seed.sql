@@ -217,7 +217,7 @@ INSERT INTO drivers (name, email, drivers_license, id_card, company_id) VALUES (
 INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-01', '2020-10-06', 1, 1);
 INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-01', '2020-11-02', 2, 2);
 INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2019-01-01', '2019-12-02', 3, 3);
-INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2018-05-01', '2018-07-02', 4, 4);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2018-05-01', '2018-07-02', 1, 4);
 INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-01', '2020-12-31', 5, 5);
 INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2019-12-31', '2020-05-02', 6, 6);
 INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-07-01', '2020-01-02', 7, 7);
