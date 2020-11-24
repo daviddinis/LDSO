@@ -33,7 +33,8 @@ docker-build-test:
   allow_failure: false
   artifacts:
     expire_in: 60 minutes
-    paths: coverage-report.zip
+    paths:
+        - coverage-report.zip
 
 php-linter:
   stage: lint
