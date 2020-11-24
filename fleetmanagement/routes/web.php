@@ -31,6 +31,15 @@ Route::post('car/{id}/settings', 'CarController@editAlerts')->name('editAlerts')
 // Car
 Route::resource('car', 'CarController');
 
+// Tax
+Route::get('car/{id}/taxes', 'TaxController@index')->name('tax.find');
+Route::get('car/{car_id}/taxes/tax/{id}', 'TaxController@showTax');
+Route::get('car/{id}/taxes/create', 'TaxController@create')->name('tax.create'); 
+Route::post('car/{id}/taxes/store', 'TaxController@store')->name('tax.store'); 
+Route::get('car/{car_id}/taxes/{tax_id}/edit', 'TaxController@edit')->name('tax.edit');
+Route::put('car/{car_id}/taxes/{tax_id}/update', 'TaxController@update')->name('tax.update');
+Route::delete('car/{car_id}/taxes/{tax_id}/delete', 'TaxController@destroy')->name('tax.destroy');
+
 // CarDriver
 Route::resource('cardriver', 'CarDriverController');
 
