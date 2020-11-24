@@ -193,17 +193,19 @@
                 </div>
             </div>
             <div class="col">
-                <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
-                    <div class="card-header">Inspections</div>
-                    <div class="card-body">
-                        @if(count($car->inspections) !== 0)
-                            <h4 class="card-title">Total: {{count($car->inspections)}} @if(count($car->inspections))@endif</h4>
-                            <p class="card-text">Latest: {{$car->inspections->first()->date}}</p>
-                        @else
-                            <p class="card-text">No recorded<br>inspections!</p>
-                        @endif
+                <a href="{{route('inspection.find', $car->id)}}">
+                    <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
+                        <div class="card-header">Inspections</div>
+                        <div class="card-body">
+                            @if(count($car->inspections) !== 0)
+                                <h4 class="card-title">Total: {{count($car->inspections)}} @if(count($car->inspections))@endif</h4>
+                                <p class="card-text">Latest: {{$car->inspections->first()->date}}</p>
+                            @else
+                                <p class="card-text">No recorded<br>inspections!</p>
+                            @endif
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
 
