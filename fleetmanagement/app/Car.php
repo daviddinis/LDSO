@@ -4,9 +4,14 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Car extends Model
 {
+    use HasFactory;
+
+
     public $timestamps  = false;
 
     public function company() {
