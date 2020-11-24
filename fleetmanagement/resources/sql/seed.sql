@@ -176,11 +176,11 @@ INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, 
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-06-01', 20000, 2000.00, '2020-07-01', NULL, 'Fix break lights', 3);
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-07-01', 20000, 2000.00, '2020-08-01', NULL, 'Steering', 3);
 
-INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 1);
 INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 2);
-INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 3);
-INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 4);
-INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 5);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 2);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 2);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 2);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 2);
 INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 6);
 INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 7);
 INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 8);
@@ -188,9 +188,9 @@ INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('202
 
 
 
-INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 1);
 INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 2);
-INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 3);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 2);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 2);
 INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 4);
 INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 5);
 INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 7);

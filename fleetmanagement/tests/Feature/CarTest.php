@@ -120,7 +120,7 @@ class CarTest extends TestCase
          $numberOfCarsForUser = $response->getOriginalContent()->getData()['cars'];
 
          // Delete a car
-         $delResponse = $this->actingAs($user)->delete(route('car.destroy', 1));
+         $delResponse = $this->actingAs($user)->delete(route('car.destroy', 27));
 
          // Count cars available again
          $delResponse = $this->actingAs($user)->get('/car');
