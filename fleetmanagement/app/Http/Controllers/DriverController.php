@@ -53,7 +53,7 @@ class DriverController extends Controller
         $driver = new Driver;
         $driver->name = $request->input('name');
         $driver->email = $request->input('email');
-        $driver->drivers_license = $request->input('license');
+        $driver->drivers_license = $request->input('drivers_license');
         $driver->company_id = User::find(Auth::user()->id)->company_id;
         $driver->id_card = $request->input('id_card');
         $driver->save();

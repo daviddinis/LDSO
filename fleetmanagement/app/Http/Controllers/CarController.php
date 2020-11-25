@@ -11,6 +11,7 @@ use App\Car;
 use App\Company;
 use App\Driver;
 use App\User;
+use App\Tax;
 
 class CarController extends Controller
 {
@@ -206,4 +207,5 @@ class CarController extends Controller
     public function assign(Request $request, $id)
     {
     }
+
 }

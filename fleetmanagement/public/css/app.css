@@ -9,3 +9,12 @@
   position: relative;
   font-size: 17px;
 }
+
+#carSettingsButton a{
+  color: white;
+}
+
+#tax_button a{
+  color: white;
+}
+
