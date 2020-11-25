@@ -32,7 +32,7 @@ docker-build-test:
   artifacts:
     expire_in: 60 minutes
     paths:
-        - ./fleetmanagement/reports
+        - reports/
 
 php-linter:
   stage: lint
