@@ -85,7 +85,7 @@ class CarController extends Controller
     {
         if (!Auth::check()) return redirect('/login');
         $car = Car::find($id);
-        return view('pages.car', ['car' => $car, 'drivers' => Driver::all()]);
+        return view('pages.car', array_merge(['car' => $car, 'drivers' => Driver::all()], $this->getEventExpirationDates($car) ) );
     }
 
     /**
@@ -129,6 +129,13 @@ class CarController extends Controller
         if (!Auth::check()) return redirect('/login');
         $car = Car::findOrFail($id);
 
+        return view('pages.carSettings', array_merge([
+            'car' => $car] , $this->getEventExpirationDates($car)
+        ));
+    }
+
+    private function getEventExpirationDates($car){
+
         $tax = $this->getCurrentTax($car);
         $taxDate = $tax != null ? $tax->expiration_date : null;
 
@@ -141,11 +148,10 @@ class CarController extends Controller
         $maintenance = $this->getCurrentMaintenance($car);
         $maintenanceDate = $maintenance != null ? $maintenance->date : null;
 
-        return view('pages.carSettings', [
-            'car' => $car, 'taxDate' => $taxDate,
+        return ['taxDate' => $taxDate,
             'inspectionDate' => $inspectionDate, 'insuranceDate' => $insuranceDate,
             'maintenanceDate' => $maintenanceDate
-        ]);
+        ];
     }
 
     //updates the car alert settings?
