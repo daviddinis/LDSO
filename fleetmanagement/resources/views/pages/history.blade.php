@@ -10,7 +10,7 @@
                 @foreach ($cars as $car)
                     <div class="card mb-3 w-100">
                     <div class="card-header">
-                        <a href="/car/{{ $car->id }}">{{ $car->make }} {{ $car->model }}</a>
+                        <a href="/car/{{ $car->id }}">{{ $car->make }} {{ $car->model }} {{ $car->license_plate }}</a>
                     </div>
                     <div class="card-body">
                     <table class="table table-hover">
