@@ -6,7 +6,7 @@
 
 @section('content')
 
-<section id="history">
+<section id="history" class="d-flex flex-wrap justify-content-around align-content-around mt-5">
                 @foreach ($cars as $car)
                     <div class="card mb-3 w-100">
                     <div class="card-header">
