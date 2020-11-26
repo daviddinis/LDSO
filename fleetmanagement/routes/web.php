@@ -28,6 +28,9 @@ Route::resource('driver', 'DriverController');
 Route::get('car/{id}/settings', 'CarController@showManageAlerts')->name('alerts');
 Route::post('car/{id}/settings', 'CarController@editAlerts')->name('editAlerts');
 
+//History
+Route::resource('history', 'HistoryController');
+
 // Car
 Route::resource('car', 'CarController');
 

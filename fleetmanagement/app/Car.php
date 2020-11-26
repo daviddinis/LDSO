@@ -49,6 +49,5 @@ class Car extends Model
         else{
             return $driver[0]['name'];
         }
-    }
-    
+    }    
 }
