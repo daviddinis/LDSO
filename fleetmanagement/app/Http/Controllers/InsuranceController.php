@@ -23,11 +23,13 @@ class InsuranceController extends Controller
         $yellowAlert = Car::find($id)->yellow_alert ?? 30;
         $redAlert = Car::find($id)->red_alert ?? 15;
 
-        $activeDaysLeft = (new DateTime($activeInsurance->expiration_date ?? now()))->diff(now())->format('%a');
+        //$activeDaysLeft = (new DateTime($activeInsurance->expiration_date ?? now()))->diff(now())->format('%a');
 
-        if($activeInsurance != null)
-        { 
-            $activeDaysLeft *= $activeInsurance->expiration_date < now() ? -1 : 1;
+        if((new DateTime($activeInsurance->expiration_date ?? now())) >= (new DateTime()) ){
+            $activeDaysLeft = (new DateTime($activeInsurance->expiration_date ?? now()) )->diff((new DateTime()))->format('%a') + 1;
+        }
+        else{
+            $activeDaysLeft = -(new DateTime($activeInsurance->expiration_date ?? now()) )->diff((new DateTime()))->format('%a');
         }
 
         return view('pages.insurances', ['car' => Car::find($id), 
