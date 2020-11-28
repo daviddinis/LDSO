@@ -34,6 +34,22 @@ class LaravelDuskTest extends DuskTestCase
                 });
     }
 
+    public function testUserSignup()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('http://ifleet.dusk.test/')
+                    ->click('div.row:nth-child(9) > div:nth-child(2) > h6:nth-child(1) > a:nth-child(1)')
+                    ->assertSee('Register')
+                    ->value('#name', 'testname')
+                    ->value('#company_name', 'testcompany')
+                    ->value('#email', 'testmail@mail.com')
+                    ->value('#password', '12345678')
+                    ->value('#password_confirmation', '12345678')
+                    ->click('.btn')
+                    ->assertSee('testname')
+                    ->deleteCookie('app_session_cookie');
+                });
+    }
 
     public function testAddCar()
     { 
