@@ -33,7 +33,7 @@ docker-build-test-generate:
   artifacts:
     expire_in: 60 minutes
     paths:
-      - ./fleetmanagement/
+      - ./fleetmanagement/swagger.json
 
 php-linter:
   stage: lint
