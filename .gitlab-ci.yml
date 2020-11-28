@@ -4,7 +4,7 @@ stages:
   - deploy-staging
   - deploy-prod
 
-docker-build-test:
+docker-build-test-generate:
   # Official docker image.
   stage: build-test
   image: docker:latest
@@ -28,9 +28,12 @@ docker-build-test:
     # Run php artisan tests
     - echo "Running tests..."
     - docker-compose exec -T app bash -c "vendor/bin/phpunit ./tests"
+    - docker-compose exec -T app bash -c "php artisan laravel-swagger:generate > swagger.json"
   allow_failure: false
   artifacts:
     expire_in: 60 minutes
+    paths:
+      - ./fleetmanagement/
 
 php-linter:
   stage: lint
