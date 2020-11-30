@@ -11,4 +11,8 @@ class CarDriver extends Model
     public $timestamps  = false;
 
 
+    public function driver()
+    {
+       return $this->belongsTo('App\Driver');
+    }
 }
