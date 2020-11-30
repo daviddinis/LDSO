@@ -42,6 +42,7 @@ Route::delete('car/{car_id}/taxes/{tax_id}/delete', 'TaxController@destroy')->na
 
 // CarDriver
 Route::resource('cardriver', 'CarDriverController');
+Route::get('car/{id}/history', 'CarDriverController@showDrivers');
 
 // Insurance
 Route::get('car/{id}/insurances', 'InsuranceController@index')->name('insurance.find'); 
