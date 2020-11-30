@@ -5,52 +5,49 @@
 @section('content')
 
 @if ($errors->any())
-<br>
-<div class="alert alert-dismissible alert-danger">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <h2>Error</h2>
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
+    <br>
+    <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h2>Error</h2>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
 @endif
 
 
 @php
-// Function to add all costs from each category (tax, inspection, etc.)
-function sum_costs($arr)
-{
-$total = 0;
-foreach ($arr as $obj)
-{
-$total += $obj['value'];
-}
-return $total;
-}
-
-// Function to return the if the car is in use/was last used by
-function last_used_by($car)
-{
-$last_driver = $car->drivers->first();
-if($last_driver != null)
-{
-// there is a driver
-$dates = $last_driver->pivot;
-
-if($dates->end_date !== null)
-{
-if(date($dates->end_date) < date('Y-m-d')) return '<span class="badge badge-pill badge-warning">Last used by ' . $last_driver->name . ' between ' . $dates->start_date . ' and ' . $dates->end_date . '</span>';
-    else return '<span class="badge badge-pill badge-danger">In use by ' . $last_driver->name . ' from ' . $dates->start_date . ' until ' . $dates->end_date . "</span>";
+    // Function to add all costs from each category (tax, inspection, etc.)
+    function sum_costs($arr)
+    {
+        $total = 0;
+        foreach ($arr as $obj)
+        {
+            $total += $obj['value'];
+        }
+        return $total;
     }
-    else return '<span class="badge badge-pill badge-danger">In use by ' . $last_driver->name . ' from ' . $dates->start_date . '</span>';
-    }
-    else return '<span class="badge badge-pill badge-success">Car is available!</span>';
-    }
-    @endphp
 
+    // Function to return the if the car is in use/was last used by
+    function last_used_by($car)
+    {
+        $last_driver = $car->carDrivers->sortByDesc('end_date')->first();
+        if($last_driver != null)
+        {
+            // there is a driver
 
+            if($last_driver->end_date !== null)
+            {
+                if(date($last_driver->end_date) < date('Y-m-d')) return '<div class="col-auto"><span class="badge badge-pill badge-success">Car is available!</span></div><div class="col-auto"><span class="badge badge-pill badge-warning">Last used by ' . $last_driver->driver->name . ' between ' . $last_driver->start_date . ' and ' . $last_driver->end_date . '</span></div>';
+                else return '<div class="col-auto"><span class="badge badge-pill badge-danger">In use by ' . $last_driver->driver->name . ' from ' . $last_driver->start_date . ' until ' . $last_driver->end_date . "</span></div>";
+            }
+            else return '<div class="col-auto"><span class="badge badge-pill badge-danger">In use by ' . $last_driver->driver->name . ' from ' . $last_driver->start_date . '</span></div>';
+        }
+        else return '<div class="col-auto"><span class="badge badge-pill badge-success">Car is available!</span></div>';
+    }
+ @endphp
     <div class="jumbotron">
         <div class="container">
             <div class="row">
@@ -73,30 +70,29 @@ if(date($dates->end_date) < date('Y-m-d')) return '<span class="badge badge-pill
         <div class="container">
 
             <div class="row" style="margin-top:5%;">
-                <div class="col">
                     <h4>
                         @php echo last_used_by($car); @endphp
-                        <a class="btn btn-primary" href="/car/{{$car->id}}/history">view all</a>
-                    </h4>
-                   
-                </div>
+                    </h4>                   
                 <!-- TODO does nothing currently -->
             </div>
 
-            <div class="row" style="margin-bottom: 5%;">
-                <div class="col">
-                    @if (strpos(last_used_by($car), 'available'))
+        <div class="row" style="margin-bottom: 5%;">
+            <div class="col-auto">
+                @if (strpos(last_used_by($car), 'available') || strpos(last_used_by($car), 'Last used by'))
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assignDriverModal">Assign new driver</button>
-                    @else
-                    <form action="{{route('cardriver.destroy', $car->drivers->first()->pivot->id)}}" method="POST">
+                @else
+                    <form action="{{route('cardriver.destroy', $car->carDrivers->sortByDesc('end_date')->first())}}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
                         <button type="submit" class="btn btn-danger">Remove driver</button>
-
                     </form>
-                    @endif
-                </div>
+                @endif
             </div>
+            <div class="col-auto">
+                <a class="btn btn-primary" href="/car/{{$car->id}}/history">Driver history</a>
+            </div>
+        </div>
+    </div>
 
             <!-- Modal -->
             <form method="POST" action="{{route('cardriver.store')}}">
@@ -158,10 +154,10 @@ if(date($dates->end_date) < date('Y-m-d')) return '<span class="badge badge-pill
                             <div class="card-header">Maintenances</div>
                             <div class="card-body">
                                 @if(count($car->maintenances) !== 0)
-                                <h4 class="card-title">Total: {{count($car->maintenances)}} @if(count($car->maintenances))@endif</h4>
-                                <p class="card-text">Latest: {{ $car->maintenances->first()->date}}</p>
+                                    <h4 class="card-title">Total: {{count($car->maintenances)}} @if(count($car->maintenances))@endif</h4>
+                                    <p class="card-text">Latest: {{ $car->maintenances->first()->date}}</p>
                                 @else
-                                <p class="card-text">No recorded<br>maintenances!</p>
+                                    <p class="card-text">No recorded<br>maintenances!</p>
                                 @endif
                             </div>
                         </div>
@@ -173,62 +169,61 @@ if(date($dates->end_date) < date('Y-m-d')) return '<span class="badge badge-pill
                             <div class="card-header">Insurance</div>
                             <div class="card-body">
                                 @if(count($car->insurances) !== 0)
-                                <h4 class="card-title">Total: {{count($car->insurances)}} @if(count($car->insurances))@endif</h4>
-                                <p class="card-text">Latest: {{$car->insurances->first()->date}}</p>
+                                    <h4 class="card-title">Total: {{count($car->insurances)}} @if(count($car->insurances))@endif</h4>
+                                    <p class="card-text">Latest: {{$car->insurances->first()->date}}</p>
                                 @else
-                                <p class="card-text">No recorded<br>insurances!</p>
+                                    <p class="card-text">No recorded<br>insurances!</p>
                                 @endif
                             </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col">
-            <a href="{{route('tax.find', $car->id)}}">
-                <div class=" card text-white bg-primary mb-3" style="max-width: 40rem; ">
-                    <div class="card-header">Taxes</div>
-                        <div class="card-body">
-                            @if(count($car->taxes) !== 0)
-                                <h4 class="card-title">Total: {{count($car->taxes)}} @if(count($car->taxes))@endif</h4>
-                                <p class="card-text">Latest: {{$car->taxes->first()->date}}</p>
-                            @else
-                                <p class="card-text">No recorded<br>taxes!</p>
-                            @endif
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col">
-                <a href="{{route('inspection.find', $car->id)}}">
-                    <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
-                        <div class="card-header">Inspections</div>
-                        <div class="card-body">
-                            @if(count($car->inspections) !== 0)
-                                <h4 class="card-title">Total: {{count($car->inspections)}} @if(count($car->inspections))@endif</h4>
-                                <p class="card-text">Latest: {{$car->inspections->first()->date}}</p>
+                    </a>
+                </div>
+                <div class="col">
+                <a href="{{route('tax.find', $car->id)}}">
+                    <div class=" card text-white bg-primary mb-3" style="max-width: 40rem; ">
+                        <div class="card-header">Taxes</div>
+                            <div class="card-body">
+                                @if(count($car->taxes) !== 0)
+                                    <h4 class="card-title">Total: {{count($car->taxes)}} @if(count($car->taxes))@endif</h4>
+                                    <p class="card-text">Latest: {{$car->taxes->first()->date}}</p>
                                 @else
-                                <p class="card-text">No recorded<br>inspections!</p>
+                                    <p class="card-text">No recorded<br>taxes!</p>
+                                @endif
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="{{route('inspection.find', $car->id)}}">
+                        <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
+                            <div class="card-header">Inspections</div>
+                            <div class="card-body">
+                                @if(count($car->inspections) !== 0)
+                                    <h4 class="card-title">Total: {{count($car->inspections)}} @if(count($car->inspections))@endif</h4>
+                                    <p class="card-text">Latest: {{$car->inspections->first()->date}}</p>
+                                @else
+                                    <p class="card-text">No recorded<br>inspections!</p>
                                 @endif
                             </div>
                         </div>
                     </a>
                 </div>
             </div>
-
+    
             <div class="row justify-content-end" style="margin-top:20%;">
-
+    
                 <div class="col col-md-auto">
                     <a href="{{route('alerts', ['id' => $car->id])}}" class="btn btn-primary">Settings</a>
-
-
+    
+    
                 </div>
                 <!-- TODO does not work currently -->
                 <div class="col col-md-auto">
                     <button type="button" class="btn btn-danger">Delete car</button>
                 </div>
-
+    
             </div>
-
+    
         </div>
     </div>
     @endsection
