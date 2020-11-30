@@ -33,18 +33,17 @@
     // Function to return the if the car is in use/was last used by
     function last_used_by($car)
     {
-        $last_driver = $car->drivers->first();
+        $last_driver = $car->carDrivers->sortByDesc('end_date')->first();
         if($last_driver != null)
         {
             // there is a driver
-            $dates = $last_driver->pivot;
 
-            if($dates->end_date !== null)
+            if($last_driver->end_date !== null)
             {
-                if(date($dates->end_date) < date('Y-m-d')) return '<span class="badge badge-pill badge-warning">Last used by ' . $last_driver->name . ' between ' . $dates->start_date . ' and ' . $dates->end_date . '</span>';
-                else return '<span class="badge badge-pill badge-danger">In use by ' . $last_driver->name . ' from ' . $dates->start_date . ' until ' . $dates->end_date . "</span>";
+                if(date($last_driver->end_date) < date('Y-m-d')) return '<span class="badge badge-pill badge-success">Car is available!</span><span class="badge badge-pill badge-warning">Last used by ' . $last_driver->driver->name . ' between ' . $last_driver->start_date . ' and ' . $last_driver->end_date . '</span>';
+                else return '<span class="badge badge-pill badge-danger">In use by ' . $last_driver->driver->name . ' from ' . $last_driver->start_date . ' until ' . $last_driver->end_date . "</span>";
             }
-            else return '<span class="badge badge-pill badge-danger">In use by ' . $last_driver->name . ' from ' . $dates->start_date . '</span>';
+            else return '<span class="badge badge-pill badge-danger">In use by ' . $last_driver->driver->name . ' from ' . $last_driver->start_date . '</span>';
         }
         else return '<span class="badge badge-pill badge-success">Car is available!</span>';
     }
@@ -78,15 +77,15 @@
                 @php echo last_used_by($car); @endphp
             </h4>
             </div>
-            <!-- TODO does nothing currently -->
+
         </div>
 
         <div class="row" style="margin-bottom: 5%;">
             <div class="col">
-                @if (strpos(last_used_by($car), 'available'))
+                @if (strpos(last_used_by($car), 'available') || strpos(last_used_by($car), 'Last used by'))
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assignDriverModal">Assign new driver</button>
                 @else
-                    <form action="{{route('cardriver.destroy', $car->drivers->first()->pivot->id)}}" method="POST">
+                    <form action="{{route('cardriver.destroy', $car->carDrivers->sortByDesc('end_date')->first())}}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
                         <button type="submit" class="btn btn-danger">Remove driver</button>

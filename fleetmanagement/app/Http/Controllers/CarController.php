@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Car;
 use App\Company;
 use App\Driver;
+use App\CarDriver;
 use App\User;
 use App\Tax;
 
@@ -58,9 +59,7 @@ class CarController extends Controller
 
         if ($request->hasFile('image')) {
             request()->validate([
-
                 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-
             ]);
             $imageName = $request->input('plate') . '.' . request()->image->getClientOriginalExtension();
             request()->image->move(public_path('img'), $imageName);
@@ -85,6 +84,7 @@ class CarController extends Controller
     {
         if (!Auth::check()) return redirect('/login');
         $car = Car::find($id);
+
         return view('pages.car', ['car' => $car, 'drivers' => Driver::all()]);
     }
 
