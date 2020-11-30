@@ -29,8 +29,3 @@ function enableListView() {
       enableListView()
     }
   }
-
-
-  //let tooglegridview = document.querySelectorAll('#gridViewToggle');
-  //if (tooglegridview != null)
-  //tooglegridview.addEventListener('click', gridViewToggle); 

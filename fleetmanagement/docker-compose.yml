@@ -32,4 +32,12 @@ services:
     depends_on:
       - db
     container_name: pgadmin
-    
+
+  selenium:
+    image: selenium/standalone-chrome:3.11.0-antimony
+    depends_on:
+      - app
+    links:
+      - app:ifleet.dusk.test
+    volumes:
+      - /dev/shm:/dev/shm
