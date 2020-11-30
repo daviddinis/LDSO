@@ -106,19 +106,10 @@ class CarDriverController extends Controller
 
     public function showDrivers($car_id){
         $car = Car::find($car_id);
-        $drivers = $car->drivers()->get();
+        $drivers = $car->drivers()->orderBy('end_date', 'DESC')->get();
 
         return view('pages.driverHistory')->with('drivers', $drivers)->with('car_id' , $car_id);
         
     }
 
-
-
-    public function driverChart($car_id){
-        $car = Car::find($car_id);
-        $drivers = $car->drivers()->get();
-
-        return view('pages.driverHistory')->with('drivers', $drivers)->with('car_id' , $car_id);
-        
-    }
 }
