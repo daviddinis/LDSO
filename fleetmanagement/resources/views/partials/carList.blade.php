@@ -9,7 +9,10 @@
         @else
         <span class="carBadge badge badge-danger badge-pill">{{$car->issues()}}</span>
         @endif</td>
-    <td>{{$car->currentDriver()}}</td>
+        {{-- TODO: fix the current driver display --}}
+    <td>@if(count($car->drivers) != null)
+            {{$car->drivers->sortBy('end_date')->first()->name}}
+        @else Available @endif</td>
     <th>
         <form style="float:right" method="post" action="{{route('car.destroy', $car->id)}}">
             {{ method_field('DELETE') }}
