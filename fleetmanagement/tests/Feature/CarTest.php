@@ -50,7 +50,7 @@ class CarTest extends TestCase
         $numberOfCarsForUser2 = $response2->getOriginalContent()->getData()['cars'];
 
         //See seed.sql for correct amount of cars per company
-        $this->assertCount(30, $numberOfCarsForUser1);
+        $this->assertCount(31, $numberOfCarsForUser1);
         $this->assertCount(5, $numberOfCarsForUser2);
 
         //$this->artisan('migrate:fresh');
