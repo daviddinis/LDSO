@@ -23,6 +23,8 @@
             <span class="badge badge-danger badge-pill">{{$car->issues()}}</span>
             @endif
         </li>
-        <li class="list-group-item">{{$car->currentDriver()}}</li>
+        <li class="list-group-item">@if(count($car->drivers) != null)
+            {{$car->drivers->sortBy('end_date')->first()->name}}
+        @else Available @endif</li>
     </ul>
 </div>
