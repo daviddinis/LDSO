@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\CarDriver;
+use App\Car;
 
 
 class CarDriverController extends Controller
@@ -102,4 +103,13 @@ class CarDriverController extends Controller
         CarDriver::destroy($id);
         return redirect()->route('car.show', $carId);
     }
+
+    public function showDrivers($car_id){
+        $car = Car::find($car_id);
+        $drivers = $car->drivers()->orderBy('end_date', 'DESC')->get();
+
+        return view('pages.driverHistory')->with('drivers', $drivers)->with('car_id' , $car_id);
+        
+    }
+
 }
