@@ -23,6 +23,7 @@ class HistoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         if (!Auth::check()) return redirect('/login');
@@ -32,12 +33,42 @@ class HistoryController extends Controller
         $inspections = Inspection::get();
         $taxes = Tax::get();
 
+        $history = [];
+        foreach ($maintenances as $maintenance){
+                array_push($history,$maintenance);
+        }
+        for ($i = 0; $i < sizeof($maintenances) ; $i++) {
+            $history[$i]->type = "maintenance";
+        }
+        foreach ($insurances as $insurance){
+            array_push($history,$insurance);
+        }
+        for ($i = 0; $i < sizeof($insurances) ; $i++) {
+            $history[$i+sizeof($maintenances)]->type = "insurance";
+        }
+        foreach ($inspections as $inspection){
+            array_push($history,$inspection);
+        }
+        for ($i = 0; $i < sizeof($inspections) ; $i++) {
+            $history[$i+sizeof($maintenances)+sizeof($insurances)]->type = "inspection";
+        }
+        foreach ($taxes as $tax){
+            array_push($history,$tax);
+        }
+        for ($i = 0; $i < sizeof($taxes) ; $i++) {
+            $history[$i+sizeof($maintenances)+sizeof($insurances)+sizeof($inspections)]->type = "tax";
+        }
+
+        array_sort_by_column($history, 'date');
+
         return view('pages.history', ['cars' => $cars, 
                                     'maintenances' => $maintenances, 
                                     'insurances' => $insurances,
                                     'inspections' => $inspections,
-                                    'taxes' => $taxes]);
+                                    'taxes' => $taxes,
+                                    'history' => $history]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -136,4 +167,13 @@ class HistoryController extends Controller
     {
     }
 
+}
+
+function array_sort_by_column(&$arr, $col, $dir = SORT_ASC) {
+    $sort_col = array();
+    foreach ($arr as $key=> $row) {
+        $sort_col[$key] = $row[$col];
+    }
+
+    array_multisort($sort_col, $dir, $arr);
 }
