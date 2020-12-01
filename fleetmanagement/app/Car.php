@@ -33,6 +33,11 @@ class Car extends Model
         return $this->belongsToMany('App\Driver')->withPivot('id', 'start_date', 'end_date');
     }
 
+    public function carDrivers() {
+        return $this->hasMany('App\CarDriver');
+    }
+
+
     public function issues(){
         $count = $this->taxes->where( 'expiration_date', '<', Carbon::now()->addDays(30))->count();
         $count += $this->maintenances->where( 'next_maintenance_date', '<', Carbon::now()->addDays(30))->count();
