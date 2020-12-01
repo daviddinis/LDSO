@@ -220,7 +220,7 @@
         </div>
     </form>
 
-    <div class="row">
+    <div class="row vehicleEvents">
         @include('partials.vehicleEvent', ['route_name' => 'maintenance', 'events' => $car->maintenances, 'eventDate' => $maintenanceDate])
 
         @include('partials.vehicleEvent', ['route_name' => 'insurance', 'events' => $car->insurances, 'eventDate' => $insuranceDate])
