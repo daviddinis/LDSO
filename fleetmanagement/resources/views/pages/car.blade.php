@@ -2,6 +2,10 @@
 
 @section('title', 'Car')
 
+@section('styles')
+<link href="{{ asset('css/car.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
 
 @if ($errors->any())
@@ -49,45 +53,111 @@
         else return '<div class="col-auto"><span class="badge badge-pill badge-success">Car is available!</span></div>';
 
     }
- @endphp
-    <div class="jumbotron">
-        <div class="container">
-            <div class="row">
-                <div class="col-auto mr-auto">
-                    <h1 class="display-3">{{$car->make}} {{$car->model}} </h1>
-                    <br>
-                    <p>{{$car->license_plate}}</p>
-                    <br>
-                    <p class="lead">Total cost: @php echo sum_costs($car->taxes) + sum_costs($car->maintenances) + sum_costs($car->inspections) + sum_costs($car->insurances); @endphp €</p>
-                </div>
-                <div class="col-md-auto">
-                    @if(isset($car->image))
-                    <img style="border:1px solid black" src="{{ asset('img/' . $car->image) }}" alt="tag">
-                    @endif
-                </div>
+
+    //returns alert date string in format Y-m-d
+    //$eventdate -> event date, $alertTolerance -> alert time in days (date used to notify x days before the event)
+    function eventDate($eventDate, $alertTolerance){
+
+    $dateTime = new DateTime($eventDate);
+    $alertInterval = new DateInterval("P" . $alertTolerance . "D");
+    $alertDateTime = new DateTime($eventDate);
+    $alertDateTime->sub($alertInterval);
+
+
+    return $alertDateTime->format('Y-m-d');
+    }
+
+    //similar to timeToEvent but merely returns the integer that represents the number of days  
+    function timeToEventInt($currentDate, $eventDate, $alertTolerance){
+
+    $dateTime = new DateTime($currentDate);
+    $alertDateTime = new DateTime(eventDate($eventDate, $alertTolerance));
+
+
+    $alertDateInterval = date_diff($dateTime, $alertDateTime);
+
+    return intval(str_replace(' days', '', $alertDateInterval->format('%r%a days') ) );
+
+    }
+
+    //similar to currentTimeToEvent but merely returns the integer that represents the number of days
+    function currentTimeToEventInt($eventDate, $alertTolerance){
+    return timeToEventInt(date("Y-m-d"), $eventDate, $alertTolerance);
+    }
+
+    function getTypeAndTimeToEvent($yellow_alert, $red_alert, $eventDate){
+
+        $yellowTime = currentTimeToEventInt($eventDate, $yellow_alert);
+        $redTime = currentTimeToEventInt($eventDate, $red_alert);
+        $overdueTime = currentTimeToEventInt($eventDate, 0);
+        if ($overdueTime < 0)
+        {
+            $alertTimeToType = 'overdue';
+            $alertTypeColour = 'overdue';
+            $alertTime = $overdueTime;
+        }
+        else if ($redTime < 0)
+        {
+            $alertTimeToType = 'overdue';
+            $alertTypeColour = 'red';
+            $alertTime = $overdueTime;
+        }
+        else if($yellowTime < 0)
+        {
+            $alertTimeToType = 'red';
+            $alertTypeColour = 'yellow';
+            $alertTime = $redTime;
+        }
+        else {
+            $alertTimeToType = 'yellow';
+            $alertTypeColour = 'green';
+            $alertTime = $yellowTime;
+        }
+
+        return array('timerType' => $alertTimeToType, 'typeColour' => $alertTypeColour, 'time' => $alertTime);
+    }
+
+
+    
+@endphp
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-auto mr-auto">
+                <h1 class="display-3">{{$car->make}} {{$car->model}} </h1>
+                <br>
+                <p>{{$car->license_plate}}</p>
+                <br>
+                <p class="lead">Total cost: @php echo sum_costs($car->taxes) + sum_costs($car->maintenances) + sum_costs($car->inspections) + sum_costs($car->insurances); @endphp €</p>
+            </div>
+            <div class="col-md-auto">
+                @if(isset($car->image))
+                <img style="border:1px solid black" src="{{ asset('img/' . $car->image) }}" alt="tag">
+                @endif
             </div>
         </div>
-        <hr class="my-4">
+    </div>
+    <hr class="my-4">
 
-        <div class="container">
+    <div class="container">
 
-            <div class="row" style="margin-top:5%;">
-                    <h4>
-                        @php echo last_used_by($car); @endphp
-                    </h4>                   
-                <!-- TODO does nothing currently -->
-            </div>
+        <div class="row" style="margin-top:5%;">
+            <h4>
+                @php echo last_used_by($car); @endphp
+            </h4>
+            <!-- TODO does nothing currently -->
+        </div>
 
         <div class="row" style="margin-bottom: 5%;">
             <div class="col-auto">
                 @if (strpos(last_used_by($car), 'available') || strpos(last_used_by($car), 'Last used by'))
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assignDriverModal">Assign new driver</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assignDriverModal">Assign new driver</button>
                 @else
-                    <form action="{{route('cardriver.destroy', $car->carDriver->sortByDesc('end_date')->first())}}" method="POST">
-                        {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
-                        <button type="submit" class="btn btn-danger">Remove driver</button>
-                    </form>
+                <form action="{{route('cardriver.destroy', $car->carDriver->sortByDesc('end_date')->first())}}" method="POST">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+                    <button type="submit" class="btn btn-danger">Remove driver</button>
+                </form>
                 @endif
             </div>
             <div class="col-auto">
@@ -96,136 +166,85 @@
         </div>
     </div>
 
-            <!-- Modal -->
-            <form method="POST" action="{{route('cardriver.store')}}">
-                {{ csrf_field() }}
-                <div class="modal fade" style="padding-top: 3%" id="assignDriverModal" tabindex="-1" role="dialog" aria-labelledby="assignDriverModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-sm" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="assignDriverModalLabel">Assign Driver</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+
+    <!-- Modal -->
+    <form method="POST" action="{{route('cardriver.store')}}">
+        {{ csrf_field() }}
+        <div class="modal fade" style="padding-top: 3%" id="assignDriverModal" tabindex="-1" role="dialog" aria-labelledby="assignDriverModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="assignDriverModalLabel">Assign Driver</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body container">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <label for="driver_id">Select a driver or create a new one <a href="{{route('driver.create')}}">here</a>:</label>
+                        </div>
+                        <div class="row" style="padding-left: 5%">
+                            <div class="col-1"></div>
+                            <select name="driver_id" id="driver_id" required>
+                                <option value=""></option>
+                                @foreach ($drivers as $driver)
+                                <option value="{{$driver->id}}">{{$driver->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-5">
+                                <label for="start_date">Starting:</label>
+                                <input type="date" name="start_date" min="{{ date('Y-m-d') }}" value="{{ date('Y-m-d') }}" id="start_date" required>
                             </div>
-                            <div class="modal-body container">
-                                <div class="row">
-                                    <div class="col-1"></div>
-                                    <label for="driver_id">Select a driver or create a new one <a href="{{route('driver.create')}}">here</a>:</label>
-                                </div>
-                                <div class="row" style="padding-left: 5%">
-                                    <div class="col-1"></div>
-                                    <select name="driver_id" id="driver_id" required>
-                                        <option value=""></option>
-                                        @foreach ($drivers as $driver)
-                                        <option value="{{$driver->id}}">{{$driver->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-1"></div>
-                                    <div class="col-5">
-                                        <label for="start_date">Starting:</label>
-                                        <input type="date" name="start_date" min="{{ date('Y-m-d') }}" value="{{ date('Y-m-d') }}" id="start_date" required>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-1"></div>
-                                    <div class="col-5">
-                                        <label for="end_date">Ending:</label>
-                                        <input type="date" name="end_date" id="end_date" min="{{ (new DateTime('tomorrow'))->format('Y-m-d')}}">
-                                    </div>
-                                </div>
-                            </div>
-                            <input type="hidden" name="car_id" value="{{$car->id}}">
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-5">
+                                <label for="end_date">Ending:</label>
+                                <input type="date" name="end_date" id="end_date" min="{{ (new DateTime('tomorrow'))->format('Y-m-d')}}">
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
-
-            <div class="row">
-                <div class="col">
-                    <a href="{{route('maintenance.find', $car->id)}}">
-                        <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
-                            <div class="card-header">Maintenances</div>
-                            <div class="card-body">
-                                @if(count($car->maintenances) !== 0)
-                                    <h4 class="card-title">Total: {{count($car->maintenances)}} @if(count($car->maintenances))@endif</h4>
-                                    <p class="card-text">Latest: {{ $car->maintenances->first()->date}}</p>
-                                @else
-                                    <p class="card-text">No recorded<br>maintenances!</p>
-                                @endif
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col">
-                    <a href="{{route('insurance.find', $car->id)}}">
-                        <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
-                            <div class="card-header">Insurance</div>
-                            <div class="card-body">
-                                @if(count($car->insurances) !== 0)
-                                    <h4 class="card-title">Total: {{count($car->insurances)}} @if(count($car->insurances))@endif</h4>
-                                    <p class="card-text">Latest: {{$car->insurances->first()->date}}</p>
-                                @else
-                                    <p class="card-text">No recorded<br>insurances!</p>
-                                @endif
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col">
-                <a href="{{route('tax.find', $car->id)}}">
-                    <div class=" card text-white bg-primary mb-3" style="max-width: 40rem; ">
-                        <div class="card-header">Taxes</div>
-                            <div class="card-body">
-                                @if(count($car->taxes) !== 0)
-                                    <h4 class="card-title">Total: {{count($car->taxes)}} @if(count($car->taxes))@endif</h4>
-                                    <p class="card-text">Latest: {{$car->taxes->first()->date}}</p>
-                                @else
-                                    <p class="card-text">No recorded<br>taxes!</p>
-                                @endif
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col">
-                    <a href="{{route('inspection.find', $car->id)}}">
-                        <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
-                            <div class="card-header">Inspections</div>
-                            <div class="card-body">
-                                @if(count($car->inspections) !== 0)
-                                    <h4 class="card-title">Total: {{count($car->inspections)}} @if(count($car->inspections))@endif</h4>
-                                    <p class="card-text">Latest: {{$car->inspections->first()->date}}</p>
-                                @else
-                                    <p class="card-text">No recorded<br>inspections!</p>
-                                @endif
-                            </div>
-                        </div>
-                    </a>
+                    <input type="hidden" name="car_id" value="{{$car->id}}">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
                 </div>
             </div>
-    
-            <div class="row justify-content-end" style="margin-top:20%;">
-    
-                <div class="col col-md-auto">
-                    <a href="{{route('alerts', ['id' => $car->id])}}" class="btn btn-primary">Settings</a>
-    
-    
-                </div>
-                <!-- TODO does not work currently -->
-                <div class="col col-md-auto">
-                    <button type="button" class="btn btn-danger">Delete car</button>
-                </div>
-    
-            </div>
-    
         </div>
+    </form>
+
+    <div class="row vehicleEvents">
+        @include('partials.vehicleEvent', ['route_name' => 'maintenance', 'events' => $car->maintenances, 'eventDate' => $maintenanceDate])
+
+        @include('partials.vehicleEvent', ['route_name' => 'insurance', 'events' => $car->insurances, 'eventDate' => $insuranceDate])
+
+        @include('partials.vehicleEvent', ['route_name' => 'tax', 'events' => $car->taxes, 'eventDate' => $taxDate])
+
+        @include('partials.vehicleEvent', ['route_name' => 'inspection', 'events' => $car->inspections, 'eventDate' => $inspectionDate])
     </div>
-    @endsection
+
+    <div class="row justify-content-end" style="margin-top:10%;">
+
+        <div class="col col-md-auto">
+            <a href="{{route('alerts', ['id' => $car->id])}}" class="btn btn-primary">Settings</a>
+
+
+        </div>
+        <!-- TODO does not work currently -->
+        <div class="col col-md-auto">
+            <button type="button" class="btn btn-danger">Delete car</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+@endsection
