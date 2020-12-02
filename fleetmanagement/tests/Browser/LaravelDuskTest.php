@@ -158,13 +158,14 @@ class LaravelDuskTest extends DuskTestCase
                     ->value('#observations', 'Observation added by test')
                     ->click('button.btn:nth-child(1)')
                     ->assertSee('Observation added by test')
-                    ->click('.card-header > form:nth-child(1) > button:nth-child(3) > i:nth-child(1)')
-                    ->acceptDialog()
                     ->assertDontSee('Steering')
                     ->click('.fa-pencil')
                     ->value('#observations', 'Edited observation')
                     ->click('button.btn:nth-child(1)')
                     ->assertSee('Edited observation')
+                    ->click('.card-header > form:nth-child(1) > button:nth-child(3) > i:nth-child(1)')
+                    ->acceptDialog()
+                    ->assertDontSee('Edited observation')
                     ->deleteCookie('app_session_cookie');
                 });
     }
