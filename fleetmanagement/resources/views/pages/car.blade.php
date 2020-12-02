@@ -33,19 +33,21 @@
     // Function to return the if the car is in use/was last used by
     function last_used_by($car)
     {
-        $last_driver = $car->carDrivers->sortByDesc('end_date')->first();
-        if($last_driver != null)
-        {
-            // there is a driver
-
-            if($last_driver->end_date !== null)
-            {
-                if(date($last_driver->end_date) < date('Y-m-d')) return '<div class="col-auto"><span class="badge badge-pill badge-success">Car is available!</span></div><div class="col-auto"><span class="badge badge-pill badge-warning">Last used by ' . $last_driver->driver->name . ' between ' . $last_driver->start_date . ' and ' . $last_driver->end_date . '</span></div>';
+        $last_driver = $car->carDriver()->orderBy('end_date', 'desc')->first();
+	        if($last_driver != null)
+	        {
+	            // there is a driver
+	            //$dates = $last_driver->pivot;
+	
+	            if($last_driver->end_date !== null)
+	            {
+                    if(date($last_driver->end_date) < date('Y-m-d')) return '<div class="col-auto"><span class="badge badge-pill badge-success">Car is available!</span></div><div class="col-auto"><span class="badge badge-pill badge-warning">Last used by ' . $last_driver->driver->name . ' between ' . $last_driver->start_date . ' and ' . $last_driver->end_date . '</span></div>';
                 else return '<div class="col-auto"><span class="badge badge-pill badge-danger">In use by ' . $last_driver->driver->name . ' from ' . $last_driver->start_date . ' until ' . $last_driver->end_date . "</span></div>";
             }
             else return '<div class="col-auto"><span class="badge badge-pill badge-danger">In use by ' . $last_driver->driver->name . ' from ' . $last_driver->start_date . '</span></div>';
         }
         else return '<div class="col-auto"><span class="badge badge-pill badge-success">Car is available!</span></div>';
+
     }
  @endphp
     <div class="jumbotron">
@@ -81,7 +83,7 @@
                 @if (strpos(last_used_by($car), 'available') || strpos(last_used_by($car), 'Last used by'))
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assignDriverModal">Assign new driver</button>
                 @else
-                    <form action="{{route('cardriver.destroy', $car->carDrivers->sortByDesc('end_date')->first())}}" method="POST">
+                    <form action="{{route('cardriver.destroy', $car->carDriver->sortByDesc('end_date')->first())}}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
                         <button type="submit" class="btn btn-danger">Remove driver</button>
