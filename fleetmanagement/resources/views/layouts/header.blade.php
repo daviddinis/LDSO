@@ -21,6 +21,9 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Company</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('history.index')}}">History</a>
+      </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <span style="font-size: 150%; padding-right: 15px">{{Auth::user()->name}}</span>

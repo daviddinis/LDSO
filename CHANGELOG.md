@@ -6,6 +6,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+## [0.5.0] - December 1 2020
+In this sprint we finished the final work on the car profile as well as added pages for car history for a company. Added an alert system as well as a grid view for the cars. We have also worked on adding several unit tests and automated browser tests using the laravel dusk framework. Finally we fixed some bugs and added a step in our pipelines to export a swagger API json file.
+
+### Added
+- Car alerts https://gitlab.com/feup-tbs/ldso2021/t1g3/-/merge_requests/66 
+- Car history page https://gitlab.com/feup-tbs/ldso2021/t1g3/-/merge_requests/65 
+- Maintenance page https://gitlab.com/feup-tbs/ldso2021/t1g3/-/merge_requests/51
+- Insurance page https://gitlab.com/feup-tbs/ldso2021/t1g3/-/merge_requests/52
+- Tax page https://gitlab.com/feup-tbs/ldso2021/t1g3/-/merge_requests/53 
+- Unit tests https://gitlab.com/feup-tbs/ldso2021/t1g3/-/merge_requests/58 
+- Dusk tests https://gitlab.com/feup-tbs/ldso2021/t1g3/-/merge_requests/59
+- Car driver history https://gitlab.com/feup-tbs/ldso2021/t1g3/-/merge_requests/62 
+- Car grid view https://gitlab.com/feup-tbs/ldso2021/t1g3/-/merge_requests/57 
+- Sort car dashboard https://gitlab.com/feup-tbs/ldso2021/t1g3/-/merge_requests/64 
+- Swagger https://gitlab.com/feup-tbs/ldso2021/t1g3/-/merge_requests/60 
+
+
+### Modified
+- Update README with setup instructions https://gitlab.com/feup-tbs/ldso2021/t1g3/-/merge_requests/61 
+- Bugfix insurance expiration date https://gitlab.com/feup-tbs/ldso2021/t1g3/-/merge_requests/63 
+- Bugfix assign driver https://gitlab.com/feup-tbs/ldso2021/t1g3/-/merge_requests/57 
+
+## [Released]
+
 ## [0.1.0] - November 10 2020
 
 ### Added

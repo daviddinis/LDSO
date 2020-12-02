@@ -2,19 +2,19 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Car;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 
-class UserFactory extends Factory
+class CarFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = \App\User::class;
+    protected $model = \App\Car::class;
 
     /**
      * Define the model's default state.
@@ -24,12 +24,12 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'id'=> 1,
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'brand' => $this->faker->name,
+            'make' => $this->faker->name,
+            'license_plate' => '12ABCD',
+            'date_acquired'=>now(),
+            'value' => 0,
             'company_id' => 1,
-            'remember_token' => Str::random(10),
         ];
     }
 }

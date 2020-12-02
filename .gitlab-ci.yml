@@ -27,10 +27,13 @@ docker-build-test:
     # Run phpunit & dusk tests
     - echo "Running tests..."
     - docker-compose exec -T app bash -c "php artisan db:seed"
-    - docker-compose exec -T app bash -c "vendor/bin/phpunit --process-isolation ./tests"
+    - docker-compose exec -T app bash -c "vendor/bin/phpunit --process-isolation --coverage-html /reports ./tests"
+
   allow_failure: false
   artifacts:
     expire_in: 60 minutes
+    paths:
+        - ./
 
 php-linter:
   stage: lint

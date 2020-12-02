@@ -18,7 +18,7 @@ class InspectionController extends Controller
     public function index($id)
     {
         $inspections = Inspection::get()->where('car_id', '=', $id)->sortByDesc('date');
-        $activeInspection = $inspections->shift();
+        $activeInspection = $inspections->first();
         
         $yellowAlert = Car::find($id)->yellow_alert ?? 30;
         $redAlert = Car::find($id)->red_alert ?? 15;
