@@ -4,7 +4,7 @@ stages:
   - deploy-staging
   - deploy-prod
 
-docker-build-test:
+docker-build-test-generate:
   # Official docker image.
   stage: build-test
   image: docker:latest
@@ -24,6 +24,8 @@ docker-build-test:
     - echo "Running Docker exec commands..."
     - docker-compose exec -T app bash -c "composer install"
     - docker-compose exec -T app bash -c "php artisan config:cache"
+    # Swagger
+    - docker-compose exec -T app bash -c "php artisan laravel-swagger:generate > swagger.json"
     # Run phpunit & dusk tests
     - echo "Running tests..."
     - docker-compose exec -T app bash -c "php artisan db:seed"
@@ -31,9 +33,9 @@ docker-build-test:
 
   allow_failure: false
   artifacts:
-    expire_in: 60 minutes
+    expire_in: 360 minutes
     paths:
-        - ./
+      - ./fleetmanagement/swagger.json
 
 php-linter:
   stage: lint

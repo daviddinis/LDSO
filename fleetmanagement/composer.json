@@ -17,6 +17,7 @@
         "laravel/legacy-factories": "^1.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
+        "mtrajano/laravel-swagger": "^0.6.4",
         "sentry/sentry-laravel": "^2.2"
     },
     "require-dev": {
