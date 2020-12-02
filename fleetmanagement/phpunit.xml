@@ -27,5 +27,18 @@
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
+
+        <!-- Use real DB when testing  -->
+        <env name="DB_CONNECTION" value="pqsql"/>
+        
+        <env name="DB_HOST" value="db"/>
+        <env name="DB_PORT" value="5432"/>
+        <env name="DB_DATABASE" value="root"/> 
+        <env name="DB_USERNAME" value="root"/>
+        <env name="DB_PASSWORD" value="example"/>
+        
+
+        <ini name="display_errors" value="true"/>
+
     </php>
 </phpunit>

@@ -158,13 +158,14 @@ class LaravelDuskTest extends DuskTestCase
                     ->value('#observations', 'Observation added by test')
                     ->click('button.btn:nth-child(1)')
                     ->assertSee('Observation added by test')
-                    ->click('.card-header > form:nth-child(1) > button:nth-child(3) > i:nth-child(1)')
-                    ->acceptDialog()
                     ->assertDontSee('Steering')
                     ->click('.fa-pencil')
                     ->value('#observations', 'Edited observation')
                     ->click('button.btn:nth-child(1)')
                     ->assertSee('Edited observation')
+                    ->click('.card-header > form:nth-child(1) > button:nth-child(3) > i:nth-child(1)')
+                    ->acceptDialog()
+                    ->assertDontSee('Edited observation')
                     ->deleteCookie('app_session_cookie');
                 });
     }
@@ -177,7 +178,7 @@ class LaravelDuskTest extends DuskTestCase
                     ->value('#password', '1234')
                     ->click('.btn')
                     ->click('#carTable > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > a:nth-child(1)')
-                    ->click('div.col:nth-child(3) > a:nth-child(1)')
+                    ->click('.vehicleEvents > :nth-child(3) > a:nth-child(1)')
                     ->click('.fa-plus')
                     ->keys('#date', '10102018')
                     ->keys('#expiration_date', '10102021')
@@ -185,13 +186,13 @@ class LaravelDuskTest extends DuskTestCase
                     ->value('#obs', 'Observation added by test')
                     ->click('button.btn:nth-child(1)')
                     ->assertSee('Observation added by test')
-                    ->click('button.btn:nth-child(3)')
-                    ->acceptDialog()
-                    ->assertDontSee('Steering')
                     ->click('.fa-pencil')
                     ->value('#obs', 'Edited observation')
                     ->click('button.btn:nth-child(1)')
                     ->assertSee('Edited observation')
+                    ->click('button.btn:nth-child(3)')
+                    ->acceptDialog()
+                    ->assertDontSee('Edited observation')
                     ->deleteCookie('app_session_cookie');
                 });
     }
@@ -204,7 +205,7 @@ class LaravelDuskTest extends DuskTestCase
                     ->value('#password', '1234')
                     ->click('.btn')
                     ->click('#carTable > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > a:nth-child(1)')
-                    ->click('div.col:nth-child(4) > a:nth-child(1)')
+                    ->click('.vehicleEvents > :nth-child(4) > a:nth-child(1)')
                     ->click('.fa-plus')
                     ->keys('#date', '10102018')
                     ->keys('#expiration_date', '10102021')
