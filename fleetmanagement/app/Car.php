@@ -4,9 +4,14 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Car extends Model
 {
+    use HasFactory;
+
+
     public $timestamps  = false;
 
     public function company() {
@@ -33,6 +38,10 @@ class Car extends Model
         return $this->belongsToMany('App\Driver')->withPivot('id', 'start_date', 'end_date');
     }
 
+    public function carDriver() {
+        return $this->hasMany('App\CarDriver');
+    }
+
     public function issues(){
         $count = $this->taxes->where( 'expiration_date', '<', Carbon::now()->addDays(30))->count();
         $count += $this->maintenances->where( 'next_maintenance_date', '<', Carbon::now()->addDays(30))->count();
@@ -41,13 +50,4 @@ class Car extends Model
         return $count;
     }
 
-    public function currentDriver(){
-        $driver = $this->drivers()->wherePivot('end_date', '=', null)->orWherePivot('end_date', '>', Carbon::now())->get();
-        if(count($driver) == 0){
-            return 'available';
-        }
-        else{
-            return $driver[0]['name'];
-        }
-    }
 }

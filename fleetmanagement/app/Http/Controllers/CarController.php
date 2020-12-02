@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Car;
 use App\Company;
 use App\Driver;
+use App\CarDriver;
 use App\User;
+use App\Tax;
 
 class CarController extends Controller
 {
@@ -57,9 +59,7 @@ class CarController extends Controller
 
         if ($request->hasFile('image')) {
             request()->validate([
-
                 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-
             ]);
             $imageName = $request->input('plate') . '.' . request()->image->getClientOriginalExtension();
             request()->image->move(public_path('img'), $imageName);
@@ -84,7 +84,7 @@ class CarController extends Controller
     {
         if (!Auth::check()) return redirect('/login');
         $car = Car::find($id);
-        return view('pages.car', ['car' => $car, 'drivers' => Driver::all()]);
+        return view('pages.car', array_merge(['car' => $car, 'drivers' => Driver::all()], $this->getEventExpirationDates($car) ) );
     }
 
     /**
@@ -128,6 +128,13 @@ class CarController extends Controller
         if (!Auth::check()) return redirect('/login');
         $car = Car::findOrFail($id);
 
+        return view('pages.carSettings', array_merge([
+            'car' => $car] , $this->getEventExpirationDates($car)
+        ));
+    }
+
+    private function getEventExpirationDates($car){
+
         $tax = $this->getCurrentTax($car);
         $taxDate = $tax != null ? $tax->expiration_date : null;
 
@@ -140,11 +147,10 @@ class CarController extends Controller
         $maintenance = $this->getCurrentMaintenance($car);
         $maintenanceDate = $maintenance != null ? $maintenance->date : null;
 
-        return view('pages.carSettings', [
-            'car' => $car, 'taxDate' => $taxDate,
+        return ['taxDate' => $taxDate,
             'inspectionDate' => $inspectionDate, 'insuranceDate' => $insuranceDate,
             'maintenanceDate' => $maintenanceDate
-        ]);
+        ];
     }
 
     //updates the car alert settings?
@@ -206,4 +212,5 @@ class CarController extends Controller
     public function assign(Request $request, $id)
     {
     }
+
 }

@@ -18,12 +18,12 @@
 
 @section('content')
 <div class="container-md">
-    <form method="POST" action="{{route('insurance.store', $car_id)}}" enctype="multipart/form-data">
+    <form method="POST" action="{{route('inspection.store', $car_id)}}" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="row" style="margin-top: 5%">
             <div class="col-md-2"></div>
             <div class="col">
-                <h1>Add Insurance</h1>
+                <h1>Add Inspection</h1>
             </div>
         </div>
         <br>
@@ -61,11 +61,13 @@
         <br>
         <div class="row form-group">
             <div class="col-md-2"></div>
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <label for="name">File</label>
-                <div class="input-group">
-                    <input type="file" class="form-control" id="file" name="file">
-                </div>
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="file" id="file">
+                        <label class="custom-file-label" for="file">Choose file</label>
+                    </div>
                 </div>
             </div>
         </div>
