@@ -37,17 +37,28 @@ class Car extends Model
     public function drivers() {
         return $this->belongsToMany('App\Driver')->withPivot('id', 'start_date', 'end_date');
     }
-
+    
     public function carDriver() {
         return $this->hasMany('App\CarDriver');
     }
 
-    public function issues(){
-        $count = $this->taxes->where( 'expiration_date', '<', Carbon::now()->addDays(30))->count();
-        $count += $this->maintenances->where( 'next_maintenance_date', '<', Carbon::now()->addDays(30))->count();
-        $count += $this->inspections->where( 'expiration_date', '<', Carbon::now()->addDays(30))->count();
-        $count += $this->insurances->where( 'expiration_date', '<', Carbon::now()->addDays(30))->count();
+    public function numIssues(){
+        $count = $this->taxes->where( 'expiration_date', '<', Carbon::now()->addDays(30))->sortByDesc('expiration_date')->take(1)->count();
+        $count += $this->maintenances->where( 'next_maintenance_date', '<', Carbon::now()->addDays(30))->sortByDesc('expiration_date')->take(1)->count();
+        $count += $this->inspections->where( 'expiration_date', '<', Carbon::now()->addDays(30))->sortByDesc('expiration_date')->take(1)->count();
+        $count += $this->insurances->where( 'expiration_date', '<', Carbon::now()->addDays(30))->sortByDesc('expiration_date')->take(1)->count();
         return $count;
+    }
+
+    public function issues() {
+        $taxIssue = $this->taxes->sortByDesc('expiration_date')->take(1);
+        $maintenanceIssue = $this->maintenances->sortByDesc('next_maintenance_date')->take(1);
+        $inspectionIssue = $this->inspections->sortByDesc('expiration_date')->take(1);
+        $insuranceIssue = $this->insurances->sortByDesc('expiration_date')->take(1);
+
+        $listofIssues = ['Tax' => $taxIssue, 'Maintenance' => $maintenanceIssue, 'Inspection' => $inspectionIssue, 'Insurance' => $insuranceIssue];
+
+        return $listofIssues;
     }
 
 }
