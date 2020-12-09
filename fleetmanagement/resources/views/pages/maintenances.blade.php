@@ -42,7 +42,7 @@
                             <tr class="table-primary">
                                 <th scope="row">tax</th>
                                 <th>{{$activeMaintenance->date}}</th>
-                                <th>{{$activeMaintenance->expiration_date}}</th>
+                                <th>{{$activeMaintenance->next_maintenance_date}}</th>
                                 <th>{{$activeMaintenance->value . '€'}}</th>
                                 <th>{{$activeMaintenance->obs}}</th>                            
                             </tr>
@@ -80,7 +80,6 @@
                             {{ csrf_field() }}
                             <button onclick="return confirm('Are you sure?')" class="btn btn-secondary btn-sm rounded-circle "><i class="fa fa-trash"></i></button>
                         </form>
-
                         <a href= {{route('maintenance.edit', [$car->id, $maintenance])}} class="btn btn-info btn-sm rounded-circle" style="float:right"><i class="fa fa-pencil"></i></a>
                     </td>
                 </tr>
