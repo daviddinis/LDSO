@@ -93,7 +93,7 @@
         if ($overdueTime < 0)
         {
             $alertTimeToType = 'overdue';
-            $alertTypeColour = 'overdue';
+            $alertTypeColour = 'red';
             $alertTime = $overdueTime;
         }
         else if ($redTime < 0)
@@ -126,9 +126,11 @@
             <div class="col-auto mr-auto">
                 <h1 class="display-3">{{$car->make}} {{$car->model}} </h1>
                 <br>
-                <p>{{$car->license_plate}}</p>
+                <p><b>{{$car->license_plate}}</b></p>
+                <hr class="my-4">
                 <br>
                 <p class="lead">Total cost: @php echo sum_costs($car->taxes) + sum_costs($car->maintenances) + sum_costs($car->inspections) + sum_costs($car->insurances); @endphp €</p>
+            <p class="lead">Total mileage: {{$car->kilometers}} km</p>
             </div>
             <div class="col-md-auto">
                 @if(isset($car->image))
@@ -143,6 +145,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
+                <h4><b>Issues</b></h4>
                 @php
                     // We use this to get details about the issues the car is currently having
                     $issues = $car->issues();
@@ -157,7 +160,13 @@
                     </div>
                 </div>
                 @else
-                    <h4>Issues</h4>
+                    @if($car->numIssues() > 2)
+                        <div class="alert alert-dismissible alert-warning">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <h4 class="alert-heading">Warning!</h4>
+                        <p class="mb-0">Your vehicle currently has {{$car->numIssues()}} issues. Please review the list carefully before proceeding!</a>.</p>
+                        </div>
+                    @endif
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -184,7 +193,7 @@
                                     <tr class="table-warning">
                                         <th>Insurance</th>
                                         <td>Upcoming</td>
-                                        <td>Your latest Insurance document will expire soon. Please consider renewing it</td>
+                                        <td>Your latest Insurance document will <b>expire soon.</b> Please consider renewing it</td>
                                     </tr>
                                 @endif
                             @endif
@@ -206,7 +215,7 @@
                                     <tr class="table-warning">
                                         <th>Inspection</th>
                                         <td>Upcoming</td>
-                                        <td>Your latest tax document will expire soon. Please consider renewing it</td>
+                                        <td>Your latest tax document will <b>expire soon.</b> Please consider renewing it</td>
                                     </tr>
                                 @endif
                             @endif
@@ -228,7 +237,7 @@
                                     <tr class="table-warning">
                                         <th>Tax</th>
                                         <td>Upcoming</td>
-                                        <td>Your latest tax document will expire soon. Please consider renewing it</td>
+                                        <td>Your latest tax document will <b>expire soon.</b> Please consider renewing it</td>
                                     </tr>
                                 @endif
                             @endif
@@ -254,7 +263,7 @@
                                         <tr class="table-warning">
                                             <th>Maintenance</th>
                                             <td>Upcoming</td>
-                                            <td>Your latest Maintenance document will expire soon. Please consider renewing it</td>
+                                            <td>Your latest Maintenance document will <b>expire soon.</b> Please consider renewing it</td>
                                         </tr>
                                 @endif
                             @endif
@@ -268,7 +277,7 @@
     <hr class="my-4">
     
     <div class="container">
-        <h4>Availability</h4>
+        <h4><b>Availability</b></h4>
         <div class="row" style="margin-top:5%;">
             <h4>
                 @php echo last_used_by($car); @endphp
@@ -349,7 +358,7 @@
     </form>
 
     <div class="container">
-        <h4>Historical data</h4>
+        <h4><b>Historical data</b></h4>
 
         <div class="row vehicleEvents">
             @include('partials.vehicleEvent', ['route_name' => 'maintenance', 'events' => $car->maintenances, 'eventDate' => $maintenanceDate])
