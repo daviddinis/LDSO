@@ -231,7 +231,7 @@ class LaravelDuskTest extends DuskTestCase
                     ->value('#email', 'johndoe@fe.up.pt')
                     ->value('#password', '1234')
                     ->click('.btn')
-                    ->click('#carTable > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > a:nth-child(1)')
+                    ->click('#carTable > tbody:nth-child(2) > tr:nth-child(7) > td:nth-child(1) > a:nth-child(1)')
                     ->assertSee("Dangerous")
                     ->assertSee("Upcoming");
                 });
