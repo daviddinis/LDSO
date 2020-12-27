@@ -13,6 +13,9 @@ use App\Driver;
 use App\CarDriver;
 use App\User;
 use App\Tax;
+use App\Maintenance;
+use App\Insurance;
+use App\Inspection;
 
 class CarController extends Controller
 {
@@ -25,8 +28,52 @@ class CarController extends Controller
     {
         if (!Auth::check()) return redirect('/login');
         $cars = Car::where('company_id', '=', User::find(Auth::user()->id)->company->id)->get();
+        $carIds = $cars->pluck('id');
 
-        return view('pages.cars')->with('cars', $cars);
+
+        $maintenanceCosts = Maintenance::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as yearandmonth, sum(value) as costs')
+            ->whereIn('maintenances.car_id', $carIds)
+            ->groupBy('yearandmonth')
+            ->limit(12)
+            ->orderBy('yearandmonth')
+            ->get();
+        $maintenanceValues = $maintenanceCosts->pluck('costs');
+        
+        $taxCosts = Tax::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as yearandmonth, sum(value) as costs')
+            ->whereIn('taxes.car_id', $carIds)
+            ->groupBy('yearandmonth')
+            ->limit(12)
+            ->orderBy('yearandmonth')
+            ->get();        
+        $taxValues = $taxCosts->pluck('costs');
+
+        $InsuranceCosts = Insurance::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as yearandmonth, sum(value) as costs')
+            ->whereIn('insurances.car_id', $carIds)
+            ->groupBy('yearandmonth')
+            ->limit(12)
+            ->orderBy('yearandmonth')
+            ->get();        
+        $InsuranceValues = $InsuranceCosts->pluck('costs');
+
+        $InspectionCosts = Inspection::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as yearandmonth, sum(value) as costs')
+            ->whereIn('inspections.car_id', $carIds)
+            ->groupBy('yearandmonth')
+            ->limit(12)
+            ->orderBy('yearandmonth')
+            ->get();        
+        $InspectionValues = $InspectionCosts->pluck('costs');
+        
+
+        $maintenanceLabels = $maintenanceCosts->pluck('yearandmonth');
+
+        return view('pages.cars', [
+            'costs' => $maintenanceCosts, 
+            'maintenanceLabels' => $maintenanceLabels, 
+            'maintenanceValues'=> $maintenanceValues, 
+            'taxValues' => $taxValues, 
+            'insuranceValues' => $InsuranceValues, 
+            'carIds' => $carIds,
+            'inspectionValues' => $InspectionValues])->with('cars', $cars);
     }
 
     /**

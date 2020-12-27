@@ -6,7 +6,101 @@
 
 @section('content')
 
+
+
+
+
 <section id="cars">
+  <div class="d-flex justify-content-between my-2 ">
+    
+    <div class="container">
+      <div class="row">
+        <h2 class="">Statistics </h2>
+      </div>
+      
+      <div class="row">
+        <canvas id="bar-chart" width="500" height="200"></canvas>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    
+        <script>
+
+        var chartLabels = @php echo $maintenanceLabels; @endphp;
+        var maintenanceChartValues = @php echo $maintenanceValues; @endphp;
+        var taxChartValues = @php echo $taxValues; @endphp;
+        var insuranceChartValues = @php echo $insuranceValues; @endphp;
+        var inspectionChartValues = @php echo $inspectionValues; @endphp;
+
+        // Bar chart
+        new Chart(document.getElementById("bar-chart"), {
+            type: 'line',
+            data: {
+              labels: chartLabels,
+              datasets: [
+                {
+                  label: "Accumulated amount (Maintenance)",
+                  fill: false,
+                  borderColor: "red",
+                  pointBackgroundColor:"red",
+                  pointFillColor: "red",
+                  steppedLine:false,
+                  pointHoverBorderColor: "red",
+                  pointRadius:5,
+                  data: maintenanceChartValues
+                },
+                {
+                  label: "Accumulated amount (Tax)",
+                  fill: false,
+                  borderColor: "Blue",
+                  pointBackgroundColor:"Blue",
+                  pointFillColor: "Blue",
+                  steppedLine:false,
+                  pointHoverBorderColor: "Blue",
+                  pointRadius:5,
+                  data: taxChartValues
+                  },
+                  {
+                  label: "Accumulated amount (Inspection)",
+                  fill: false,
+                  borderColor: "Green",
+                  pointBackgroundColor:"Green",
+                  pointFillColor: "Green",
+                  steppedLine:false,
+                  pointHoverBorderColor: "Green",
+                  pointRadius:5,
+                  data: inspectionChartValues
+                  },
+                  {
+                  label: "Accumulated amount (Insurance)",
+                  fill: false,
+                  borderColor: "Orange",
+                  pointBackgroundColor:"Orange",
+                  pointFillColor: "Orange",
+                  steppedLine:false,
+                  pointHoverBorderColor: "Orange",
+                  pointRadius:5,
+                  data: insuranceChartValues
+                  }
+
+
+              ]
+            },
+            options: {
+              legend: { display: true },
+              title: {
+                display: true,
+                text: 'Cost of all owned vehicles per month of the last 12 months'
+              }
+            }
+        });
+        
+        </script>
+
+    </div>
+  </div>
+  </div>
+
+
     <div class="d-flex justify-content-between my-2 ">
         <h2 class="">Dashboard </h2><button onclick="gridViewToggle()"class="btn btn-outline-primary" ><i class="fa fa-list p-1" id="gridViewToggle" ></i></button>
     </div>
