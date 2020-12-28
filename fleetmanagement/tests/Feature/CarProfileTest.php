@@ -68,7 +68,7 @@ class CarProfileTest extends TestCase
         $numberOfInsurances = $response1->getOriginalContent()->getData()['insurances'];
 
         //See seed.sql for correct amount of insurances for this vehicle
-        $this->assertCount(2, $numberOfInsurances);
+        $this->assertCount(5, $numberOfInsurances);
     }
 
 
@@ -88,7 +88,7 @@ class CarProfileTest extends TestCase
         $numberOfInspections = $response1->getOriginalContent()->getData()['inspections'];
 
         //See seed.sql for correct amount of inspections for this vehicle
-        $this->assertCount(1, $numberOfInspections);
+        $this->assertCount(5, $numberOfInspections);
     }
 
 

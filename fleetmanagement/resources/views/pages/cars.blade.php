@@ -7,9 +7,6 @@
 @section('content')
 
 
-
-
-
 <section id="cars">
   <div class="d-flex justify-content-between my-2 ">
     
@@ -17,22 +14,52 @@
       <div class="row">
         <h2 class="">Statistics </h2>
       </div>
-      
       <div class="row">
-        <canvas id="bar-chart" width="500" height="200"></canvas>
-    
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#cost">Cost</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#mileage">Mileage</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#issues">Issues</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#hide">Don't show</a>
+          </li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+          <div class="tab-pane fade active show" id="cost">
+            <canvas id="cost-chart" width="1080px" height="420"></canvas>
+          </div>
+          <div class="tab-pane fade" id="mileage">            
+            <!-- Put another graph here! -->
+            <p>Put another graph here!</p>
+          </div>
+          <div class="tab-pane fade" id="issues">
+            <!-- Put another graph here! -->
+            <p>Put another graph here!</p>  
+          </div>
+          <div class="tab-pane fade" id="hide">
+            <!-- Don't put anything here :) -->
+          </div>
+        </div>
+      </div>
+      <hr class="my-4">
+          
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     
         <script>
-
+        
         var chartLabels = @php echo $maintenanceLabels; @endphp;
         var maintenanceChartValues = @php echo $maintenanceValues; @endphp;
         var taxChartValues = @php echo $taxValues; @endphp;
         var insuranceChartValues = @php echo $insuranceValues; @endphp;
         var inspectionChartValues = @php echo $inspectionValues; @endphp;
-
-        // Bar chart
-        new Chart(document.getElementById("bar-chart"), {
+        
+        // Multiple line chart for car cost
+        new Chart(document.getElementById("cost-chart"), {
             type: 'line',
             data: {
               labels: chartLabels,
@@ -81,8 +108,8 @@
                   pointRadius:5,
                   data: insuranceChartValues
                   }
-
-
+        
+        
               ]
             },
             options: {
@@ -96,7 +123,8 @@
         
         </script>
 
-    </div>
+
+    
   </div>
   </div>
 
