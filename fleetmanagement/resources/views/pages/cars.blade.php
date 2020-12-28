@@ -49,21 +49,33 @@
       <hr class="my-4">
           
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-    
+
         <script>
         
-        var chartLabels = @php echo $maintenanceLabels; @endphp;
+        function padChartData(labels, data)
+        {
+          const filledMonths = data.map((month) => month.x);
+          const dataset = labels.map(month => {
+            const indexOfFilledData = filledMonths.indexOf(month);
+            if( indexOfFilledData!== -1) return data[indexOfFilledData].y;
+            return null;
+          });
+          return dataset;
+        }
+
+
+        var chartLabels = @php echo $graphLabels; @endphp;
         var maintenanceChartValues = @php echo $maintenanceValues; @endphp;
         var taxChartValues = @php echo $taxValues; @endphp;
         var insuranceChartValues = @php echo $insuranceValues; @endphp;
         var inspectionChartValues = @php echo $inspectionValues; @endphp;
-        
+
         // Multiple line chart for car cost
         new Chart(document.getElementById("cost-chart"), {
             type: 'line',
             data: {
               labels: chartLabels,
-              datasets: [
+              datasets: [               
                 {
                   label: "Accumulated amount (Maintenance)",
                   fill: false,
@@ -73,43 +85,41 @@
                   steppedLine:false,
                   pointHoverBorderColor: "red",
                   pointRadius:5,
-                  data: maintenanceChartValues
-                },
+                  data: padChartData(chartLabels,maintenanceChartValues)
+                },   
                 {
                   label: "Accumulated amount (Tax)",
                   fill: false,
-                  borderColor: "Blue",
-                  pointBackgroundColor:"Blue",
-                  pointFillColor: "Blue",
+                  borderColor: "green",
+                  pointBackgroundColor:"green",
+                  pointFillColor: "green",
                   steppedLine:false,
-                  pointHoverBorderColor: "Blue",
+                  pointHoverBorderColor: "green",
                   pointRadius:5,
-                  data: taxChartValues
-                  },
-                  {
-                  label: "Accumulated amount (Inspection)",
-                  fill: false,
-                  borderColor: "Green",
-                  pointBackgroundColor:"Green",
-                  pointFillColor: "Green",
-                  steppedLine:false,
-                  pointHoverBorderColor: "Green",
-                  pointRadius:5,
-                  data: inspectionChartValues
-                  },
-                  {
+                  data: padChartData(chartLabels,taxChartValues)
+                },   
+                {
                   label: "Accumulated amount (Insurance)",
                   fill: false,
-                  borderColor: "Orange",
-                  pointBackgroundColor:"Orange",
-                  pointFillColor: "Orange",
+                  borderColor: "blue",
+                  pointBackgroundColor:"blue",
+                  pointFillColor: "blue",
                   steppedLine:false,
-                  pointHoverBorderColor: "Orange",
+                  pointHoverBorderColor: "blue",
                   pointRadius:5,
-                  data: insuranceChartValues
-                  }
-        
-        
+                  data: padChartData(chartLabels,insuranceChartValues)
+                },   
+                {
+                  label: "Accumulated amount (Inspection)",
+                  fill: false,
+                  borderColor: "yellow",
+                  pointBackgroundColor:"yellow",
+                  pointFillColor: "yellow",
+                  steppedLine:false,
+                  pointHoverBorderColor: "yellow",
+                  pointRadius:5,
+                  data: padChartData(chartLabels,inspectionChartValues)
+                },   
               ]
             },
             options: {
@@ -117,6 +127,7 @@
               title: {
                 display: true,
                 text: 'Cost of all owned vehicles per month of the last 12 months'
+
               }
             }
         });
