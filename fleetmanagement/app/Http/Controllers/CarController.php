@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +15,9 @@ use App\Driver;
 use App\CarDriver;
 use App\User;
 use App\Tax;
+use App\Maintenance;
+use App\Insurance;
+use App\Inspection;
 
 class CarController extends Controller
 {
@@ -25,8 +30,53 @@ class CarController extends Controller
     {
         if (!Auth::check()) return redirect('/login');
         $cars = Car::where('company_id', '=', User::find(Auth::user()->id)->company->id)->get();
+        $carIds = $cars->pluck('id');
 
-        return view('pages.cars')->with('cars', $cars);
+
+        $maintenanceCosts = Maintenance::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->whereIn('maintenances.car_id', $carIds)
+            ->groupBy('x')
+            ->limit(12)
+            ->orderBy('x')
+            ->get();
+
+        $taxCosts = Tax::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->whereIn('taxes.car_id', $carIds)
+            ->groupBy('x')
+            ->limit(12)
+            ->orderBy('x')
+            ->get();
+
+        $insuranceCosts = Insurance::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->whereIn('insurances.car_id', $carIds)
+            ->groupBy('x')
+            ->limit(12)
+            ->orderBy('x')
+            ->get();
+
+        $inspectionCosts = Inspection::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->whereIn('inspections.car_id', $carIds)
+            ->groupBy('x')
+            ->limit(12)
+            ->orderBy('x')
+            ->get();
+        
+        // Last 12 months (for graph x-axis)
+        $period = CarbonPeriod::create(Carbon::now()->addMonths(-11), Carbon::now())->month();
+
+        $months = collect($period)->map(function (Carbon $date) {
+            return [
+                'yearandmonth' => $date->year . '-' . $date->month
+            ];
+        });
+
+        return view('pages.cars', [
+            'carIds' => $carIds,
+            'graphLabels' => $months->pluck('yearandmonth'),
+            'maintenanceValues'=> $maintenanceCosts, 
+            'taxValues' => $taxCosts, 
+            'insuranceValues' => $insuranceCosts, 
+            'inspectionValues' => $inspectionCosts])->with('cars', $cars);
     }
 
     /**
