@@ -40,6 +40,13 @@ class CarController extends Controller
             ->orderBy('x')
             ->get();
 
+        $mileage = Maintenance::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(kilometers) as y')
+            ->whereIn('maintenances.car_id', $carIds)
+            ->groupBy('x')
+            ->limit(12)
+            ->orderBy('x')
+            ->get();
+
         $taxCosts = Tax::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
             ->whereIn('taxes.car_id', $carIds)
             ->groupBy('x')
@@ -60,7 +67,7 @@ class CarController extends Controller
             ->limit(12)
             ->orderBy('x')
             ->get();
-        
+
         // Last 12 months (for graph x-axis)
         $period = CarbonPeriod::create(Carbon::now()->addMonths(-11), Carbon::now())->month();
 
@@ -72,11 +79,13 @@ class CarController extends Controller
 
         return view('pages.cars', [
             'carIds' => $carIds,
+            'mileage' => $mileage,
             'graphLabels' => $months->pluck('yearandmonth'),
-            'maintenanceValues'=> $maintenanceCosts, 
-            'taxValues' => $taxCosts, 
-            'insuranceValues' => $insuranceCosts, 
-            'inspectionValues' => $inspectionCosts])->with('cars', $cars);
+            'maintenanceValues' => $maintenanceCosts,
+            'taxValues' => $taxCosts,
+            'insuranceValues' => $insuranceCosts,
+            'inspectionValues' => $inspectionCosts
+        ])->with('cars', $cars);
     }
 
     /**
@@ -134,7 +143,7 @@ class CarController extends Controller
     {
         if (!Auth::check()) return redirect('/login');
         $car = Car::find($id);
-        return view('pages.car', array_merge(['car' => $car, 'drivers' => Driver::all()], $this->getEventExpirationDates($car) ) );
+        return view('pages.car', array_merge(['car' => $car, 'drivers' => Driver::all()], $this->getEventExpirationDates($car)));
     }
 
     /**
@@ -179,11 +188,12 @@ class CarController extends Controller
         $car = Car::findOrFail($id);
 
         return view('pages.carSettings', array_merge([
-            'car' => $car] , $this->getEventExpirationDates($car)
-        ));
+            'car' => $car
+        ], $this->getEventExpirationDates($car)));
     }
 
-    private function getEventExpirationDates($car){
+    private function getEventExpirationDates($car)
+    {
 
         $tax = $this->getCurrentTax($car);
         $taxDate = $tax != null ? $tax->expiration_date : null;
@@ -197,7 +207,8 @@ class CarController extends Controller
         $maintenance = $this->getCurrentMaintenance($car);
         $maintenanceDate = $maintenance != null ? $maintenance->date : null;
 
-        return ['taxDate' => $taxDate,
+        return [
+            'taxDate' => $taxDate,
             'inspectionDate' => $inspectionDate, 'insuranceDate' => $insuranceDate,
             'maintenanceDate' => $maintenanceDate
         ];
@@ -252,7 +263,7 @@ class CarController extends Controller
 
         return $car->maintenances()->orderBy('date', 'desc')->first();
     }
-    
+
     /**
      * Assign driver to car
      *
@@ -262,5 +273,4 @@ class CarController extends Controller
     public function assign(Request $request, $id)
     {
     }
-
 }
