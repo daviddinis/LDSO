@@ -51,7 +51,7 @@ class LaravelDuskTest extends DuskTestCase
                 });
     }
 
-    public function testAddCar()
+    public function testAddAndDeleteCar()
     { 
         $this->browse(function (Browser $browser) {
             $browser->visit('http://ifleet.dusk.test/')
@@ -66,7 +66,11 @@ class LaravelDuskTest extends DuskTestCase
                     ->value('#mileage','100')
                     ->value('#mileage','100')
                     ->click('button.btn:nth-child(1)')
+                    ->click('li.page-item:nth-child(4) > a:nth-child(1)')
                     ->assertSee('Car1 Carbrand1')
+                    ->click('#carTable > tbody:nth-child(2) > tr:nth-child(1) > th:nth-child(5) > form:nth-child(1) > button:nth-child(3) > i:nth-child(1)')
+                    ->acceptDialog()
+                    ->assertDontSee('Car1 Carbrand1')
                     ->deleteCookie('app_session_cookie');
                 });
     }
@@ -124,7 +128,7 @@ class LaravelDuskTest extends DuskTestCase
                     ->click('#carTable > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > a:nth-child(1)')
                     ->click('div.row:nth-child(5) > div:nth-child(1) > a:nth-child(1)')
                     ->click('.fa-plus')
-                    ->keys('#date', '10102018')
+                    ->keys('#date', '10102020')
                     ->keys('#next_maintenance_date', '10102021')
                     ->value('#value', '139')
                     ->value('#mileage', '15000')
@@ -133,7 +137,7 @@ class LaravelDuskTest extends DuskTestCase
                     ->assertSee('Observation added by test')
                     ->click('.card-header > form:nth-child(1) > button:nth-child(3) > i:nth-child(1)')
                     ->acceptDialog()
-                    ->assertDontSee('Steering')
+                    ->assertDontSee('Observation added by test')
                     ->click('tr.table-primary:nth-child(2) > td:nth-child(8) > a:nth-child(2) > i:nth-child(1)')
                     ->value('#observations', 'Edited observation')
                     ->click('button.btn:nth-child(1)')
@@ -152,7 +156,7 @@ class LaravelDuskTest extends DuskTestCase
                     ->click('#carTable > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > a:nth-child(1)')
                     ->click('div.row:nth-child(5) > div:nth-child(2) > a:nth-child(1)')
                     ->click('.fa-plus')
-                    ->keys('#date', '10102018')
+                    ->keys('#date', '10102020')
                     ->keys('#expiration_date', '10102021')
                     ->value('#value', '139')
                     ->value('#observations', 'Observation added by test')
@@ -180,7 +184,7 @@ class LaravelDuskTest extends DuskTestCase
                     ->click('#carTable > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > a:nth-child(1)')
                     ->click('.vehicleEvents > :nth-child(3) > a:nth-child(1)')
                     ->click('.fa-plus')
-                    ->keys('#date', '10102018')
+                    ->keys('#date', '10102020')
                     ->keys('#expiration_date', '10102021')
                     ->value('#value', '139')
                     ->value('#obs', 'Observation added by test')
@@ -207,7 +211,7 @@ class LaravelDuskTest extends DuskTestCase
                     ->click('#carTable > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > a:nth-child(1)')
                     ->click('.vehicleEvents > :nth-child(4) > a:nth-child(1)')
                     ->click('.fa-plus')
-                    ->keys('#date', '10102018')
+                    ->keys('#date', '10102020')
                     ->keys('#expiration_date', '10102021')
                     ->value('#value', '139')
                     ->value('#observations', 'Observation added by test')
