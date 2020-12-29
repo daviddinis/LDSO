@@ -9,6 +9,8 @@
 
 
 </section> 
+<div>{{$drivers->links()}}</div>
+
 <a href="/driver/create" class="btn btn-primary btn-lg rounded-circle " style="position:absolute;bottom:30px;right:30px;">
     <i class="fa fa-plus"></i>
 </a>

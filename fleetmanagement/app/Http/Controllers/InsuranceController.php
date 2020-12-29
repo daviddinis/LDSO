@@ -17,8 +17,8 @@ class InsuranceController extends Controller
      */
     public function index($id)
     {
-        $insurances = Insurance::get()->where('car_id', '=', $id)->sortByDesc('date');
-        $activeInsurance = $insurances->shift();
+        $insurances = Insurance::where('car_id', '=', $id)->orderBy('date', 'DESC');
+        $activeInsurance = $insurances->first();
         
         $yellowAlert = Car::find($id)->yellow_alert ?? 30;
         $redAlert = Car::find($id)->red_alert ?? 15;
@@ -33,7 +33,7 @@ class InsuranceController extends Controller
         }
 
         return view('pages.insurances', ['car' => Car::find($id), 
-            'insurances' => $insurances, 
+            'insurances' => $insurances->paginate(10), 
             'activeInsurance' => $activeInsurance, 
             'activeDaysLeft' => $activeDaysLeft,
             'yellowAlert' => $yellowAlert, 

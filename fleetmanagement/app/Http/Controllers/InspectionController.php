@@ -17,7 +17,7 @@ class InspectionController extends Controller
      */
     public function index($id)
     {
-        $inspections = Inspection::get()->where('car_id', '=', $id)->sortByDesc('date');
+        $inspections = Inspection::where('car_id', '=', $id)->orderBy('date', 'DESC');
         $activeInspection = $inspections->first();
         
         $yellowAlert = Car::find($id)->yellow_alert ?? 30;
@@ -31,7 +31,7 @@ class InspectionController extends Controller
         }
 
         return view('pages.inspections', ['car' => Car::find($id), 
-            'inspections' => $inspections, 
+            'inspections' => $inspections->paginate(10), 
             'activeInspection' => $activeInspection, 
             'activeDaysLeft' => $activeDaysLeft,
             'yellowAlert' => $yellowAlert, 

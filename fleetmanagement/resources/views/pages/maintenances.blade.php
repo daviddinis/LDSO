@@ -87,8 +87,10 @@
                 @endforeach
             </tbody>
         </table>
+        <div>{{$maintenances->links()}}</div>
+
     </div>
-    <a href="{{route('maintenance.create', $car->id)}}" class="btn btn-primary btn-lg rounded-circle " style="position:absolute;bottom:30px;right:30px;">
+    <a href="{{route('maintenance.create', $car->id)}}" class="btn btn-primary btn-lg rounded-circle " style="position:fixed;bottom:30px;right:30px;">
         <i class="fa fa-plus"></i>
     </a>
 
