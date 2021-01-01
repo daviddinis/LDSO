@@ -134,7 +134,53 @@ class CarController extends Controller
     {
         if (!Auth::check()) return redirect('/login');
         $car = Car::find($id);
-        return view('pages.car', array_merge(['car' => $car, 'drivers' => Driver::all()], $this->getEventExpirationDates($car) ) );
+
+        // Data for charts
+
+        $drivers = Driver::where('company_id', '=', $car->company_id)->get();
+        $period = CarbonPeriod::create(Carbon::now()->addMonths(-11), Carbon::now())->month();
+        $months = collect($period)->map(function (Carbon $date) {
+            return [
+                'yearandmonth' => $date->year . '-' . $date->month
+            ];
+        });
+
+
+        $maintenanceCosts = Maintenance::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->where('maintenances.car_id','=', $car->id)
+            ->groupBy('x')
+            ->orderBy('x')
+            ->get();
+
+        $taxCosts = Tax::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->where('taxes.car_id','=', $car->id)
+            ->groupBy('x')
+            ->orderBy('x')
+            ->get();
+
+        $insuranceCosts = Insurance::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->where('insurances.car_id','=', $car->id)
+            ->groupBy('x')
+            ->orderBy('x')
+            ->get();
+
+        $inspectionCosts = Inspection::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->where('inspections.car_id','=', $car->id)
+            ->groupBy('x')
+            ->orderBy('x')
+            ->get();
+        
+
+
+        return view('pages.car', array_merge([
+            'maintenanceValues' => $maintenanceCosts,
+            'taxValues' => $taxCosts,
+            'insuranceValues' => $insuranceCosts,
+            'inspectionValues' => $inspectionCosts,
+            'car' => $car, 
+            'graphLabels' => $months->pluck('yearandmonth'),    
+            'drivers' => $drivers], 
+            $this->getEventExpirationDates($car) ) );
     }
 
     /**

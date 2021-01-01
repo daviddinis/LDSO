@@ -225,8 +225,17 @@ INSERT INTO drivers (name, email, drivers_license, id_card, company_id) VALUES (
 INSERT INTO drivers (name, email, drivers_license, id_card, company_id) VALUES ('Ivar', 'benlos@outlook.com', 123456789, 19, 1);
 
 
-INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-01', '2020-10-10', 1, 1);
-INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-01', '2020-11-02', 2, 2);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-01', '2020-01-10', 1, 1);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-02-03', '2020-02-05', 1, 1);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-03-01', '2020-03-10', 1, 1);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-03-11', '2020-03-15', 1, 1);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-04-11', '2020-03-15', 1, 1);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-04-16', '2020-03-17', 1, 1);
+
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-15', '2020-01-21', 1, 2);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-02-15', '2020-02-27', 1, 2);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-03-01', '2020-03-05', 1, 2);
+
 INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2019-01-01', '2019-12-02', 3, 3);
 INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2018-05-01', '2018-07-02', 4, 4);
 INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-01', '2020-12-31', 5, 5);
