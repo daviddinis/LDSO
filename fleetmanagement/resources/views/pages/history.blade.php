@@ -71,26 +71,26 @@
     <div class="tab-pane fade" id="maintenances">  
     
       <div class="card-body">
-        <table class="table table-hover">
+        <table id="maintenancesTable" class="table table-hover">
               <thead>
                   <tr>
-                      <th scope="col">ID</th>
-                      <th scope="col">Car Name</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Next Maintenance date</th>
-                      <th scope="col">km</th>
-                      <th scope="col">Value</th>
-                      <th scope="col">Observations</th>
-                      <th scope="col">File</th>
+                      <th scope="col"><a href="#" onclick="sortTable(0)">ID</a></th>
+                      <th scope="col"><a href="#" onclick="sortTable(1)">Car Name</a></th>
+                      <th scope="col"><a href="#" onclick="sortTable(2)">Date</a></th>
+                      <th scope="col"><a href="#" onclick="sortTable(3)">Next Maintenance date</a></th>
+                      <th scope="col"><a href="#" onclick="sortTable(4)">km</a></th>
+                      <th scope="col"><a href="#" onclick="sortTable(5)">Value</a></th>
+                      <th scope="col"><a href="#">Observations</a></th>
+                      <th scope="col"><a href="#">File</a></th>
                   </tr>
               </thead>
               @foreach ($allMaintenances as $maintenance)
               <tbody>
                   <tr class="table-primary">
-                      <th scope="row"> {{$maintenance->id}} </th>
+                      <th scope="row"><span class="maintenanceID">{{$maintenance->id}}</span></th>
                       @foreach ($cars as $car)
                       @if($car->id == $maintenance->car_id)
-                      <td>{{ $car->make }} {{ $car->model }} {{ $car->license_plate }}</td>
+                      <td><span class="carName">{{ $car->make }} {{ $car->model }} {{ $car->license_plate }}</span></td>
                       @endif
                       @endforeach
                       <td>{{$maintenance->date}}</td>
@@ -112,6 +112,106 @@
   <div class="tab-pane fade" id="hide">
   </div>
 </div>
+
+{{-- <button onclick="sortTable()">Muerder me</button> --}}
+<script>
+var sort = [0,0,0,0,0,0];
+function sortTable(option) {
+    if(sort[option] == 0)
+        sortAsc(option);
+    else
+        sortDesc(option);
+}
+function sortAsc(option){
+  sort[option] = 1;
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("maintenancesTable");
+  switching = true;
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    var isnumber = false;
+    var isword = false;
+
+    for (i = 1; i < (rows.length - 1); i++) {
+        shouldSwitch = false;
+        
+        if(option == 0) {
+            x = document.getElementsByClassName("maintenanceID")[i-1];
+            y = document.getElementsByClassName("maintenanceID")[i];
+            isnumber = true;
+        }
+        else if(option == 1) {
+            x = document.getElementsByClassName("carName")[i-1];
+            y = document.getElementsByClassName("carName")[i];
+            isword = true;
+        }
+
+        if(isnumber){
+            if (Number(x.innerHTML) > Number(y.innerHTML)) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+        else if (isword){
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+    
+  }
+}
+function sortDesc(option){
+  sort[option] = 0;
+
+    var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("maintenancesTable");
+  switching = true;
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    var isnumber = false;
+    var isword = false;
+
+    for (i = 1; i < (rows.length - 1); i++) {
+
+        shouldSwitch = false;
+        if(option == 0) {
+            x = document.getElementsByClassName("maintenanceID")[i-1];
+            y = document.getElementsByClassName("maintenanceID")[i];
+            isnumber = true;
+        }
+        else if(option == 1) {
+            x = document.getElementsByClassName("carName")[i-1];
+            y = document.getElementsByClassName("carName")[i];
+            isword = true;
+        } 
+        if(isnumber){
+            if (Number(x.innerHTML) < Number(y.innerHTML)) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+        else if (isword){
+            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+</script>
 
 @endsection
 
