@@ -93,7 +93,7 @@
         if ($overdueTime < 0)
         {
             $alertTimeToType = 'overdue';
-            $alertTypeColour = 'overdue';
+            $alertTypeColour = 'red';
             $alertTime = $overdueTime;
         }
         else if ($redTime < 0)
@@ -126,9 +126,11 @@
             <div class="col-auto mr-auto">
                 <h1 class="display-3">{{$car->make}} {{$car->model}} </h1>
                 <br>
-                <p>{{$car->license_plate}}</p>
+                <p><b>{{$car->license_plate}}</b></p>
+                <hr class="my-4">
                 <br>
                 <p class="lead">Total cost: @php echo sum_costs($car->taxes) + sum_costs($car->maintenances) + sum_costs($car->inspections) + sum_costs($car->insurances); @endphp €</p>
+            <p class="lead">Total mileage: {{$car->kilometers}} km</p>
             </div>
             <div class="col-md-auto">
                 @if(isset($car->image))
@@ -140,6 +142,7 @@
             </div>
         </div>
     </div>
+
     <hr class="my-4">
     <div class="container">
         <div class="row">
@@ -259,14 +262,147 @@
 
     <hr class="my-4">
     <div class="container">
+        <div class="row">
+            <div class="col">
+                <h4><b>Issues</b></h4>
+                @php
+                    // We use this to get details about the issues the car is currently having
+                    $issues = $car->issues();
+                @endphp
+                @if($car->numIssues() == 0)
+                <div class="row">    
+                    <div class="col-auto">
+                        <div class="alert alert-dismissible alert-success">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong><h5>This vehicle has no major issues!</h5></a>
+                        </div>
+                    </div>
+                </div>
+                @else
+                    @if($car->numIssues() > 2)
+                        <div class="alert alert-dismissible alert-warning">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <h4 class="alert-heading">Warning!</h4>
+                        <p class="mb-0">Your vehicle currently has {{$car->numIssues()}} issues. Please review the list carefully before proceeding!</a>.</p>
+                        </div>
+                    @endif
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Issue</th>
+                            <th scope="col">Severity</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @if (count($issues["Insurance"]) != 0)
+                                @if($issues["Insurance"][0]->expiration_date < Carbon\Carbon::now())
+                                    <tr class="table-danger">
+                                        <th>Insurance</th>
+                                        <td>Dangerous</td>
+                                        <td>Your latest Insurance document <b>has expired</b>. Please consider if this vehicle is fit for use!</td>
+                                    </tr>
+                                @elseif($issues["Insurance"][0]->expiration_date < Carbon\Carbon::now()->addDays($car->red_alert))
+                                    <tr class="table-warning">
+                                        <th>Insurance</th>
+                                        <td>Urgent</td>
+                                        <td>Your latest Insurance document will expire <b>very soon</b> soon. Please consider renewing it</td>
+                                    </tr>
+                                @elseif($issues["Insurance"][0]->expiration_date < Carbon\Carbon::now()->addDays($car->yellow_alert))
+                                    <tr class="table-warning">
+                                        <th>Insurance</th>
+                                        <td>Upcoming</td>
+                                        <td>Your latest Insurance document will <b>expire soon.</b> Please consider renewing it</td>
+                                    </tr>
+                                @endif
+                            @endif
+            
+                            @if (count($issues["Inspection"]) != 0)
+                                @if($issues["Inspection"][0]->expiration_date < Carbon\Carbon::now())
+                                    <tr class="table-danger">
+                                        <th>Inspection</th>
+                                        <td>Dangerous</td>
+                                        <td>Your latest Inspection document <b>has expired</b>. Please consider if this vehicle is fit for use!</td>
+                                    </tr>
+                                @elseif($issues["Inspection"][0]->expiration_date < Carbon\Carbon::now()->addDays($car->red_alert))
+                                    <tr class="table-warning">
+                                        <th>Inspection</th>
+                                        <td>Urgent</td>
+                                        <td>Your latest Inspection document will expire <b>very soon</b> soon. Please consider renewing it</td>
+                                    </tr>
+                                @elseif($issues["Inspection"][0]->expiration_date < Carbon\Carbon::now()->addDays($car->yellow_alert))
+                                    <tr class="table-warning">
+                                        <th>Inspection</th>
+                                        <td>Upcoming</td>
+                                        <td>Your latest tax document will <b>expire soon.</b> Please consider renewing it</td>
+                                    </tr>
+                                @endif
+                            @endif
+            
+                            @if (count($issues["Tax"]) != 0)
+                                @if($issues["Tax"][0]->expiration_date < Carbon\Carbon::now())
+                                    <tr class="table-danger">
+                                        <th>Tax</th>
+                                        <td>Dangerous</td>
+                                        <td>Your latest tax document <b>has expired</b>. Please consider if this vehicle is fit for use!</td>
+                                    </tr>
+                                @elseif($issues["Tax"][0]->expiration_date < Carbon\Carbon::now()->addDays($car->red_alert))
+                                    <tr class="table-warning">
+                                        <th>Tax</th>
+                                        <td>Urgent</td>
+                                        <td>Your latest tax document will expire <b>very soon</b> soon. Please consider renewing it</td>
+                                    </tr>
+                                @elseif($issues["Tax"][0]->expiration_date < Carbon\Carbon::now()->addDays($car->yellow_alert))
+                                    <tr class="table-warning">
+                                        <th>Tax</th>
+                                        <td>Upcoming</td>
+                                        <td>Your latest tax document will <b>expire soon.</b> Please consider renewing it</td>
+                                    </tr>
+                                @endif
+                            @endif
+            
+                            @php
+                            // For some reason the maintenance is sent nested with an id. To get this id so we can index it we can use this function.
+                            $firstId = array_key_first(json_decode($issues["Maintenance"], true));
+                            @endphp
+                            @if (count($issues["Maintenance"]) != 0)
+                                @if($issues["Maintenance"][$firstId]->next_maintenance_date < Carbon\Carbon::now())
+                                        <tr class="table-danger">
+                                            <th>Maintenance</th>
+                                            <td>Dangerous</td>
+                                            <td>Your latest Maintenance document <b>has expired</b>. Please consider if this vehicle is fit for use!</td>
+                                        </tr>
+                                @elseif($issues["Maintenance"][$firstId]->next_maintenance_date < Carbon\Carbon::now()->addDays($car->red_alert))
+                                        <tr class="table-warning">
+                                            <th>Maintenance</th>
+                                            <td>Urgent</td>
+                                            <td>Your latest Maintenance document will expire <b>very soon</b> soon. Please consider renewing it</td>
+                                        </tr>
+                                @elseif($issues["Maintenance"][$firstId]->next_maintenance_date < Carbon\Carbon::now()->addDays($car->yellow_alert))
+                                        <tr class="table-warning">
+                                            <th>Maintenance</th>
+                                            <td>Upcoming</td>
+                                            <td>Your latest Maintenance document will <b>expire soon.</b> Please consider renewing it</td>
+                                        </tr>
+                                @endif
+                            @endif
+                        </tbody>
+                    </table>
+                @endif
+            </div>
+        </div>
+    </div>
 
+    <hr class="my-4">
+    
+    <div class="container">
+        <h4><b>Availability</b></h4>
         <div class="row" style="margin-top:5%;">
             <h4>
                 @php echo last_used_by($car); @endphp
             </h4>
             <!-- TODO does nothing currently -->
         </div>
-
         <div class="row" style="margin-bottom: 5%;">
             <div class="col-auto">
                 @if (strpos(last_used_by($car), 'available') || strpos(last_used_by($car), 'Last used by'))
@@ -285,6 +421,7 @@
         </div>
     </div>
 
+    <hr class="my-4">
 
     <!-- Modal -->
     <form method="POST" action="{{route('cardriver.store')}}">
@@ -339,16 +476,20 @@
         </div>
     </form>
 
-    <div class="row vehicleEvents">
-        @include('partials.vehicleEvent', ['route_name' => 'maintenance', 'events' => $car->maintenances, 'eventDate' => $maintenanceDate])
+    <div class="container">
+        <h4><b>Historical data</b></h4>
 
-        @include('partials.vehicleEvent', ['route_name' => 'insurance', 'events' => $car->insurances, 'eventDate' => $insuranceDate])
+        <div class="row vehicleEvents">
+            @include('partials.vehicleEvent', ['route_name' => 'maintenance', 'events' => $car->maintenances, 'eventDate' => $maintenanceDate])
 
-        @include('partials.vehicleEvent', ['route_name' => 'tax', 'events' => $car->taxes, 'eventDate' => $taxDate])
+            @include('partials.vehicleEvent', ['route_name' => 'insurance', 'events' => $car->insurances, 'eventDate' => $insuranceDate])
 
-        @include('partials.vehicleEvent', ['route_name' => 'inspection', 'events' => $car->inspections, 'eventDate' => $inspectionDate])
+            @include('partials.vehicleEvent', ['route_name' => 'tax', 'events' => $car->taxes, 'eventDate' => $taxDate])
+
+            @include('partials.vehicleEvent', ['route_name' => 'inspection', 'events' => $car->inspections, 'eventDate' => $inspectionDate])
+        </div>
+
     </div>
-
     <div class="row justify-content-end" style="margin-top:10%;">
 
         <div class="col col-md-auto">

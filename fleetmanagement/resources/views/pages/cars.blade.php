@@ -211,17 +211,16 @@ function sortAsc(option){
 function sortDesc(option){
   sort[option] = 0;
 
-    var table, rows, switching, i, x, y, shouldSwitch;
+  var table, rows, switching, i, x, y, shouldSwitch;
   table = document.getElementById("carTable");
   switching = true;
   while (switching) {
     switching = false;
     rows = table.rows;
 
-
     for (i = 1; i < (rows.length - 1); i++) {
 
-        shouldSwitch = false;
+      shouldSwitch = false;
 
       if(option == 0) {
         x = document.getElementsByClassName("carLink")[i-1];
