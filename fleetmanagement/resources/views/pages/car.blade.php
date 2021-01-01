@@ -151,34 +151,43 @@
         <div class="row">
             <ul class="nav nav-tabs">
               <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#drivers">Cost</a>
+                <a class="nav-link active" data-toggle="tab" href="#cost">Cost</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#mileage">Mileage</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#driver">Drivers</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#hide">Don't show</a>
               </li>
             </ul>
                 <div id="myTabContent" class="tab-content">
-                <div class="tab-pane fade active show" id="drivers">
-                    <canvas id="cost-chart" width="960px" height="300px"></canvas>
-                </div>
-                <div class="tab-pane fade" id="mileage">            
-                    <!-- Put another graph here! -->
+                <div class="tab-pane fade active show" id="cost">
                     <div style="height:300px; width:960px;">
-                        <canvas id="bar2-chart" width="960px" height="300px"></canvas>
+                        <canvas id="cost-chart"></canvas>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="issues">
-                    <!-- Put another graph here! -->
-                    <p>Put another graph here!</p>  
+                <div class="tab-pane fade" id="mileage">            
+                    <div style="height:300px; width:960px;">
+                        <canvas id="mileage-chart"></canvas>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="driver">            
+                    <div style="height:300px; width:960px;">
+                        <canvas id="driver-chart"></canvas>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="hide">
                     <!-- Don't put anything here :) -->
                 </div>
             </div>
+        </div>
+
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script>
-
     function padChartData(labels, data)
     {
         const filledMonths = data.map((month) => month.x);
@@ -195,6 +204,9 @@
     var taxChartValues = @php echo $taxValues; @endphp;
     var insuranceChartValues = @php echo $insuranceValues; @endphp;
     var inspectionChartValues = @php echo $inspectionValues; @endphp;
+
+    var mileageChartValues = @php echo $mileageValues; @endphp;
+    var driverChartValues = @php echo $driverValues; @endphp;
 
     // Multiple line chart for car cost
     new Chart(document.getElementById("cost-chart"), {
@@ -249,15 +261,83 @@
             ]
         },
         options: {
+            maintainAspectRatio: false,
             legend: { display: true },
             title: {
             display: true,
             text: 'Cost of all owned vehicles per month of the last 12 months'
 
             }
+
         }
     });
 
+
+    new Chart(document.getElementById("driver-chart"), {
+        type: 'bar',
+        data: {
+            labels: chartLabels,
+            datasets: [               
+            {
+                label: "Accumulated amount (Maintenance)",
+                fill: false,
+                borderColor: "orange",
+                backgroundColor:"orange",
+                pointFillColor: "orange",
+                steppedLine:false,
+                pointHoverBorderColor: "orange",
+                pointRadius:2,
+                data: padChartData(chartLabels, driverChartValues)
+            },    
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            legend: { display: true },
+            title: {
+            display: true,
+            text: 'Recorded usage of vehicle per month of the last 12 months'
+            },
+            scales: {
+                yAxes:[{
+                    ticks: {
+                        min:0
+                }
+            }],
+            },
+
+        }
+    });
+
+    new Chart(document.getElementById("mileage-chart"), {
+        type: 'line',
+        data: {
+            labels: chartLabels,
+            datasets: [               
+            {
+                label: "Accumulated amount (Maintenance)",
+                fill: false,
+                borderColor: "red",
+                backgroundColor:"red",
+                pointFillColor: "red",
+                steppedLine:false,
+                pointHoverBorderColor: "red",
+                pointRadius:5,
+                data: padChartData(chartLabels,mileageChartValues)
+            },    
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            legend: { display: true },
+            title: {
+            display: true,
+            text: 'Recorded maintenance of this vehicle per month of the last 12 months'
+
+            }
+
+        }
+    });
     </script>
 
     <hr class="my-4">
@@ -397,6 +477,7 @@
     
     <div class="container">
         <h4><b>Availability</b></h4>
+        
         <div class="row" style="margin-top:5%;">
             <h4>
                 @php echo last_used_by($car); @endphp
@@ -419,6 +500,7 @@
                 <a class="btn btn-primary" href="/car/{{$car->id}}/history">Driver history</a>
             </div>
         </div>
+        
     </div>
 
     <hr class="my-4">
@@ -443,7 +525,7 @@
                         <div class="row" style="padding-left: 5%">
                             <div class="col-1"></div>
                             <select name="driver_id" id="driver_id" required>
-                                <option value=""></option>
+                                <option value="">Select driver</option>
                                 @foreach ($drivers as $driver)
                                 <option value="{{$driver->id}}">{{$driver->name}}</option>
                                 @endforeach
