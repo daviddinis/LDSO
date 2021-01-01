@@ -93,7 +93,7 @@
                       <td><span class="carName">{{ $car->make }} {{ $car->model }} {{ $car->license_plate }}</span></td>
                       @endif
                       @endforeach
-                      <td>{{$maintenance->date}}</td>
+                      <td><span class="maintenanceDate">{{$maintenance->date}}</span></td>
                       <td>@if($maintenance->next_maintenance_date != null){{$maintenance->next_maintenance_date}} @else N/A @endif</td>
                       <td>{{$maintenance->kilometers}} km</td>
                       <td>{{$maintenance->value}} €</td>
@@ -132,6 +132,7 @@ function sortAsc(option){
     rows = table.rows;
     var isnumber = false;
     var isword = false;
+    var isdate = false;
 
     for (i = 1; i < (rows.length - 1); i++) {
         shouldSwitch = false;
@@ -146,6 +147,11 @@ function sortAsc(option){
             y = document.getElementsByClassName("carName")[i];
             isword = true;
         }
+        else if(option == 2) {
+            x = document.getElementsByClassName("maintenanceDate")[i-1];
+            y = document.getElementsByClassName("maintenanceDate")[i];
+            isdate = true;
+        }
 
         if(isnumber){
             if (Number(x.innerHTML) > Number(y.innerHTML)) {
@@ -155,6 +161,12 @@ function sortAsc(option){
         }
         else if (isword){
             if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+        else if (isdate){
+            if (x.innerHTML > y.innerHTML) {
                 shouldSwitch = true;
                 break;
             }
@@ -178,6 +190,7 @@ function sortDesc(option){
     rows = table.rows;
     var isnumber = false;
     var isword = false;
+    var isdate = false;
 
     for (i = 1; i < (rows.length - 1); i++) {
 
@@ -192,6 +205,11 @@ function sortDesc(option){
             y = document.getElementsByClassName("carName")[i];
             isword = true;
         } 
+        else if(option == 2) {
+            x = document.getElementsByClassName("maintenanceDate")[i-1];
+            y = document.getElementsByClassName("maintenanceDate")[i];
+            isdate = true;
+        } 
         if(isnumber){
             if (Number(x.innerHTML) < Number(y.innerHTML)) {
                 shouldSwitch = true;
@@ -200,6 +218,12 @@ function sortDesc(option){
         }
         else if (isword){
             if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+        else if (isdate){
+            if (x.innerHTML < y.innerHTML) {
                 shouldSwitch = true;
                 break;
             }
