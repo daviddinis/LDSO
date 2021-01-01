@@ -80,8 +80,8 @@
                       <th scope="col"><a href="#" onclick="sortTable(3)">Next Maintenance date</a></th>
                       <th scope="col"><a href="#" onclick="sortTable(4)">km</a></th>
                       <th scope="col"><a href="#" onclick="sortTable(5)">Value</a></th>
-                      <th scope="col"><a href="#">Observations</a></th>
-                      <th scope="col"><a href="#">File</a></th>
+                      <th scope="col"><a href="#" onclick="sortTable(6)">Observations</a></th>
+                      <th scope="col"><a href="#" onclick="sortTable(7)"><a href="#">File</a></th>
                   </tr>
               </thead>
               @foreach ($allMaintenances as $maintenance)
@@ -94,11 +94,11 @@
                       @endif
                       @endforeach
                       <td><span class="maintenanceDate">{{$maintenance->date}}</span></td>
-                      <td>@if($maintenance->next_maintenance_date != null){{$maintenance->next_maintenance_date}} @else N/A @endif</td>
-                      <td>{{$maintenance->kilometers}} km</td>
-                      <td>{{$maintenance->value}} €</td>
-                      <td>@if($maintenance->obs != null){{$maintenance->obs}} @else N/A @endif</td>
-                      <td>@if($maintenance->file != null) <a href="{{ asset($maintenance->file) }}" style="color: white" download="{{substr($maintenance->file, 17)}}">Download File</a> @else N/A @endif </td>
+                      <td><span class="nextMaintenanceDate">@if($maintenance->next_maintenance_date != null){{$maintenance->next_maintenance_date}} @else N/A @endif</span></td>
+                      <td><span class="kilometers">{{$maintenance->kilometers}}</span> km </td>
+                      <td><span class="value">{{$maintenance->value}}</span> €</td>
+                      <td><span class="obs">@if($maintenance->obs != null){{$maintenance->obs}} @else N/A @endif</span></td>
+                      <td><span class="file">@if($maintenance->file != null) <a href="{{ asset($maintenance->file) }}" style="color: white" download="{{substr($maintenance->file, 17)}}">Download File</a> @else N/A @endif </span></td>
                   </tr>
               </tbody>
               @endforeach
@@ -115,7 +115,7 @@
 
 {{-- <button onclick="sortTable()">Muerder me</button> --}}
 <script>
-var sort = [0,0,0,0,0,0];
+var sort = [0,0,0,0,0,0,0,0];
 function sortTable(option) {
     if(sort[option] == 0)
         sortAsc(option);
@@ -142,17 +142,41 @@ function sortAsc(option){
             y = document.getElementsByClassName("maintenanceID")[i];
             isnumber = true;
         }
-        else if(option == 1) {
+        if(option == 1) {
             x = document.getElementsByClassName("carName")[i-1];
             y = document.getElementsByClassName("carName")[i];
             isword = true;
         }
-        else if(option == 2) {
+        if(option == 2) {
             x = document.getElementsByClassName("maintenanceDate")[i-1];
             y = document.getElementsByClassName("maintenanceDate")[i];
             isdate = true;
         }
-
+        if(option == 3) {
+            x = document.getElementsByClassName("nextMaintenanceDate")[i-1];
+            y = document.getElementsByClassName("nextMaintenanceDate")[i];
+            isdate = true;
+        }
+        if(option == 4) {
+            x = document.getElementsByClassName("kilometers")[i-1];
+            y = document.getElementsByClassName("kilometers")[i];
+            isnumber = true;
+        }
+        if(option == 5) {
+            x = document.getElementsByClassName("value")[i-1];
+            y = document.getElementsByClassName("value")[i];
+            isnumber = true;
+        }
+        if(option == 6) {
+            x = document.getElementsByClassName("obs")[i-1];
+            y = document.getElementsByClassName("obs")[i];
+            isword = true;
+        }
+        if(option == 7) {
+            x = document.getElementsByClassName("file")[i-1];
+            y = document.getElementsByClassName("file")[i];
+            isword = true;
+        }
         if(isnumber){
             if (Number(x.innerHTML) > Number(y.innerHTML)) {
                 shouldSwitch = true;
@@ -200,16 +224,41 @@ function sortDesc(option){
             y = document.getElementsByClassName("maintenanceID")[i];
             isnumber = true;
         }
-        else if(option == 1) {
+        if(option == 1) {
             x = document.getElementsByClassName("carName")[i-1];
             y = document.getElementsByClassName("carName")[i];
             isword = true;
         } 
-        else if(option == 2) {
+        if(option == 2) {
             x = document.getElementsByClassName("maintenanceDate")[i-1];
             y = document.getElementsByClassName("maintenanceDate")[i];
             isdate = true;
         } 
+        if(option == 3) {
+            x = document.getElementsByClassName("nextMaintenanceDate")[i-1];
+            y = document.getElementsByClassName("nextMaintenanceDate")[i];
+            isdate = true;
+        }
+        if(option == 4) {
+            x = document.getElementsByClassName("kilometers")[i-1];
+            y = document.getElementsByClassName("kilometers")[i];
+            isnumber = true;
+        }
+        if(option == 5) {
+            x = document.getElementsByClassName("value")[i-1];
+            y = document.getElementsByClassName("value")[i];
+            isnumber = true;
+        }
+        if(option == 6) {
+            x = document.getElementsByClassName("obs")[i-1];
+            y = document.getElementsByClassName("obs")[i];
+            isword = true;
+        }
+        if(option == 7) {
+            x = document.getElementsByClassName("file")[i-1];
+            y = document.getElementsByClassName("file")[i];
+            isword = true;
+        }
         if(isnumber){
             if (Number(x.innerHTML) < Number(y.innerHTML)) {
                 shouldSwitch = true;
