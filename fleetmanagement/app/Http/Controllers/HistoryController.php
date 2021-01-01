@@ -33,6 +33,8 @@ class HistoryController extends Controller
         $inspections = Inspection::get();
         $taxes = Tax::get();
 
+        $all_maintenaces = Maintenance::orderByDesc('id')->get();
+
         $history = [];
         foreach ($maintenances as $maintenance){
                 array_push($history,$maintenance);
@@ -66,7 +68,8 @@ class HistoryController extends Controller
                                     'insurances' => $insurances,
                                     'inspections' => $inspections,
                                     'taxes' => $taxes,
-                                    'history' => $history]);
+                                    'history' => $history,
+                                    'allMaintenances' => $all_maintenaces]);
     }
 
 
