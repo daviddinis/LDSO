@@ -20,8 +20,8 @@ class DriverController extends Controller
     public function index()
     {
         if (!Auth::check()) return redirect('/login');
-        $drivers = Driver::orderBy('name','asc')->get();
-        return view('pages.driverList')->with('drivers', $drivers);
+        $drivers = Driver::orderBy('name','asc');
+        return view('pages.driverList')->with('drivers', $drivers->paginate(9));
     }
 
     /**

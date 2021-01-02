@@ -51,7 +51,7 @@ class Car extends Model
     }
 
     public function issues() {
-        $taxIssue = $this->taxes->sortByDesc('expiration_date')->take(1);
+        $taxIssue = $this->taxes->sortBy('expiration_date')->take(1);
         $maintenanceIssue = $this->maintenances->sortByDesc('next_maintenance_date')->take(1);
         $inspectionIssue = $this->inspections->sortByDesc('expiration_date')->take(1);
         $insuranceIssue = $this->insurances->sortByDesc('expiration_date')->take(1);

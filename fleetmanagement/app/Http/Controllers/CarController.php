@@ -29,35 +29,31 @@ class CarController extends Controller
     public function index()
     {
         if (!Auth::check()) return redirect('/login');
-        $cars = Car::where('company_id', '=', User::find(Auth::user()->id)->company->id)->get();
+        $cars = Car::where('company_id', '=', User::find(Auth::user()->id)->company->id);
         $carIds = $cars->pluck('id');
 
 
         $maintenanceCosts = Maintenance::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
             ->whereIn('maintenances.car_id', $carIds)
             ->groupBy('x')
-            ->limit(12)
             ->orderBy('x')
             ->get();
 
         $taxCosts = Tax::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
             ->whereIn('taxes.car_id', $carIds)
             ->groupBy('x')
-            ->limit(12)
             ->orderBy('x')
             ->get();
 
         $insuranceCosts = Insurance::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
             ->whereIn('insurances.car_id', $carIds)
             ->groupBy('x')
-            ->limit(12)
             ->orderBy('x')
             ->get();
 
         $inspectionCosts = Inspection::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
             ->whereIn('inspections.car_id', $carIds)
             ->groupBy('x')
-            ->limit(12)
             ->orderBy('x')
             ->get();
         
@@ -76,7 +72,7 @@ class CarController extends Controller
             'maintenanceValues'=> $maintenanceCosts, 
             'taxValues' => $taxCosts, 
             'insuranceValues' => $insuranceCosts, 
-            'inspectionValues' => $inspectionCosts])->with('cars', $cars);
+            'inspectionValues' => $inspectionCosts])->with('cars', $cars->paginate(15));
     }
 
     /**
