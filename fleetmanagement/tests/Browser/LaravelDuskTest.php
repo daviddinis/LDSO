@@ -126,7 +126,7 @@ class LaravelDuskTest extends DuskTestCase
                     ->value('#password', '1234')
                     ->click('.btn')
                     ->click('#carTable > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > a:nth-child(1)')
-                    ->click('div.row:nth-child(5) > div:nth-child(1) > a:nth-child(1)')
+                    ->click('.vehicleEvents > :nth-child(1) > a:nth-child(1)')
                     ->click('.fa-plus')
                     ->keys('#date', '10102020')
                     ->keys('#next_maintenance_date', '10102021')
@@ -154,7 +154,7 @@ class LaravelDuskTest extends DuskTestCase
                     ->value('#password', '1234')
                     ->click('.btn')
                     ->click('#carTable > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > a:nth-child(1)')
-                    ->click('div.row:nth-child(5) > div:nth-child(2) > a:nth-child(1)')
+                    ->click('.vehicleEvents > :nth-child(2) > a:nth-child(1)')
                     ->click('.fa-plus')
                     ->keys('#date', '10102020')
                     ->keys('#expiration_date', '10102021')
@@ -225,6 +225,19 @@ class LaravelDuskTest extends DuskTestCase
                     ->click('button.btn:nth-child(1)')
                     ->assertSee('Edited observation')
                     ->deleteCookie('app_session_cookie');
+                });
+    }
+
+    public function testCanSeeIssueTable()
+    {        
+        $this->browse(function (Browser $browser) {
+            $browser->visit('http://ifleet.dusk.test/')
+                    ->value('#email', 'johndoe@fe.up.pt')
+                    ->value('#password', '1234')
+                    ->click('.btn')
+                    ->click('#carTable > tbody:nth-child(2) > tr:nth-child(7) > td:nth-child(1) > a:nth-child(1)')
+                    ->assertSee("Dangerous")
+                    ->assertSee("Upcoming");
                 });
     }
     
