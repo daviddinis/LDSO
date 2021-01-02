@@ -110,29 +110,29 @@
     <table id="maintenancesTable" class="table table-hover">
               <thead>
                   <tr>
-                      <th scope="col"><a href="#" onclick="sortTaxTable(0)">ID</a></th>
-                      <th scope="col"><a href="#" onclick="sortTaxTable(1)">Car Name</a></th>
-                      <th scope="col"><a href="#" onclick="sortTaxTable(2)">Date</a></th>
-                      <th scope="col"><a href="#" onclick="sortTaxTable(3)">Expiration date</a></th>
-                      <th scope="col"><a href="#" onclick="sortTaxTable(4)">Value</a></th>
-                      <th scope="col"><a href="#" onclick="sortTaxTable(5)">Observations</a></th>
-                      <th scope="col"><a href="#" onclick="sortTaxTable(6)"><a href="#">File</a></th>
+                      <th scope="col"><a href="#" onclick="sortTaxesTable(0)">ID</a></th>
+                      <th scope="col"><a href="#" onclick="sortTaxesTable(1)">Car Name</a></th>
+                      <th scope="col"><a href="#" onclick="sortTaxesTable(2)">Date</a></th>
+                      <th scope="col"><a href="#" onclick="sortTaxesTable(3)">Expiration date</a></th>
+                      <th scope="col"><a href="#" onclick="sortTaxesTable(4)">Value</a></th>
+                      <th scope="col"><a href="#" onclick="sortTaxesTable(5)">Observations</a></th>
+                      <th scope="col"><a href="#" onclick="sortTaxesTable(6)"><a href="#">File</a></th>
                   </tr>
               </thead>
               @foreach ($taxes as $tax)
               <tbody>
                   <tr class="table-primary">
-                      <th scope="row"><span class="maintenanceID">{{$tax->id}}</span></th>
+                      <th scope="row"><span class="taxID">{{$tax->id}}</span></th>
                       @foreach ($cars as $car)
                       @if($car->id == $tax->car_id)
-                      <td><span class="carName">{{ $car->make }} {{ $car->model }} {{ $car->license_plate }}</span></td>
+                      <td><span class="taxCarName">{{ $car->make }} {{ $car->model }} {{ $car->license_plate }}</span></td>
                       @endif
                       @endforeach
-                      <td><span class="maintenanceDate">{{$tax->date}}</span></td>
-                      <td><span class="nextMaintenanceDate">@if($tax->expiration_date != null){{$tax->expiration_date}} @else N/A @endif</span></td>
-                      <td><span class="value">{{$tax->value}}</span> €</td>
-                      <td><span class="obs">@if($tax->obs != null){{$maintenance->obs}} @else N/A @endif</span></td>
-                      <td><span class="file">@if($tax->file != null) <a href="{{ asset($maintenance->file) }}" style="color: white" download="{{substr($maintenance->file, 17)}}">Download File</a> @else N/A @endif </span></td>
+                      <td><span class="taxDate">{{$tax->date}}</span></td>
+                      <td><span class="taxExpirationDate">@if($tax->expiration_date != null){{$tax->expiration_date}} @else N/A @endif</span></td>
+                      <td><span class="taxValue">{{$tax->value}}</span> €</td>
+                      <td><span class="taxObs">@if($tax->obs != null){{$maintenance->obs}} @else N/A @endif</span></td>
+                      <td><span class="taxFile">@if($tax->file != null) <a href="{{ asset($maintenance->file) }}" style="color: white" download="{{substr($maintenance->file, 17)}}">Download File</a> @else N/A @endif </span></td>
                   </tr>
               </tbody>
               @endforeach
