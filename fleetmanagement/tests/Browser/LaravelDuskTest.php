@@ -239,7 +239,7 @@ class LaravelDuskTest extends DuskTestCase
                     ->click('li.nav-item:nth-child(5) > a:nth-child(1)')
                     ->click('a.active');
             $elements = $browser->driver->findElements(WebDriverBy::className('maintenanceID'));
-            $this->assertCount(21, $elements);
+            $this->assertCount(49, $elements);
             });
     }
     
