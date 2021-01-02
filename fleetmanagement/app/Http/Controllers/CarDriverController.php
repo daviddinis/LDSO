@@ -108,8 +108,13 @@ class CarDriverController extends Controller
         $car = Car::find($car_id);
         $drivers = $car->drivers()->orderBy('end_date', 'DESC');
 
-        return view('pages.driverHistory')->with('drivers', $drivers->paginate(15))->with('car_id' , $car_id);
-        
+        $driverChartValues = CarDriver::selectRaw('drivers.name as x, count(driver_id) as y')
+            ->leftJoin('drivers', 'drivers.id', '=', 'car_driver.driver_id')
+            ->where('car_id', '=', $car->id)
+            ->groupBy('x')
+            ->get();
+
+        return view('pages.driverHistory')->with('drivers', $drivers->paginate(15))->with('car_id' , $car_id)->with('driverChartValues', $driverChartValues);        
     }
 
 }
