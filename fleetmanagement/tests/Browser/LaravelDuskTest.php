@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Carbon\Carbon;
+use Facebook\WebDriver\WebDriverBy;
 
 class LaravelDuskTest extends DuskTestCase
 {
@@ -222,6 +223,20 @@ class LaravelDuskTest extends DuskTestCase
                     ->assertSee('Edited observation')
                     ->deleteCookie('app_session_cookie');
                 });
+    }
+
+    public function testSeeMaintenanceHistory()
+    {        
+        $this->browse(function (Browser $browser) {
+            $browser->visit('http://ifleet.dusk.test/')
+                    ->value('#email', 'johndoe@fe.up.pt')
+                    ->value('#password', '1234')
+                    ->click('.btn')
+                    ->click('li.nav-item:nth-child(5) > a:nth-child(1)')
+                    ->click('a.active');
+            $elements = $browser->driver->findElements(WebDriverBy::className('maintenanceID'));
+            $this->assertCount(21, $elements);
+            });
     }
     
 }
