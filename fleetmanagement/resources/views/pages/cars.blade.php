@@ -9,7 +9,7 @@
 
 <section id="cars">
   <div class="d-flex justify-content-between my-2 ">
-    
+      
     <div class="container">
       <div class="row">
         <h2 class="">Statistics </h2>
@@ -47,11 +47,12 @@
         </div>
       </div>
       <hr class="my-4">
-          
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
         <script>
         
+        // Use to pad chart data with nulls so lines render properly
         function padChartData(labels, data)
         {
           const filledMonths = data.map((month) => month.x);
@@ -62,7 +63,6 @@
           });
           return dataset;
         }
-
 
         var chartLabels = @php echo $graphLabels; @endphp;
         var maintenanceChartValues = @php echo $maintenanceValues; @endphp;
@@ -135,7 +135,7 @@
         </script>
 
 
-    
+
   </div>
   </div>
 
@@ -164,84 +164,84 @@
             </tbody>
         </table>
     </div>
-    {{-- <button onclick="sortTable()">Muerder me</button> --}}
+    <hr class="my-4">
+    <div>{{$cars->links()}}</div>
 <script>
 var sort = [0,0,0,0];
+
 function sortTable(option) {
     if(sort[option] == 0)
         sortAsc(option);
     else
         sortDesc(option);
 }
+
 function sortAsc(option){
-  sort[option] = 1;
-  var table, rows, switching, i, x, y, shouldSwitch;
-  table = document.getElementById("carTable");
-  switching = true;
-  while (switching) {
-    switching = false;
-    rows = table.rows;
+    sort[option] = 1;
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("carTable");
+    switching = true;
 
-
-    for (i = 1; i < (rows.length - 1); i++) {
-
-        shouldSwitch = false;
-
-      if(option == 0) {
-        x = document.getElementsByClassName("carLink")[i-1];
-        y = document.getElementsByClassName("carLink")[i];
-      } else if(option == 2){
-        x = document.getElementsByClassName("carBadge")[i-1];
-        y = document.getElementsByClassName("carBadge")[i];
-      } else {
-        x = rows[i].getElementsByTagName("TD")[option];
-        y = rows[i +1].getElementsByTagName("TD")[option];
-    }
-      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-        shouldSwitch = true;
-        break;
-      }
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            if(option == 0) {
+                x = document.getElementsByClassName("carLink")[i-1];
+                y = document.getElementsByClassName("carLink")[i];
+            } else if(option == 2){
+                x = document.getElementsByClassName("carBadge")[i-1];
+                y = document.getElementsByClassName("carBadge")[i];
+            } else {
+                x = rows[i].getElementsByTagName("TD")[option];
+                y = rows[i +1].getElementsByTagName("TD")[option];
+            }
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+            }
     }
     if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
     }
   }
 }
 function sortDesc(option){
-  sort[option] = 0;
+    sort[option] = 0;
 
-  var table, rows, switching, i, x, y, shouldSwitch;
-  table = document.getElementById("carTable");
-  switching = true;
-  while (switching) {
-    switching = false;
-    rows = table.rows;
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("carTable");
+    switching = true;
+    while (switching) {
+        switching = false;
+        rows = table.rows;
 
-    for (i = 1; i < (rows.length - 1); i++) {
+        for (i = 1; i < (rows.length - 1); i++) {
 
-      shouldSwitch = false;
+            shouldSwitch = false;
 
-      if(option == 0) {
-        x = document.getElementsByClassName("carLink")[i-1];
-        y = document.getElementsByClassName("carLink")[i];
-      } else if(option == 2){
-        x = document.getElementsByClassName("carBadge")[i-1];
-        y = document.getElementsByClassName("carBadge")[i];
-      } else {
-        x = rows[i].getElementsByTagName("TD")[option];
-        y = rows[i +1].getElementsByTagName("TD")[option];
+            if(option == 0) {
+                x = document.getElementsByClassName("carLink")[i-1];
+                y = document.getElementsByClassName("carLink")[i];
+            } else if(option == 2){
+                x = document.getElementsByClassName("carBadge")[i-1];
+                y = document.getElementsByClassName("carBadge")[i];
+            } else {
+                x = rows[i].getElementsByTagName("TD")[option];
+                y = rows[i +1].getElementsByTagName("TD")[option];
+            }
+            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            witching = true;
+        }
     }
-      if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-        shouldSwitch = true;
-        break;
-      }
-    }
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-    }
-  }
 }
 </script>
 
