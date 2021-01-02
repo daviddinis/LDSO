@@ -15,16 +15,24 @@
     <ul class="list-group list-group-horizontal">
         <li class="list-group-item mr-auto">
             Issues
-            @if($car->issues() == 0)
+            @if($car->numIssues() == 0)
             <span class="badge badge-primary badge-pill">0</span>
-            @elseif($car->issues() == 1)
+            @elseif($car->numIssues() == 1)
             <span class="badge badge-warning badge-pill">1</span>
             @else
-            <span class="badge badge-danger badge-pill">{{$car->issues()}}</span>
+            <span class="badge badge-danger badge-pill">{{$car->numIssues()}}</span>
             @endif
         </li>
-        <li class="list-group-item">@if(count($car->drivers) != null)
-            {{$car->drivers->sortBy('end_date')->first()->name}}
-        @else Available @endif</li>
+
+        <li class="list-group-item">
+                @if(count($car->drivers) != null)
+                    @php $lastDriver = $car->carDriver->sortByDesc('end_date')->first() @endphp  
+                    @if($lastDriver->end_date > \Carbon\Carbon::now())
+                        {{$lastDriver->driver->name}}
+                    @else Available 
+                    @endif
+                @else Available
+                @endif
+        </li>            
     </ul>
 </div>

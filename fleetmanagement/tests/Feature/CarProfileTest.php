@@ -68,7 +68,7 @@ class CarProfileTest extends TestCase
         $numberOfInsurances = $response1->getOriginalContent()->getData()['insurances'];
 
         //See seed.sql for correct amount of insurances for this vehicle
-        $this->assertCount(2, $numberOfInsurances);
+        $this->assertCount(6, $numberOfInsurances);
     }
 
 
@@ -88,7 +88,7 @@ class CarProfileTest extends TestCase
         $numberOfInspections = $response1->getOriginalContent()->getData()['inspections'];
 
         //See seed.sql for correct amount of inspections for this vehicle
-        $this->assertCount(1, $numberOfInspections);
+        $this->assertCount(5, $numberOfInspections);
     }
 
 
@@ -218,9 +218,9 @@ class CarProfileTest extends TestCase
 
         // Count maintenances available
         $response = $this->actingAs($user)->get('/car/2/maintenances');
-        $numberOfMaintenancesForUser = $response->getOriginalContent()->getData()['maintenances'];
+        $numberOfMaintenancesForUser = $response->getOriginalContent()->getData()['maintenances']->all();
 
-        $firstId = array_key_first(json_decode($numberOfMaintenancesForUser, true));
+        $firstId = array_key_first($numberOfMaintenancesForUser);
 
         // Delete a maintenance
         $delResponse = $this->actingAs($user)->delete(route('maintenance.destroy', ['car_id' => 2, 'maintenance_id' =>  $numberOfMaintenancesForUser[$firstId]['id']]));
@@ -242,9 +242,9 @@ class CarProfileTest extends TestCase
 
         // Count tax available
         $response = $this->actingAs($user)->get('/car/2/taxes');
-        $numberOfTaxesForUser = $response->getOriginalContent()->getData()['taxes'];
+        $numberOfTaxesForUser = $response->getOriginalContent()->getData()['taxes']->all();
 
-        $firstId = array_key_first(json_decode($numberOfTaxesForUser, true));
+        $firstId = array_key_first($numberOfTaxesForUser);
 
         // Delete a tax
         $delResponse = $this->actingAs($user)->delete(route('tax.destroy', ['car_id' => 2, 'tax_id' =>  $numberOfTaxesForUser[$firstId]['id']]));
@@ -267,9 +267,9 @@ class CarProfileTest extends TestCase
 
         // Count insurances available
         $response = $this->actingAs($user)->get('/car/2/insurances');
-        $numberOfInsurancesForUser = $response->getOriginalContent()->getData()['insurances'];
+        $numberOfInsurancesForUser = $response->getOriginalContent()->getData()['insurances']->all();
 
-        $firstId = array_key_first(json_decode($numberOfInsurancesForUser, true));
+        $firstId = array_key_first($numberOfInsurancesForUser);
 
         // Delete a insurance
         $delResponse = $this->actingAs($user)->delete(route('insurance.destroy', ['id' => 2, 'insurance_id' =>  $numberOfInsurancesForUser[$firstId]['id']]));
@@ -292,9 +292,9 @@ class CarProfileTest extends TestCase
 
         // Count inspections available
         $response = $this->actingAs($user)->get('/car/2/inspections');
-        $numberOfInspectionsForUser = $response->getOriginalContent()->getData()['inspections'];
+        $numberOfInspectionsForUser = $response->getOriginalContent()->getData()['inspections']->all();
 
-        $firstId = array_key_first(json_decode($numberOfInspectionsForUser, true));
+        $firstId = array_key_first($numberOfInspectionsForUser);
 
         // Delete an inspection
         $delResponse = $this->actingAs($user)->delete(route('inspection.destroy', ['car_id' => 2, 'inspection_id' =>  $numberOfInspectionsForUser[$firstId]['id']]));
