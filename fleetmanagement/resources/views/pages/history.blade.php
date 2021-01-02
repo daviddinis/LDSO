@@ -15,7 +15,7 @@
       </div>
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#cost">All History</a>
+            <a class="nav-link active" data-toggle="tab" href="#allHistory">All History</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#maintenances">Maintenances History</a>
@@ -28,7 +28,7 @@
           </li>
         </ul>
         <div id="myTabContent" class="tab-content">
-          <div class="tab-pane fade active show" id="cost">
+          <div class="tab-pane fade active show" id="allHistory">
           @foreach ($cars as $car)
             @foreach ($history as $carhistory)
               @if($car->id == $carhistory->car_id)
@@ -81,7 +81,7 @@
                       <th scope="col"><a href="#" onclick="sortTable(4)">km</a></th>
                       <th scope="col"><a href="#" onclick="sortTable(5)">Value</a></th>
                       <th scope="col"><a href="#" onclick="sortTable(6)">Observations</a></th>
-                      <th scope="col"><a href="#" onclick="sortTable(7)"><a href="#">File</a></th>
+                      <th scope="col"><a href="#" onclick="sortTable(7)">File</a></th>
                   </tr>
               </thead>
               @foreach ($allMaintenances as $maintenance)
