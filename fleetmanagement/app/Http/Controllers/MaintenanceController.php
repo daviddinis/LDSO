@@ -16,13 +16,12 @@ class MaintenanceController extends Controller
      */
     public function index($id)
     {
-        $maintenances = Maintenance::get()->where('car_id', '=', $id)->sortByDesc('date');
+        $maintenances = Maintenance::where('car_id', '=', $id)->orderBy('date', 'DESC');
 
         $activeMaintenance = $maintenances->first();
 
-
         return view('pages.maintenances', ['car' => Car::find($id),
-                                            'maintenances' => $maintenances, 'activeMaintenance' => $activeMaintenance]);
+                                            'maintenances' => $maintenances->paginate(10), 'activeMaintenance' => $activeMaintenance]);
 
     }
 
