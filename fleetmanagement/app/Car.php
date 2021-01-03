@@ -61,4 +61,80 @@ class Car extends Model
         return $listofIssues;
     }
 
+    public function numIssuesYear($year)    
+    {
+        $yearStart = new Carbon('first day of January' . $year);
+        $yearEnd = new Carbon('last day of December' . $year);        
+        
+        return $this->numAllIssuesPeriod($yearStart, $yearEnd);
+
+        //return json_encode([$yearStart, $yearEnd]);
+    }
+
+    public function numIssuesMonth($year, $month)
+    {
+        $monthStart = Carbon::createFromFormat('Y-m-d H', "$year-$month-1 24")->startOfMonth();
+        $monthEnd = $monthStart->copy();
+        $monthEnd->endOfMonth()->startOfDay();
+        
+        return $this->numAllIssuesPeriod($monthStart, $monthEnd);
+    }
+
+    private function numAllIssuesPeriod($dateStart, $dateEnd){
+
+        $count = $this->numEventIssuesTimePeriod($dateStart, $dateEnd, $this->taxes, 'expiration_date');
+        $count += $this->numEventIssuesTimePeriod($dateStart, $dateEnd, $this->maintenances, 'next_maintenance_date');
+        $count += $this->numEventIssuesTimePeriod($dateStart, $dateEnd, $this->inspections, 'expiration_date');
+        $count += $this->numEventIssuesTimePeriod($dateStart, $dateEnd, $this->insurances, 'expiration_date');
+
+        return $this->model . ' ' . $this->make  . ' ' . $this->license_plate . '  |  ' . $count;
+    }
+
+    private function numEventIssuesTimePeriod($dateStart, $dateEnd, $allEvents, $endDateName)
+    {
+        $yearEventsExp = $allEvents->whereBetween($endDateName, [$dateStart, $dateEnd]);    
+        $yearEventsStart = $allEvents->whereBetween('date', [$dateStart, $dateEnd]);
+
+        $yearEvents = ($yearEventsExp->merge($yearEventsStart))->sortBy($endDateName);
+
+        $yearEventsDates = $yearEvents->map(function ($event) use ($endDateName) {
+            return collect($event->toArray())
+                ->only(['id', 'date', $endDateName])
+                ->all();
+        });
+
+        $yearEventsDatesArray = $yearEventsDates->toArray();
+
+        $count = 0;
+        $lastExpDatesAreFuture = false;
+
+        for ($i = 0; $i < count($yearEventsDatesArray) - 1; $i++) {
+
+            $currEvent = $yearEventsDatesArray[$i];
+            $nextEvent = $yearEventsDatesArray[$i + 1];
+
+            $currEventExpirationDate = new Carbon($currEvent[$endDateName]); //first event expiration date
+            $nextEventDate = new Carbon($nextEvent['date']); //second event date
+            
+            $lastExpDatesAreFuture = Carbon::now()->lte($currEventExpirationDate);
+            if ($lastExpDatesAreFuture)
+                break;
+
+            if ($nextEventDate->gt($currEventExpirationDate))
+                $count++;
+        }
+
+        if (count($yearEventsDatesArray) > 0) {
+
+            $lastEvent = $yearEventsDatesArray[count($yearEventsDatesArray) - 1];
+            $lastEventExpirationDate = new Carbon($lastEvent[$endDateName]);
+
+            $lastExpDateIsFuture = Carbon::now()->lte($lastEventExpirationDate);
+
+            !$lastExpDateIsFuture && $dateEnd->gt($lastEventExpirationDate) ? $count++ : true;
+        }
+
+        return $count; 
+    }
+
 }
