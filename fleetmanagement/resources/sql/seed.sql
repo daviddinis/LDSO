@@ -245,6 +245,7 @@ INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES 
 INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-09-01', '2020-12-31', 790.56, NULL, NULL, 1);
 INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-10-01', '2020-12-31', 880.56, NULL, NULL, 1);
 INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-11-01', '2020-12-31', 500.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2021-01-01', '2022-12-31', 500.56, NULL, NULL, 1);
 INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2019-10-01', '2020-12-31', 400.56, NULL, NULL, 1);
 INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2018-10-01', '2020-12-31', 880.56, NULL, NULL, 1);
 INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-10-01', '2020-12-31', 880.56, NULL, NULL, 1);
@@ -267,6 +268,7 @@ INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES
 INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-03-01', '2020-12-31', 999, NULL, NULL, 2);
 INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 350, NULL, NULL, 1);
 INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-05-01', '2020-12-31', 1000, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2021-01-01', '2021-12-31', 1000, NULL, NULL, 1);
 INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-06-01', '2020-12-31', 1200, NULL, NULL, 2);
 INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-07-01', '2020-12-31', 700, NULL, NULL, 2);
 INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-08-01', '2020-12-31', 200, NULL, NULL, 2);

@@ -93,7 +93,7 @@
                 <tr class="table-primary">
                     <th scope="row">{{$inspection->id}}</th>
                     <td>{{$inspection->date}}</td>
-                    <td>{{$inspection->expiration_date}} Km</td>
+                    <td>{{$inspection->expiration_date}}</td>
                     <td>{{$inspection->value}}€</td>
                     <td>@if($inspection->obs != null){{$inspection->obs}} @else N/A @endif</td>
                     <td>@if($inspection->file != null) <a href="{{ asset($inspection->file) }}" style="color: white" download="{{substr($inspection->file, 17)}}">Download File</a> @else N/A @endif </td>
