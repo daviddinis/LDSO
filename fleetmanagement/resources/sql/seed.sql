@@ -155,9 +155,9 @@ INSERT INTO cars (date_acquired, make, model, license_plate, image, value, kilom
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-01-01', 20000, 1000.00, '2020-02-01', NULL, 'Repair', 1);
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 990.00, '2020-03-01', NULL, 'Monthly fees', 1);
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 350.00, '2020-03-01', NULL, 'Monthly fees', 1);
-INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 400.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 23242, 400.00, '2020-03-01', NULL, 'Monthly fees', 1);
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-03-01', 20000, 700.00, '2020-04-01', NULL, 'Tires', 1);
-INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-04-01', 20000, 325.00, '2020-05-01', NULL, 'Gas', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-04-01', 22340, 325.00, '2020-05-01', NULL, 'Gas', 1);
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-05-01', 20000, 150.00, '2020-06-01', NULL, 'Test', 1);
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-06-01', 20000, 100.00, '2020-07-01', NULL, 'Fix break lights', 1);
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-07-01', 20000, 500.00, '2020-08-01', NULL, 'Steering', 1);
