@@ -18,7 +18,7 @@ class TaxController extends Controller
     public function index($id)
     {
 
-        $taxes = Tax::get()->where('car_id', '=', $id)->sortByDesc('date');
+        $taxes = Tax::where('car_id', '=', $id)->orderBy('date', 'DESC');
         $activeTax = $taxes->first();
                                     
         $yellowAlert = Car::find($id)->yellow_alert ?? 30;
@@ -31,10 +31,8 @@ class TaxController extends Controller
             $activeDaysLeft = -(new DateTime($activeTax->expiration_date ?? now()) )->diff((new DateTime()))->format('%a');
         }
 
-        
-
         return view('pages.taxes', ['car' => Car::find($id), 
-        'taxes' => $taxes, 
+        'taxes' => $taxes->paginate(10), 
         'activeTax' => $activeTax, 
         'activeDaysLeft' => $activeDaysLeft,
         'yellowAlert' => $yellowAlert, 

@@ -110,6 +110,7 @@
                 @endforeach
             </tbody>
         </table>
+        <div>{{$inspections->links()}}</div>
     </div>
     <a href="{{route('inspection.create', $car->id)}}" class="btn btn-primary btn-lg rounded-circle" style="float: right;">
         <i class="fa fa-plus"></i>

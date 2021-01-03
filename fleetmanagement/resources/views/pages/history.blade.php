@@ -15,7 +15,7 @@
       </div>
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#cost">All History</a>
+            <a class="nav-link active" data-toggle="tab" href="#allHistory">All History</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#maintenances">Maintenances History</a>
@@ -23,12 +23,9 @@
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#taxes">Taxes History</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#hide">Don't show</a>
-          </li>
         </ul>
         <div id="myTabContent" class="tab-content">
-          <div class="tab-pane fade active show" id="cost">
+          <div class="tab-pane fade active show" id="allHistory">
           @foreach ($cars as $car)
             @foreach ($history as $carhistory)
               @if($car->id == $carhistory->car_id)
@@ -81,7 +78,7 @@
                       <th scope="col"><a href="#" onclick="sortTable(4)">km</a></th>
                       <th scope="col"><a href="#" onclick="sortTable(5)">Value</a></th>
                       <th scope="col"><a href="#" onclick="sortTable(6)">Observations</a></th>
-                      <th scope="col"><a href="#" onclick="sortTable(7)"><a href="#">File</a></th>
+                      <th scope="col"><a href="#" onclick="sortTable(7)">File</a></th>
                   </tr>
               </thead>
               @foreach ($allMaintenances as $maintenance)
@@ -106,8 +103,7 @@
       </div>
   </div>
   <div class="tab-pane fade" id="taxes">
-    <p>Taxes history!</p>
-    <table id="maintenancesTable" class="table table-hover">
+    <table id="taxesTable" class="table table-hover">
               <thead>
                   <tr>
                       <th scope="col"><a href="#" onclick="sortTaxesTable(0)">ID</a></th>
@@ -313,6 +309,170 @@ function sortDesc(option){
     }
   }
 }
+
+
+var sortTax = [0,0,0,0,0,0,0];
+function sortTaxesTable(option) {
+    if(sortTax[option] == 0)
+        sortTaxesAsc(option);
+    else
+        sortTaxesDesc(option);
+}
+
+function sortTaxesAsc(option){
+  sortTax[option] = 1;
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("taxesTable");
+  switching = true;
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    var isnumber = false;
+    var isword = false;
+    var isdate = false;
+
+    for (i = 1; i < (rows.length - 1); i++) {
+        shouldSwitch = false;
+
+        if(option == 0) {
+            x = document.getElementsByClassName("taxID")[i-1];
+            y = document.getElementsByClassName("taxID")[i];
+            isnumber = true;
+        }
+        if(option == 1) {
+            x = document.getElementsByClassName("taxCarName")[i-1];
+            y = document.getElementsByClassName("taxCarName")[i];
+            isword = true;
+        }
+        if(option == 2) {
+            x = document.getElementsByClassName("taxDate")[i-1];
+            y = document.getElementsByClassName("taxDate")[i];
+            isdate = true;
+        }
+        if(option == 3) {
+            x = document.getElementsByClassName("taxExpirationDate")[i-1];
+            y = document.getElementsByClassName("taxExpirationDate")[i];
+            isdate = true;
+        }
+        if(option == 4) {
+            x = document.getElementsByClassName("taxValue")[i-1];
+            y = document.getElementsByClassName("taxValue")[i];
+            isnumber = true;
+        }
+        if(option == 5) {
+            x = document.getElementsByClassName("taxObs")[i-1];
+            y = document.getElementsByClassName("taxObs")[i];
+            isword = true;
+        }
+        if(option == 6) {
+            x = document.getElementsByClassName("taxFile")[i-1];
+            y = document.getElementsByClassName("taxFile")[i];
+            isword = true;
+        }
+        if(isnumber){
+            if (Number(x.innerHTML) > Number(y.innerHTML)) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+        else if (isword){
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+        else if (isdate){
+            if (x.innerHTML > y.innerHTML) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+
+  }
+  }
+
+  function sortTaxesDesc(option){
+  sortTax[option] = 0;
+
+    var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("taxesTable");
+  switching = true;
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    var isnumber = false;
+    var isword = false;
+    var isdate = false;
+
+    for (i = 1; i < (rows.length - 1); i++) {
+
+        shouldSwitch = false;
+        if(option == 0) {
+            x = document.getElementsByClassName("taxID")[i-1];
+            y = document.getElementsByClassName("taxID")[i];
+            isnumber = true;
+        }
+        if(option == 1) {
+            x = document.getElementsByClassName("taxCarName")[i-1];
+            y = document.getElementsByClassName("taxCarName")[i];
+            isword = true;
+        }
+        if(option == 2) {
+            x = document.getElementsByClassName("taxDate")[i-1];
+            y = document.getElementsByClassName("taxDate")[i];
+            isdate = true;
+        }
+        if(option == 3) {
+            x = document.getElementsByClassName("taxExpirationDate")[i-1];
+            y = document.getElementsByClassName("taxExpirationDate")[i];
+            isdate = true;
+        }
+        if(option == 4) {
+            x = document.getElementsByClassName("taxValue")[i-1];
+            y = document.getElementsByClassName("taxValue")[i];
+            isnumber = true;
+        }
+        if(option == 5) {
+            x = document.getElementsByClassName("taxObs")[i-1];
+            y = document.getElementsByClassName("taxObs")[i];
+            isword = true;
+        }
+        if(option == 6) {
+            x = document.getElementsByClassName("taxFile")[i-1];
+            y = document.getElementsByClassName("taxFile")[i];
+            isword = true;
+        }
+        if(isnumber){
+            if (Number(x.innerHTML) < Number(y.innerHTML)) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+        else if (isword){
+            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+        else if (isdate){
+            if (x.innerHTML < y.innerHTML) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+
 </script>
 
 @endsection
