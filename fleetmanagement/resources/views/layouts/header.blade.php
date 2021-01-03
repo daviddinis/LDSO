@@ -19,7 +19,7 @@
         <a class="nav-link" href="{{route('driver.index')}}">Drivers</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Company</a>
+        <a class="nav-link" href="{{route('company.index')}}"">Company</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{route('history.index')}}">History</a>

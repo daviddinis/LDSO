@@ -34,6 +34,9 @@ Route::resource('history', 'HistoryController');
 // Car
 Route::resource('car', 'CarController');
 
+// Company
+Route::resource('company', 'CompanyController');
+
 // Tax
 Route::get('car/{id}/taxes', 'TaxController@index')->name('tax.find');
 Route::get('car/{car_id}/taxes/tax/{id}', 'TaxController@showTax');
