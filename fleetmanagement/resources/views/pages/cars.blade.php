@@ -30,11 +30,11 @@
                     </li>
                 </ul>
                 <div id="myTabContent" class="tab-content">
-                    <div class="tab-pane fade active show" id="cost">
-                        <canvas id="cost-chart" width="1080px" height="420"></canvas>
+                    <div class="tab-pane fade active show" style="position:relative; height:40vh; width:60vw;" id="cost">
+                        <canvas id="cost-chart"></canvas>
                     </div>
                     <div class="tab-pane fade" id="mileage">
-                        <div style="display: block; height:420px; width:1080px">
+                        <div style="position:relative; height:40vh; width:60vw;">
                             <canvas id="mileage-chart" ></canvas>
                         </div>
                     </div>
@@ -96,16 +96,16 @@
                         }]
                     }
                     , options: {
-                      responsive: true,
-                      maintainAspectRatio: false,
                       legend: {
                             display: false
                         }
                         , title: {
                             display: true
-                            , text: 'Cost of all owned vehicles per month of the last 12 months'
+                            , text: 'Combined mileage of all owned vehicles per month of the last 12 months'
 
-                        }
+                        },
+                      responsive: true,
+                      maintainAspectRatio: false,
                     }
                 });
 
@@ -169,7 +169,9 @@
                             display: true
                             , text: 'Cost of all owned vehicles per month of the last 12 months'
 
-                        }
+                        },
+                        responsive:true,
+                        maintainAspectRatio:false
                     }
                 });
 
