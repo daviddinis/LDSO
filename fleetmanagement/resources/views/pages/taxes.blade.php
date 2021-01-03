@@ -157,6 +157,7 @@
             @endforeach
         </tbody>
     </table>
+    <div>{{$taxes->links()}}</div>
 </div>
 <a href="{{route('tax.create', $car->id)}}" class="btn btn-primary btn-lg rounded-circle" style="float: right;">
     <i class="fa fa-plus"></i>
