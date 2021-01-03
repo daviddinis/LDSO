@@ -33,7 +33,7 @@ class HistoryController extends Controller
         $inspections = Inspection::get();
         $taxes = Tax::get();
 
-        $all_maintenaces = Maintenance::orderByDesc('id')->get();
+        $all_maintenaces = Maintenance::orderByDesc('date')->get();
 
         $history = [];
         foreach ($maintenances as $maintenance){

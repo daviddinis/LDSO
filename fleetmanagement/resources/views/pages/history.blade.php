@@ -23,9 +23,6 @@
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#taxes">Taxes History</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#hide">Don't show</a>
-          </li>
         </ul>
         <div id="myTabContent" class="tab-content">
           <div class="tab-pane fade active show" id="allHistory">
