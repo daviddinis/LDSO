@@ -255,5 +255,19 @@ class LaravelDuskTest extends DuskTestCase
             $this->assertCount(49, $elements);
             });
     }
+
+    public function testSeeTaxHistory()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('http://ifleet.dusk.test/')
+                    ->value('#email', 'johndoe@fe.up.pt')
+                    ->value('#password', '1234')
+                    ->click('.btn')
+                    ->click('li.nav-item:nth-child(5) > a:nth-child(1)')
+                    ->click('.nav > li:nth-child(3) > a:nth-child(1)');
+            $elements = $browser->driver->findElements(WebDriverBy::className('taxID'));
+            $this->assertCount(24, $elements);
+            });
+    }
     
 }
