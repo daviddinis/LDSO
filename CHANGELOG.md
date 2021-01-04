@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
-## [1.0.0] - December 5 2020
+## [1.0.0] - January 5 2021
 In this final sprint we finished building the application according to the PO's MVP specification. We worked on adding users to a company, history pages, pagination and charts. The version will be delivered to the PO after the sprint review. 
 
 ### Added
