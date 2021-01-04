@@ -77,7 +77,7 @@
 
 /* coloring overdue alert box */
 .alertTimes:nth-child(3) {
-  background-color: var(--dark);
+  background-color: var(--danger);
 }
 
 .modal-body p {

@@ -13,7 +13,7 @@
 
 <div class="col-12 col-md-6 col-xl-3">
     <a href="{{route($route_name . '.find', $car->id)}}">
-        <div class=" card text-white bg-primary mb-3" style="max-width: 40rem;">
+        <div class=" card text-white bg-primary mb-3" style="max-width: 40rem; margin: auto; min-height:280px;">
             <div class="card-header">{{ ucfirst($route_name . $plural)}}</div>
             <div class="card-body">
                 @if(count($events) !== 0)

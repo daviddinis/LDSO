@@ -110,7 +110,15 @@ INSERT INTO companies (company_name) VALUES ('FEUP');
 INSERT INTO companies (company_name) VALUES ('FEUP2');
 INSERT INTO users (name, email, password, company_id) VALUES ('John Doe', 'johndoe@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
  1); -- Password is 1234. Generated using Hash::make('1234')
-INSERT INTO users (name, email, password, company_id) VALUES ('John Doe2', 'johndoe2@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+ INSERT INTO users (name, email, password, company_id) VALUES ('Jane Doe', 'janedoe@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+ 1); -- Password is 1234. Generated using Hash::make('1234')
+INSERT INTO users (name, email, password, company_id) VALUES ('Johan Doe', 'johandoe@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+ 1); -- Password is 1234. Generated using Hash::make('1234')
+INSERT INTO users (name, email, password, company_id) VALUES ('Donna Doe', 'donnadoe@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+ 1); -- Password is 1234. Generated using Hash::make('1234')
+INSERT INTO users (name, email, password, company_id) VALUES ('Elisa Doe', 'elisadoe@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+ 1); -- Password is 1234. Generated using Hash::make('1234')
+INSERT INTO users (name, email, password, company_id) VALUES ('Mary Doe', 'marydoe@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
  2); -- Password is 1234. Generated using Hash::make('1234')
 
 
@@ -152,21 +160,45 @@ INSERT INTO cars (date_acquired, make, model, license_plate, image, value, kilom
 INSERT INTO cars (date_acquired, make, model, license_plate, image, value, kilometers, company_id) VALUES ('2016-05-01', 'Volkswagen', 'Polo', '1234AB', NULL, NULL, 13131, 2);
 
 
-INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-01-01', 20000, 2000.00, '2020-02-01', NULL, 'Repair', 1);
-INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 2000.00, '2020-03-01', NULL, 'Monthly fees', 1);
-INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-03-01', 20000, 2000.00, '2020-04-01', NULL, 'Tires', 1);
-INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-04-01', 20000, 2000.00, '2020-05-01', NULL, 'Gas', 1);
-INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-05-01', 20000, 2000.00, '2020-06-01', NULL, 'Test', 1);
-INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-06-01', 20000, 2000.00, '2020-07-01', NULL, 'Fix break lights', 1);
-INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-07-01', 20000, 2000.00, '2020-08-01', NULL, 'Steering', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-01-01', 20000, 1000.00, '2020-02-01', NULL, 'Repair', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 990.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 350.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 23242, 400.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-03-01', 20000, 700.00, '2020-04-01', NULL, 'Tires', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-04-01', 22340, 325.00, '2020-05-01', NULL, 'Gas', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-05-01', 20000, 150.00, '2020-06-01', NULL, 'Test', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-06-01', 20000, 100.00, '2020-07-01', NULL, 'Fix break lights', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-07-01', 20000, 500.00, '2020-08-01', NULL, 'Steering', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-01-01', 20000, 1000.00, '2020-02-01', NULL, 'Repair', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 990.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 350.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 400.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-01-01', 20000, 1000.00, '2020-02-01', NULL, 'Repair', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 990.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 350.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 400.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-01-01', 20000, 1000.00, '2020-02-01', NULL, 'Repair', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 990.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 350.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 400.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-01-01', 20000, 1000.00, '2020-02-01', NULL, 'Repair', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 990.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 350.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 400.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-01-01', 20000, 1000.00, '2020-02-01', NULL, 'Repair', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 990.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 350.00, '2020-03-01', NULL, 'Monthly fees', 1);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 400.00, '2020-03-01', NULL, 'Monthly fees', 1);
+
+
 
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-01-01', 20000, 2000.00, '2020-02-01', NULL, 'Repair', 2);
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 2000.00, '2020-03-01', NULL, 'Monthly fees', 2);
-INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-03-01', 20000, 2000.00, '2020-04-01', NULL, 'Tires', 2);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-03-01', 20000, 500.00, '2020-04-01', NULL, 'Tires', 2);
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-04-01', 20000, 2000.00, '2020-05-01', NULL, 'Gas', 2);
-INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-05-01', 20000, 2000.00, '2020-06-01', NULL, 'Test', 2);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-05-01', 20, 2000.00, '2020-06-01', NULL, 'Test', 2);
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-06-01', 20000, 2000.00, '2020-07-01', NULL, 'Fix break lights', 2);
-INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-07-01', 20000, 2000.00, '2020-08-01', NULL, 'Steering', 2);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-10-01', 20000, 2000.00, '2020-08-01', NULL, 'Steering', 2);
 
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-01-01', 20000, 2000.00, '2020-02-01', NULL, 'Repair', 3);
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 2000.00, '2020-03-01', NULL, 'Monthly fees', 3);
@@ -174,41 +206,92 @@ INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, 
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-04-01', 20000, 2000.00, '2020-05-01', NULL, 'Gas', 3);
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-05-01', 20000, 2000.00, '2020-06-01', NULL, 'Test', 3);
 INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-06-01', 20000, 2000.00, '2020-07-01', NULL, 'Fix break lights', 3);
-INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-07-01', 20000, 2000.00, '2020-08-01', NULL, 'Steering', 3);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-07-01', 20000, 2000.00, '2020-08-01', NULL, 'Driving', 3);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-05-01', 20000, 2000.00, '2020-06-01', NULL, 'Test', 3);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-06-01', 20000, 2000.00, '2020-07-01', NULL, 'Fix break lights', 3);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-02-01', 20000, 2000.00, '2020-08-01', NULL, 'Wheel', 3);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2019-01-01', 20000, 2000.00, '2020-06-01', NULL, 'Test', 3);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2010-02-01', 20000, 2000.00, '2020-07-01', NULL, 'Fix break lights', 3);
+INSERT INTO maintenances (date, kilometers, value, next_maintenance_date, file, obs, car_id) VALUES ('2020-06-01', 20000, 2000.00, '2020-08-01', NULL, 'Fix windows', 3);
 
-INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 2);
-INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 2);
-INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 2);
-INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 2);
-INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 2);
-INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 6);
-INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 7);
-INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 8);
-INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 1234.56, NULL, NULL, 9);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2019-01-01', '2019-02-21', 150, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2019-02-01', '2019-03-21', 150, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2019-03-01', '2019-04-21', 50, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2019-04-01', '2019-05-21', 150, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2019-05-01', '2019-06-21', 50, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2019-06-01', '2019-07-21', 150, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-06-01', '2019-07-21', 50, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-06-01', '2019-07-21', 250, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-06-01', '2019-07-21', 150, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-06-01', '2019-07-21', 150, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-06-01', '2019-08-21', 150, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-06-01', '2019-08-21', 150, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-06-01', '2019-08-21', 150, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-06-01', '2019-08-21', 150, NULL, NULL, 1);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-09-01', '2020-10-21', 150, NULL, NULL, 1);
+
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 150, NULL, NULL, 2);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-02-01', '2020-11-21', 450, NULL, NULL, 2);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-03-01', '2020-11-21', 300, NULL, NULL, 2);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-11-21', 2000, NULL, NULL, 2);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-05-01', '2020-11-21', 220, NULL, NULL, 2);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 600, NULL, NULL, 6);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 90, NULL, NULL, 7);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 150, NULL, NULL,8);
+INSERT INTO taxes (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-11-21', 550, NULL, NULL,9);
 
 
 
 INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 2);
-INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 2);
-INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 2);
-INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 4);
-INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 5);
-INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 7);
-INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 8);
-INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 9);
-INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 10);
-INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 11);
-INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 1234.56, NULL, NULL, 12);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-02-01', '2020-12-31', 1200.56, NULL, NULL, 2);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-03-01', '2020-12-31', 1100.56, NULL, NULL, 2);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 1050.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-05-01', '2020-12-31', 1000.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-06-01', '2020-12-31', 990.56, NULL, NULL, 2);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-07-01', '2020-12-31', 850.56, NULL, NULL, 2);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-08-01', '2020-12-31', 800.56, NULL, NULL, 2);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-09-01', '2020-12-31', 790.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-10-01', '2020-12-31', 880.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-11-01', '2020-12-31', 500.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2021-01-01', '2022-12-31', 500.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2019-10-01', '2020-12-31', 400.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2018-10-01', '2020-12-31', 880.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-10-01', '2020-12-31', 880.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-09-01', '2020-12-31', 500.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-08-01', '2020-12-31', 880.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-05-01', '2020-12-31', 880.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 880.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-03-01', '2020-12-31', 880.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2020-02-01', '2020-12-31', 880.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2019-01-01', '2020-12-31', 880.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2016-10-01', '2020-12-31', 880.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2017-10-01', '2020-12-31', 880.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2016-10-01', '2020-12-31', 880.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2014-10-01', '2020-12-31', 880.56, NULL, NULL, 1);
+INSERT INTO insurances (date, expiration_date, value, file, obs, car_id) VALUES ('2010-10-01', '2020-12-31', 880.56, NULL, NULL, 1);
 
 
-INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', NULL, NULL, NULL, 1);
-INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', NULL, NULL, NULL, 2);
-INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', NULL, NULL, NULL, 3);
-INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', NULL, NULL, NULL, 4);
-INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', NULL, NULL, NULL, 5);
-INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', NULL, NULL, NULL, 6);
-INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', NULL, NULL, NULL, 7);
-INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', NULL, NULL, NULL, 8);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-01-01', '2020-12-31', 400, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-02-01', '2020-12-31', 490, NULL, NULL, 2);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-03-01', '2020-12-31', 999, NULL, NULL, 2);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 350, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-05-01', '2020-12-31', 1000, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2021-01-01', '2021-12-31', 1000, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-06-01', '2020-12-31', 1200, NULL, NULL, 2);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-07-01', '2020-12-31', 700, NULL, NULL, 2);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-08-01', '2020-12-31', 200, NULL, NULL, 2);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 350, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 350, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 350, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 350, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 350, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 350, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 350, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 350, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 350, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 350, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 350, NULL, NULL, 1);
+INSERT INTO inspections (date, expiration_date, value, file, obs, car_id) VALUES ('2020-04-01', '2020-12-31', 350, NULL, NULL, 1);
 
 
 INSERT INTO drivers (name, email, drivers_license, id_card, company_id) VALUES ('Jane Doe', 'jane.doe@fe.up.pt', 123456789, 1, 1);
@@ -223,8 +306,17 @@ INSERT INTO drivers (name, email, drivers_license, id_card, company_id) VALUES (
 INSERT INTO drivers (name, email, drivers_license, id_card, company_id) VALUES ('Ivar', 'benlos@outlook.com', 123456789, 19, 1);
 
 
-INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-01', '2020-10-10', 1, 1);
-INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-01', '2020-11-02', 2, 2);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-01', '2020-01-10', 1, 1);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-02-03', '2020-02-05', 1, 1);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-03-01', '2020-03-10', 1, 1);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-03-11', '2020-03-15', 1, 1);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-04-11', '2020-03-15', 1, 1);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-04-16', '2020-03-17', 1, 1);
+
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-15', '2020-01-21', 1, 2);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-02-15', '2020-02-27', 1, 2);
+INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-03-01', '2020-03-05', 1, 2);
+
 INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2019-01-01', '2019-12-02', 3, 3);
 INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2018-05-01', '2018-07-02', 4, 4);
 INSERT INTO car_driver (start_date, end_date, car_id, driver_id) VALUES ('2020-01-01', '2020-12-31', 5, 5);

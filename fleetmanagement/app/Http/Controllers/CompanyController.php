@@ -2,13 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
-use App\CarDriver;
 use App\Car;
+use App\Company;
+use App\Driver;
+use App\CarDriver;
+use App\User;
+use App\Tax;
+use App\Maintenance;
+use App\Insurance;
+use App\Inspection;
 
-
-class CarDriverController extends Controller
+class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +28,10 @@ class CarDriverController extends Controller
      */
     public function index()
     {
-        //
+        if (!Auth::check()) return redirect('/login');
+        $users = User::where('company_id', '=', User::find(Auth::user()->id)->company_id);
+
+        return view('pages.company', ['users' => $users->paginate(15)]);
     }
 
     /**
@@ -27,7 +41,9 @@ class CarDriverController extends Controller
      */
     public function create()
     {
-        //
+        if (!Auth::check()) return redirect('/login');
+
+        return view('pages.addUser');
     }
 
     /**
@@ -38,22 +54,18 @@ class CarDriverController extends Controller
      */
     public function store(Request $request)
     {
-        $cardriver = new CarDriver();
+        if (!Auth::check()) return redirect('/login');
+        $company_id = User::find(Auth::user()->id)->company->id;
 
-        $request->validate([
-            'car_id' => 'required',
-            'driver_id' => 'required',
-            'start_date' => 'required|date|after_or_equal:today',
-            'end_date' => 'nullable|date|after:start_date'
+        User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+            'company_id' => $company_id,
         ]);
 
-        $cardriver->car_id = $request['car_id'];
-        $cardriver->driver_id = $request['driver_id'];
-        $cardriver->start_date = $request['start_date'];
-        $cardriver->end_date = $request['end_date'];
-        $cardriver->save();
-
-        return redirect()->route('car.show', $request['car_id']);
+        $users = User::where('company_id', '=', User::find(Auth::user()->id)->company_id);
+        return view('pages.company', ['users' => $users->paginate(15)]);
     }
 
     /**
@@ -64,7 +76,7 @@ class CarDriverController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -98,23 +110,13 @@ class CarDriverController extends Controller
      */
     public function destroy($id)
     {
-        $carDriver = CarDriver::find($id);
-        $carId = $carDriver->car_id;
-        CarDriver::destroy($id);
-        return redirect()->route('car.show', $carId);
-    }
 
-    public function showDrivers($car_id){
-        $car = Car::find($car_id);
-        $drivers = $car->drivers()->orderBy('end_date', 'DESC');
+        $user = User::find($id);
+        $user->delete();
 
-        $driverChartValues = CarDriver::selectRaw('drivers.name as x, count(driver_id) as y')
-            ->leftJoin('drivers', 'drivers.id', '=', 'car_driver.driver_id')
-            ->where('car_id', '=', $car->id)
-            ->groupBy('x')
-            ->get();
+        $users = User::where('company_id', '=', User::find(Auth::user()->id)->company_id);
 
-        return view('pages.driverHistory')->with('drivers', $drivers->paginate(15))->with('car_id' , $car_id)->with('driverChartValues', $driverChartValues);        
+        return view('pages.company', ['users' => $users->paginate(15)]);
     }
 
 }

@@ -27,11 +27,17 @@ class HistoryController extends Controller
     public function index()
     {
         if (!Auth::check()) return redirect('/login');
-        $cars = Car::where('company_id', '=', User::find(Auth::user()->id)->company->id)->get();
-        $maintenances = Maintenance::get();
-        $insurances = Insurance::get();
-        $inspections = Inspection::get();
-        $taxes = Tax::get();
+        $userId = User::find(Auth::user()->id)->company->id;
+        $cars = Car::where('company_id', '=', $userId)->get();
+        $carIds = $cars->pluck('id');
+
+        $maintenances = Maintenance::whereIn('car_id', $carIds)->get();
+        $insurances = Insurance::whereIn('car_id', $carIds)->get();
+        $inspections = Inspection::whereIn('car_id', $carIds)->get();
+        $taxes = Tax::whereIn('car_id', $carIds)->get();
+        $allTaxes = Tax::whereIn('car_id', $carIds);
+
+        $all_maintenaces = Maintenance::whereIn('car_id', $carIds)->orderBy('date');
 
         $history = [];
         foreach ($maintenances as $maintenance){
@@ -66,7 +72,9 @@ class HistoryController extends Controller
                                     'insurances' => $insurances,
                                     'inspections' => $inspections,
                                     'taxes' => $taxes,
-                                    'history' => $history]);
+                                    'allTaxes' =>$allTaxes->paginate(15),
+                                    'history' => $history,
+                                    'allMaintenances' => $all_maintenaces->paginate(15)]);
     }
 
 

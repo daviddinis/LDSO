@@ -4,11 +4,12 @@
 #
 #                         Deploy script for iFleet app (staging/production)
 #                         
-#                           Requirements:
+#                           Requirements (server):
 #                               - git
 #                               - docker
 #                               - docker compose
 #                               - yq
+#                               - sponge
 #                               - ssh with (probably) root access
 #
 #                           Call script like this:
@@ -34,7 +35,7 @@ GITLAB_ACCESS_USER=$2;
 GITLAB_ACCESS_TOKEN=$3;
 
 POSTGRESQL_DB_HOST=$4;
-POSGRESQL_DB_NAME=$5;
+POSTGRESQL_DB_NAME=$5;
 POSTGRESQL_ROOT_USER=$6;
 POSTGRESQL_ROOT_PWD=$7;
 
@@ -92,17 +93,20 @@ echo "Updating secrets..."
 
 # Replace env variables, append ok since laravel will only use the last version of the variable
 echo "DB_HOST=$POSTGRESQL_DB_HOST"       >> .env
-echo "DB_DATABASE=$POSGRESQL_DB_NAME"    >> .env
+echo "DB_DATABASE=$POSTGRESQL_DB_NAME"    >> .env
 echo "DB_USERNAME=$POSTGRESQL_ROOT_USER" >> .env
 echo "DB_PASSWORD=$POSTGRESQL_ROOT_PWD"  >> .env
 
-# Update docker-compose.yml secrets
-yq w -i docker-compose.yml services.db.environment.POSTGRES_DB $POSGRESQL_DB_NAME
-yq w -i docker-compose.yml services.db.environment.POSTGRES_USER $POSTGRESQL_ROOT_USER
-yq w -i docker-compose.yml services.db.environment.POSTGRES_PASSWORD $POSTGRESQL_ROOT_PWD
 
-yq w -i docker-compose.yml services.pgadmin.environment.PGADMIN_DEFAULT_EMAIL $PGADMIN_ADMIN_USER
-yq w -i docker-compose.yml services.pgadmin.environment.PGADMIN_DEFAULT_PASSWORD $PGADMIN_ADMIN_PWD
+
+
+# Update docker-compose.yml secrets
+yq eval ".services.db.environment.POSTGRES_DB = \"$POSTGRESQL_DB_NAME\"" docker-compose.yml | sponge docker-compose.yml
+yq eval ".services.db.environment.POSTGRES_USER = \"$POSTGRESQL_ROOT_USER\"" docker-compose.yml | sponge docker-compose.yml
+yq eval ".services.db.environment.POSTGRES_PASSWORD = \"$POSTGRESQL_ROOT_PWD\"" docker-compose.yml | sponge docker-compose.yml
+
+yq eval ".services.pgadmin.environment.PGADMIN_DEFAULT_EMAIL = \"$PGADMIN_ADMIN_USER\"" docker-compose.yml | sponge docker-compose.yml
+yq eval ".services.pgadmin.environment.PGADMIN_DEFAULT_PASSWORD = \"$PGADMIN_ADMIN_PWD\"" docker-compose.yml | sponge docker-compose.yml
 
 ## Give our user ownership (for logging, uploading images etc)
 sudo chown -R ubuntu:www-data storage
