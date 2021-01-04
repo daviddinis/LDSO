@@ -375,20 +375,23 @@
                         </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $firstInsuranceId = array_key_first(json_decode($issues["Insurance"], true));
+                            @endphp
                             @if (count($issues["Insurance"]) != 0)
-                                @if($issues["Insurance"][0]->expiration_date < Carbon\Carbon::now())
+                                @if($issues["Insurance"][$firstInsuranceId]->expiration_date < Carbon\Carbon::now())
                                     <tr class="table-danger">
                                         <th>Insurance</th>
                                         <td>Dangerous</td>
                                         <td>Your latest Insurance document <b>has expired</b>. Please consider if this vehicle is fit for use!</td>
                                     </tr>
-                                @elseif($issues["Insurance"][0]->expiration_date < Carbon\Carbon::now()->addDays($car->red_alert))
+                                @elseif($issues["Insurance"][$firstInsuranceId]->expiration_date < Carbon\Carbon::now()->addDays($car->red_alert))
                                     <tr class="table-warning">
                                         <th>Insurance</th>
                                         <td>Urgent</td>
                                         <td>Your latest Insurance document will expire <b>very soon</b> soon. Please consider renewing it</td>
                                     </tr>
-                                @elseif($issues["Insurance"][0]->expiration_date < Carbon\Carbon::now()->addDays($car->yellow_alert))
+                                @elseif($issues["Insurance"][$firstInsuranceId]->expiration_date < Carbon\Carbon::now()->addDays($car->yellow_alert))
                                     <tr class="table-warning">
                                         <th>Insurance</th>
                                         <td>Upcoming</td>
@@ -397,20 +400,23 @@
                                 @endif
                             @endif
             
+                            @php
+                                $firstInspectionId = array_key_first(json_decode($issues["Inspection"], true));
+                            @endphp
                             @if (count($issues["Inspection"]) != 0)
-                                @if($issues["Inspection"][0]->expiration_date < Carbon\Carbon::now())
+                                @if($issues["Inspection"][$firstInspectionId]->expiration_date < Carbon\Carbon::now())
                                     <tr class="table-danger">
                                         <th>Inspection</th>
                                         <td>Dangerous</td>
                                         <td>Your latest Inspection document <b>has expired</b>. Please consider if this vehicle is fit for use!</td>
                                     </tr>
-                                @elseif($issues["Inspection"][0]->expiration_date < Carbon\Carbon::now()->addDays($car->red_alert))
+                                @elseif($issues["Inspection"][$firstInspectionId]->expiration_date < Carbon\Carbon::now()->addDays($car->red_alert))
                                     <tr class="table-warning">
                                         <th>Inspection</th>
                                         <td>Urgent</td>
                                         <td>Your latest Inspection document will expire <b>very soon</b> soon. Please consider renewing it</td>
                                     </tr>
-                                @elseif($issues["Inspection"][0]->expiration_date < Carbon\Carbon::now()->addDays($car->yellow_alert))
+                                @elseif($issues["Inspection"][$firstInspectionId]->expiration_date < Carbon\Carbon::now()->addDays($car->yellow_alert))
                                     <tr class="table-warning">
                                         <th>Inspection</th>
                                         <td>Upcoming</td>
@@ -418,21 +424,24 @@
                                     </tr>
                                 @endif
                             @endif
-            
+
+                            @php
+                                $firstTaxId = array_key_first(json_decode($issues["Tax"], true));
+                            @endphp
                             @if (count($issues["Tax"]) != 0)
-                                @if($issues["Tax"][0]->expiration_date < Carbon\Carbon::now())
+                                @if($issues["Tax"][$firstTaxId]->expiration_date < Carbon\Carbon::now())
                                     <tr class="table-danger">
                                         <th>Tax</th>
                                         <td>Dangerous</td>
                                         <td>Your latest tax document <b>has expired</b>. Please consider if this vehicle is fit for use!</td>
                                     </tr>
-                                @elseif($issues["Tax"][0]->expiration_date < Carbon\Carbon::now()->addDays($car->red_alert))
+                                @elseif($issues["Tax"][$firstTaxId]->expiration_date < Carbon\Carbon::now()->addDays($car->red_alert))
                                     <tr class="table-warning">
                                         <th>Tax</th>
                                         <td>Urgent</td>
                                         <td>Your latest tax document will expire <b>very soon</b> soon. Please consider renewing it</td>
                                     </tr>
-                                @elseif($issues["Tax"][0]->expiration_date < Carbon\Carbon::now()->addDays($car->yellow_alert))
+                                @elseif($issues["Tax"][$firstTaxId]->expiration_date < Carbon\Carbon::now()->addDays($car->yellow_alert))
                                     <tr class="table-warning">
                                         <th>Tax</th>
                                         <td>Upcoming</td>
