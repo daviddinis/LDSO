@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Carbon\Carbon;
+use Facebook\WebDriver\WebDriverBy;
 
 class LaravelDuskTest extends DuskTestCase
 {
@@ -241,9 +242,8 @@ class LaravelDuskTest extends DuskTestCase
                 });
     }
 
-
     public function testCanSeeAndAddAndDeleteUsers()
-    {        
+    {
         $this->browse(function (Browser $browser) {
             $browser->visit('http://ifleet.dusk.test/')
                     ->value('#email', 'johndoe@fe.up.pt')
@@ -263,6 +263,34 @@ class LaravelDuskTest extends DuskTestCase
                     ->click('button.btn:nth-child(1)')
                     ->assertSee('testname');
                 });
+    }
+
+    public function testSeeMaintenanceHistory()
+    {        
+        $this->browse(function (Browser $browser) {
+            $browser->visit('http://ifleet.dusk.test/')
+                    ->value('#email', 'johndoe@fe.up.pt')
+                    ->value('#password', '1234')
+                    ->click('.btn')
+                    ->click('li.nav-item:nth-child(5) > a:nth-child(1)')
+                    ->click('a.active');
+            $elements = $browser->driver->findElements(WebDriverBy::className('maintenanceID'));
+            $this->assertCount(49, $elements);
+            });
+    }
+
+    public function testSeeTaxHistory()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('http://ifleet.dusk.test/')
+                    ->value('#email', 'johndoe@fe.up.pt')
+                    ->value('#password', '1234')
+                    ->click('.btn')
+                    ->click('li.nav-item:nth-child(5) > a:nth-child(1)')
+                    ->click('.nav > li:nth-child(3) > a:nth-child(1)');
+            $elements = $browser->driver->findElements(WebDriverBy::className('taxID'));
+            $this->assertCount(24, $elements);
+            });
     }
     
 }
