@@ -110,7 +110,15 @@ INSERT INTO companies (company_name) VALUES ('FEUP');
 INSERT INTO companies (company_name) VALUES ('FEUP2');
 INSERT INTO users (name, email, password, company_id) VALUES ('John Doe', 'johndoe@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
  1); -- Password is 1234. Generated using Hash::make('1234')
-INSERT INTO users (name, email, password, company_id) VALUES ('John Doe2', 'johndoe2@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+ INSERT INTO users (name, email, password, company_id) VALUES ('Jane Doe', 'janedoe@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+ 1); -- Password is 1234. Generated using Hash::make('1234')
+INSERT INTO users (name, email, password, company_id) VALUES ('Johan Doe', 'johandoe@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+ 1); -- Password is 1234. Generated using Hash::make('1234')
+INSERT INTO users (name, email, password, company_id) VALUES ('Donna Doe', 'donnadoe@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+ 1); -- Password is 1234. Generated using Hash::make('1234')
+INSERT INTO users (name, email, password, company_id) VALUES ('Elisa Doe', 'elisadoe@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+ 1); -- Password is 1234. Generated using Hash::make('1234')
+INSERT INTO users (name, email, password, company_id) VALUES ('Mary Doe', 'marydoe@fe.up.pt', '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
  2); -- Password is 1234. Generated using Hash::make('1234')
 
 

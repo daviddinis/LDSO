@@ -242,6 +242,29 @@ class LaravelDuskTest extends DuskTestCase
                 });
     }
 
+    public function testCanSeeAndAddAndDeleteUsers()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('http://ifleet.dusk.test/')
+                    ->value('#email', 'johndoe@fe.up.pt')
+                    ->value('#password', '1234')
+                    ->click('.btn')
+                    ->visit('http://ifleet.dusk.test/company')
+                    ->assertSee('Elisa Doe')
+                    ->click('.table > tbody:nth-child(6) > tr:nth-child(1) > td:nth-child(4) > form:nth-child(1) > button:nth-child(3) > i:nth-child(1)')
+                    ->acceptDialog()
+                    ->assertDontSee('Elisa Doe')
+                    ->click('button.btn:nth-child(1)')
+                    ->assertSee('Add another user to the company')
+                    ->value('#name', 'testname')
+                    ->value('#email', 'testmail@mail.com')
+                    ->value('#password', '12345678')
+                    ->value('#password_confirmation', '12345678')
+                    ->click('button.btn:nth-child(1)')
+                    ->assertSee('testname');
+                });
+    }
+
     public function testSeeMaintenanceHistory()
     {        
         $this->browse(function (Browser $browser) {
