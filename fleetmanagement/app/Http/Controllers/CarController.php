@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +12,12 @@ use Illuminate\Support\Facades\Validator;
 use App\Car;
 use App\Company;
 use App\Driver;
+use App\CarDriver;
 use App\User;
+use App\Tax;
+use App\Maintenance;
+use App\Insurance;
+use App\Inspection;
 
 class CarController extends Controller
 {
@@ -22,9 +29,61 @@ class CarController extends Controller
     public function index()
     {
         if (!Auth::check()) return redirect('/login');
-        $cars = Car::where('company_id', '=', User::find(Auth::user()->id)->company->id)->get();
+        $cars = Car::where('company_id', '=', User::find(Auth::user()->id)->company->id);
+        $carIds = $cars->pluck('id');
 
-        return view('pages.cars')->with('cars', $cars);
+
+        $maintenanceCosts = Maintenance::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->whereIn('maintenances.car_id', $carIds)
+            ->groupBy('x')
+            ->orderBy('x')
+            ->get();
+
+        $mileage = Maintenance::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(kilometers) as y')
+            ->whereIn('maintenances.car_id', $carIds)
+            ->groupBy('x')
+            ->limit(12)
+            ->orderBy('x')
+            ->get();
+
+        $taxCosts = Tax::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->whereIn('taxes.car_id', $carIds)
+            ->groupBy('x')
+            ->orderBy('x')
+            ->get();
+
+        $insuranceCosts = Insurance::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->whereIn('insurances.car_id', $carIds)
+            ->groupBy('x')
+            ->orderBy('x')
+            ->get();
+
+        $inspectionCosts = Inspection::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->whereIn('inspections.car_id', $carIds)
+            ->groupBy('x')
+            ->orderBy('x')
+            ->get();
+
+        // Last 12 months (for graph x-axis)
+        $period = CarbonPeriod::create(Carbon::now()->addMonths(-11), Carbon::now())->month();
+
+        $months = collect($period)->map(function (Carbon $date) {
+            return [
+                'yearandmonth' => $date->year . '-' . $date->month
+            ];
+        });
+
+        $issuesChartValues = $this->getAllMonthlyIssuesCount($cars->get());
+
+        return view('pages.cars', [
+            'carIds' => $carIds,
+            'mileage' => $mileage,
+            'graphLabels' => $months->pluck('yearandmonth'),
+            'maintenanceValues'=> $maintenanceCosts, 
+            'taxValues' => $taxCosts, 
+            'insuranceValues' => $insuranceCosts, 
+            'inspectionValues' => $inspectionCosts,
+            'issuesChartValues' => $issuesChartValues])->with('cars', $cars->paginate(15));
     }
 
     /**
@@ -57,9 +116,7 @@ class CarController extends Controller
 
         if ($request->hasFile('image')) {
             request()->validate([
-
                 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-
             ]);
             $imageName = $request->input('plate') . '.' . request()->image->getClientOriginalExtension();
             request()->image->move(public_path('img'), $imageName);
@@ -84,7 +141,64 @@ class CarController extends Controller
     {
         if (!Auth::check()) return redirect('/login');
         $car = Car::find($id);
-        return view('pages.car', ['car' => $car, 'drivers' => Driver::all()]);
+
+        // Data for charts
+
+        $drivers = Driver::where('company_id', '=', $car->company_id)->get();
+        $period = CarbonPeriod::create(Carbon::now()->addMonths(-11), Carbon::now())->month();
+        $months = collect($period)->map(function (Carbon $date) {
+            return [
+                'yearandmonth' => $date->year . '-' . $date->month
+            ];
+        });
+
+        $maintenanceCosts = Maintenance::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->where('maintenances.car_id','=', $car->id)
+            ->groupBy('x')
+            ->orderBy('x')
+            ->get();
+
+        $taxCosts = Tax::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->where('taxes.car_id','=', $car->id)
+            ->groupBy('x')
+            ->orderBy('x')
+            ->get();
+
+        $insuranceCosts = Insurance::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->where('insurances.car_id','=', $car->id)
+            ->groupBy('x')
+            ->orderBy('x')
+            ->get();
+
+        $inspectionCosts = Inspection::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(value) as y')
+            ->where('inspections.car_id','=', $car->id)
+            ->groupBy('x')
+            ->orderBy('x')
+            ->get();
+        
+        $mileage = Maintenance::selectRaw('concat(EXTRACT(year from date), \'-\', EXTRACT(month from date)) as x, sum(kilometers) as y')
+            ->where('maintenances.car_id','=', $car->id)
+            ->groupBy('x')
+            ->orderBy('x')
+            ->get();
+
+        $driverValues = CarDriver::selectRaw('concat(EXTRACT(year from start_date), \'-\', EXTRACT(month from start_date)) as x, count(id) as y')
+            ->where('car_driver.car_id','=', $car->id)
+            ->groupBy('x')
+            ->orderBy('x')
+            ->get();
+
+        return view('pages.car', array_merge([
+            'maintenanceValues' => $maintenanceCosts,
+            'taxValues' => $taxCosts,
+            'insuranceValues' => $insuranceCosts,
+            'inspectionValues' => $inspectionCosts,
+            'mileageValues' => $mileage,
+            'driverValues' => $driverValues,
+            'car' => $car, 
+            'graphLabels' => $months->pluck('yearandmonth'),    
+            'drivers' => $drivers], 
+            $this->getEventExpirationDates($car) ) );
     }
 
     /**
@@ -128,6 +242,14 @@ class CarController extends Controller
         if (!Auth::check()) return redirect('/login');
         $car = Car::findOrFail($id);
 
+        return view('pages.carSettings', array_merge([
+            'car' => $car
+        ], $this->getEventExpirationDates($car)));
+    }
+
+    private function getEventExpirationDates($car)
+    {
+
         $tax = $this->getCurrentTax($car);
         $taxDate = $tax != null ? $tax->expiration_date : null;
 
@@ -140,11 +262,11 @@ class CarController extends Controller
         $maintenance = $this->getCurrentMaintenance($car);
         $maintenanceDate = $maintenance != null ? $maintenance->date : null;
 
-        return view('pages.carSettings', [
-            'car' => $car, 'taxDate' => $taxDate,
+        return [
+            'taxDate' => $taxDate,
             'inspectionDate' => $inspectionDate, 'insuranceDate' => $insuranceDate,
             'maintenanceDate' => $maintenanceDate
-        ]);
+        ];
     }
 
     //updates the car alert settings?
@@ -195,6 +317,32 @@ class CarController extends Controller
     {
 
         return $car->maintenances()->orderBy('date', 'desc')->first();
+    }
+
+    private function getAllMonthlyIssuesCount($cars){
+
+        // Last 12 months (for graph x-axis)
+        $period = CarbonPeriod::create(Carbon::now()->addMonths(-11), Carbon::now())->month();
+
+        $monthly_issues_count = collect($period)->map(function (Carbon $date) use ($cars) {
+            return [
+                'x' => "$date->year-$date->month",
+                'y' => strval( $this->getMonthlyIssuesCount($cars, $date->year, $date->month) )
+            ];
+        });
+
+        return json_encode($monthly_issues_count);
+    }
+
+    private function getMonthlyIssuesCount($cars, $year, $month){
+
+        $months_count = 0;
+
+        foreach($cars as $car){
+            $months_count += $car->numIssuesMonth($year, $month);
+        }
+
+        return $months_count;
     }
     
     /**

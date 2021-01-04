@@ -1,0 +1,26 @@
+/* formatting all the alert times boxes */
+.currentAlertTime{
+  border: #0079a1 3px solid;
+  text-align: center;
+  font-size: 0.9em;
+
+}
+
+/* coloring yellow alert box and the respective input background */
+.yellow-segment {
+  background-color: var(--warning);
+}
+
+/* coloring red alert box and the respective input background */
+.red-segment{
+  background-color: var(--danger);
+}
+
+/* coloring overdue alert box */
+.overdue-segment{
+  background-color: var(--dark);
+}
+
+.green-segment{
+  background-color: var(--success);
+}
