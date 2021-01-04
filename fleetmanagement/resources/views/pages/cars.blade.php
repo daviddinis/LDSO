@@ -39,7 +39,10 @@
           </div>
           <div class="tab-pane fade" id="issues">
             <!-- Put another graph here! -->
-            <p>Put another graph here!</p>  
+            {{-- ONLY WORKS WITH THIS DIV AND ONLY IF IT HAS DIMENSIONS --}}
+            <div style="height:420px; width:1080px;"> 
+            <canvas id="issues-chart" width="1080px" height="420px"></canvas>
+            </div>
           </div>
           <div class="tab-pane fade" id="hide">
             <!-- Don't put anything here :) -->
@@ -131,7 +134,44 @@
               }
             }
         });
-        
+
+        let issuesChartValues = @php echo $issuesChartValues; @endphp;
+
+        let oi = new Chart(document.getElementById("issues-chart"), {
+            type: 'bar',
+            data: {
+                labels: chartLabels,
+                datasets: [
+                    {
+                        label: "Accumulated Issues (All)",
+                        fill: false,
+                        borderColor: "orange",
+                        backgroundColor: "orange",
+                        pointFillColor: "orange",
+                        steppedLine: false,
+                        pointHoverBorderColor: "orange",
+                        pointRadius: 2,
+                        data: padChartData(chartLabels, issuesChartValues)
+                    },
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                legend: { display: true },
+                title: {
+                    display: true,
+                    text: 'Recorded usage of vehicle per month of the last 12 months'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0
+                        }
+                    }],
+                },
+
+            }
+        });
         </script>
 
 

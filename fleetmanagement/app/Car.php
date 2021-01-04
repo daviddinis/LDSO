@@ -67,8 +67,6 @@ class Car extends Model
         $yearEnd = new Carbon('last day of December' . $year);        
         
         return $this->numAllIssuesPeriod($yearStart, $yearEnd);
-
-        //return json_encode([$yearStart, $yearEnd]);
     }
 
     public function numIssuesMonth($year, $month)
@@ -87,7 +85,7 @@ class Car extends Model
         $count += $this->numEventIssuesTimePeriod($dateStart, $dateEnd, $this->inspections, 'expiration_date');
         $count += $this->numEventIssuesTimePeriod($dateStart, $dateEnd, $this->insurances, 'expiration_date');
 
-        return $this->model . ' ' . $this->make  . ' ' . $this->license_plate . '  |  ' . $count;
+        return /*$this->model . ' ' . $this->make  . ' ' . $this->license_plate . '  |  ' .*/ $count;
     }
 
     private function numEventIssuesTimePeriod($dateStart, $dateEnd, $allEvents, $endDateName)
