@@ -160,7 +160,7 @@
                 legend: { display: true },
                 title: {
                     display: true,
-                    text: 'Recorded usage of vehicle per month of the last 12 months'
+                    text: 'Total issues of all owned vehicles per month of the last 12 months'
                 },
                 scales: {
                     yAxes: [{
