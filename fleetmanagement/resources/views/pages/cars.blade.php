@@ -138,7 +138,7 @@
         let issuesChartValues = @php echo $issuesChartValues; @endphp;
 
         let oi = new Chart(document.getElementById("issues-chart"), {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: chartLabels,
                 datasets: [
