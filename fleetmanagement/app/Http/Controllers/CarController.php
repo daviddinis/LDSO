@@ -73,6 +73,8 @@ class CarController extends Controller
             ];
         });
 
+        $issuesChartValues = $this->getAllMonthlyIssuesCount($cars->get());
+
         return view('pages.cars', [
             'carIds' => $carIds,
             'mileage' => $mileage,
@@ -80,7 +82,8 @@ class CarController extends Controller
             'maintenanceValues'=> $maintenanceCosts, 
             'taxValues' => $taxCosts, 
             'insuranceValues' => $insuranceCosts, 
-            'inspectionValues' => $inspectionCosts])->with('cars', $cars->paginate(15));
+            'inspectionValues' => $inspectionCosts,
+            'issuesChartValues' => $issuesChartValues])->with('cars', $cars->paginate(15));
     }
 
     /**
@@ -316,6 +319,32 @@ class CarController extends Controller
         return $car->maintenances()->orderBy('date', 'desc')->first();
     }
 
+    private function getAllMonthlyIssuesCount($cars){
+
+        // Last 12 months (for graph x-axis)
+        $period = CarbonPeriod::create(Carbon::now()->addMonths(-11), Carbon::now())->month();
+
+        $monthly_issues_count = collect($period)->map(function (Carbon $date) use ($cars) {
+            return [
+                'x' => "$date->year-$date->month",
+                'y' => strval( $this->getMonthlyIssuesCount($cars, $date->year, $date->month) )
+            ];
+        });
+
+        return json_encode($monthly_issues_count);
+    }
+
+    private function getMonthlyIssuesCount($cars, $year, $month){
+
+        $months_count = 0;
+
+        foreach($cars as $car){
+            $months_count += $car->numIssuesMonth($year, $month);
+        }
+
+        return $months_count;
+    }
+    
     /**
      * Assign driver to car
      *
