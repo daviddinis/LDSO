@@ -29,10 +29,9 @@ class CompanyController extends Controller
     public function index()
     {
         if (!Auth::check()) return redirect('/login');
-        $user = User::where('company_id', '=', User::find(Auth::user()->id)->company_id)->get();
-        $user = User::all();
+        $users = User::where('company_id', '=', User::find(Auth::user()->id)->company_id)->get();
 
-        return view('pages.company', ['user' => $user]);
+        return view('pages.company', ['users' => $users]);
     }
 
     /**
@@ -42,6 +41,9 @@ class CompanyController extends Controller
      */
     public function create()
     {
+        if (!Auth::check()) return redirect('/login');
+
+        return view('pages.addUser');
     }
 
     /**
@@ -52,6 +54,18 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::check()) return redirect('/login');
+        $company_id = User::find(Auth::user()->id)->company->id;
+
+        User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+            'company_id' => $company_id,
+        ]);
+
+        $users = User::where('company_id', '=', User::find(Auth::user()->id)->company_id)->get();
+        return view('pages.company', ['users' => $users]);
     }
 
     /**
@@ -96,6 +110,13 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
+
+        $user = User::find($id);
+        $user->delete();
+
+        $users = User::where('company_id', '=', User::find(Auth::user()->id)->company_id)->get();
+
+        return view('pages.company', ['users' => $users]);
     }
 
 }
