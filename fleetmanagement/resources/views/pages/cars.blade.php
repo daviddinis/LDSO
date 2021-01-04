@@ -101,7 +101,7 @@
                         }
                         , title: {
                             display: true
-                            , text: 'Combined mileage of all owned vehicles per month of the last 12 months'
+                            , text: 'Recorded mileage of all owned vehicles per month of the last 12 months'
 
                         },
                       responsive: true,
