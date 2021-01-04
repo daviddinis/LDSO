@@ -85,33 +85,42 @@ class Car extends Model
         $count += $this->numEventIssuesTimePeriod($dateStart, $dateEnd, $this->inspections, 'expiration_date');
         $count += $this->numEventIssuesTimePeriod($dateStart, $dateEnd, $this->insurances, 'expiration_date');
 
-        return /*$this->model . ' ' . $this->make  . ' ' . $this->license_plate . '  |  ' .*/ $count;
+        return $count;
     }
 
     private function numEventIssuesTimePeriod($dateStart, $dateEnd, $allEvents, $endDateName)
     {
-        $yearEventsExp = $allEvents->whereBetween($endDateName, [$dateStart, $dateEnd]);    
-        $yearEventsStart = $allEvents->whereBetween('date', [$dateStart, $dateEnd]);
+        $timePeriodEventsExp = $allEvents->whereBetween($endDateName, [$dateStart, $dateEnd]);    
+        $timePeriodEventsStart = $allEvents->whereBetween('date', [$dateStart, $dateEnd]);
+        $eventPrecedingTimePeriod = $allEvents->where('date', '<', $dateStart)->sortByDesc($endDateName)->take(1)->pluck($endDateName)->first();
 
-        $yearEvents = ($yearEventsExp->merge($yearEventsStart))->sortBy($endDateName);
+        $timePeriodEvents = ($timePeriodEventsExp->merge($timePeriodEventsStart))->sortBy($endDateName);
 
-        $yearEventsDates = $yearEvents->map(function ($event) use ($endDateName) {
+        $timePeriodEventsDates = $timePeriodEvents->map(function ($event) use ($endDateName) {
             return collect($event->toArray())
                 ->only(['id', 'date', $endDateName])
                 ->all();
         });
 
-        $yearEventsDatesArray = $yearEventsDates->toArray();
+        $timePeriodEventsDatesArray = $timePeriodEventsDates->toArray();
 
         $count = 0;
         $lastExpDatesAreFuture = false;
 
-        for ($i = 0; $i < count($yearEventsDatesArray) - 1; $i++) {
+        //increments the count if the event preceding the time period has expired before the period's start
+        if ($eventPrecedingTimePeriod != null)
+        {   
+            $dateStart->gt($eventPrecedingTimePeriod) ? $count++ : true;
+        }
 
-            $currEvent = $yearEventsDatesArray[$i];
-            $nextEvent = $yearEventsDatesArray[$i + 1];
+        //counts any issues pertaining to events that start or end within the time period, 
+        //not including the last events' expiration date
+        for ($i = 0; $i < count($timePeriodEventsDatesArray) - 1; $i++) {
 
-            $currEventExpirationDate = new Carbon($currEvent[$endDateName]); //first event expiration date
+            $currEvent = $timePeriodEventsDatesArray[$i];
+            $nextEvent = $timePeriodEventsDatesArray[$i + 1];
+
+            $currEventExpirationDate = new Carbon($currEvent[$endDateName]); //first event end date
             $nextEventDate = new Carbon($nextEvent['date']); //second event date
             
             $lastExpDatesAreFuture = Carbon::now()->lte($currEventExpirationDate);
@@ -122,9 +131,11 @@ class Car extends Model
                 $count++;
         }
 
-        if (count($yearEventsDatesArray) > 0) {
+        //increments the count if the last event expires within the time period
+        //(which means there was a time where the event was not renewed)
+        if (count($timePeriodEventsDatesArray) > 0) {
 
-            $lastEvent = $yearEventsDatesArray[count($yearEventsDatesArray) - 1];
+            $lastEvent = $timePeriodEventsDatesArray[count($timePeriodEventsDatesArray) - 1];
             $lastEventExpirationDate = new Carbon($lastEvent[$endDateName]);
 
             $lastExpDateIsFuture = Carbon::now()->lte($lastEventExpirationDate);
