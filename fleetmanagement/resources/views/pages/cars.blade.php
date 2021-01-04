@@ -201,7 +201,7 @@
                         }
                         , title: {
                             display: true
-                            , text: 'Total issues of all owned vehicles per month of the last 12 months'
+                            , text: 'Total overdue events of all owned vehicles per month of the last 12 months'
                         }
                         , scales: {
                             yAxes: [{
