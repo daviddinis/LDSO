@@ -7,11 +7,6 @@
   <div class="collapse navbar-collapse" id="navbarColor01">
     @if (Auth::check())
     <ul class="navbar-nav mr-auto" id="navbarOptions">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Dashboard
-          <span class="sr-only">(current)</span>
-        </a>
-      </li>
       <li class="nav-item">
         <a class="nav-link" href="{{route('car.index')}}">Cars</a>
       </li>

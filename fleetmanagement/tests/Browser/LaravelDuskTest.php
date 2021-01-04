@@ -83,7 +83,7 @@ class LaravelDuskTest extends DuskTestCase
                     ->value('#email', 'johndoe@fe.up.pt')
                     ->value('#password', '1234')
                     ->click('.btn')
-                    ->click('li.nav-item:nth-child(3) > a:nth-child(1)')
+                    ->click('#navbarOptions > li:nth-child(2) > a:nth-child(1)')
                     ->assertSee('DriverLicense')
                     ->click('.btn-primary')
                     ->value('#name', 'DriverFirstName')
@@ -238,7 +238,7 @@ class LaravelDuskTest extends DuskTestCase
                     ->click('.btn')
                     ->click('#carTable > tbody:nth-child(2) > tr:nth-child(7) > td:nth-child(1) > a:nth-child(1)')
                     ->assertSee("Dangerous")
-                    ->assertSee("Upcoming");
+                    ->assertDontSee("Upcoming");
                 });
     }
 
@@ -272,10 +272,10 @@ class LaravelDuskTest extends DuskTestCase
                     ->value('#email', 'johndoe@fe.up.pt')
                     ->value('#password', '1234')
                     ->click('.btn')
-                    ->click('li.nav-item:nth-child(5) > a:nth-child(1)')
+                    ->click('li.nav-item:nth-child(4) > a:nth-child(1)')
                     ->click('a.active');
             $elements = $browser->driver->findElements(WebDriverBy::className('maintenanceID'));
-            $this->assertCount(49, $elements);
+            $this->assertCount(15, $elements);
             });
     }
 
@@ -286,10 +286,10 @@ class LaravelDuskTest extends DuskTestCase
                     ->value('#email', 'johndoe@fe.up.pt')
                     ->value('#password', '1234')
                     ->click('.btn')
-                    ->click('li.nav-item:nth-child(5) > a:nth-child(1)')
+                    ->click('li.nav-item:nth-child(4) > a:nth-child(1)')
                     ->click('.nav > li:nth-child(3) > a:nth-child(1)');
             $elements = $browser->driver->findElements(WebDriverBy::className('taxID'));
-            $this->assertCount(24, $elements);
+            $this->assertCount(15, $elements);
             });
     }
     

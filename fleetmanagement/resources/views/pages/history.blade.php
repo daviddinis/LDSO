@@ -66,7 +66,6 @@
           @endforeach
     </div>
     <div class="tab-pane fade" id="maintenances">
-
       <div class="card-body">
         <table id="maintenancesTable" class="table table-hover">
               <thead>
@@ -100,9 +99,12 @@
               </tbody>
               @endforeach
         </table>
+        <div>{{$allMaintenances->links()}}</div>
       </div>
+      
   </div>
   <div class="tab-pane fade" id="taxes">
+    <div class="card-body">
     <table id="taxesTable" class="table table-hover">
               <thead>
                   <tr>
@@ -115,7 +117,7 @@
                       <th scope="col"><a href="#" onclick="sortTaxesTable(6)"><a href="#">File</a></th>
                   </tr>
               </thead>
-              @foreach ($taxes as $tax)
+              @foreach ($allTaxes as $tax)
               <tbody>
                   <tr class="table-primary">
                       <th scope="row"><span class="taxID">{{$tax->id}}</span></th>
@@ -133,8 +135,8 @@
               </tbody>
               @endforeach
         </table>
-  </div>
-  <div class="tab-pane fade" id="hide">
+        <div>{{$allTaxes->links()}}</div>
+    </div>
   </div>
 </div>
 

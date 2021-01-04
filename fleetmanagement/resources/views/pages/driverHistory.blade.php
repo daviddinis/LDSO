@@ -11,8 +11,8 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col" style="margin-bottom:3em;">
-            <canvas id="pie-chart" width="960px" height="300px"></canvas>
+        <div class="col" style="position:relative; height:40vh; width:40vw; margin-bottom:3em;">
+            <canvas id="pie-chart" ></canvas>
         </div>
     </div>
 </div>
@@ -50,7 +50,9 @@
         title: {
             display: true,
             text: 'Usage of vehicle (by driver)'
-        }
+        },
+        responsive:true,
+        maintainAspectRatio:false
         }
     });
 </script>

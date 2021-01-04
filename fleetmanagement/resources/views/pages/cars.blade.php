@@ -30,11 +30,11 @@
                     </li>
                 </ul>
                 <div id="myTabContent" class="tab-content">
-                    <div class="tab-pane fade active show" id="cost">
-                        <canvas id="cost-chart" width="1080px" height="420"></canvas>
+                    <div class="tab-pane fade active show" style="position:relative; height:40vh; width:60vw;" id="cost">
+                        <canvas id="cost-chart"></canvas>
                     </div>
                     <div class="tab-pane fade" id="mileage">
-                        <div style="display: block; height:420px; width:1080px">
+                        <div style="position:relative; height:40vh; width:60vw;">
                             <canvas id="mileage-chart" ></canvas>
                         </div>
                     </div>
@@ -96,16 +96,16 @@
                         }]
                     }
                     , options: {
-                      responsive: true,
-                      maintainAspectRatio: false,
                       legend: {
                             display: false
                         }
                         , title: {
                             display: true
-                            , text: 'Cost of all owned vehicles per month of the last 12 months'
+                            , text: 'Recorded mileage of all owned vehicles per month of the last 12 months'
 
-                        }
+                        },
+                      responsive: true,
+                      maintainAspectRatio: false,
                     }
                 });
 
@@ -169,7 +169,9 @@
                             display: true
                             , text: 'Cost of all owned vehicles per month of the last 12 months'
 
-                        }
+                        },
+                        responsive:true,
+                        maintainAspectRatio:false
                     }
                 });
 
@@ -210,77 +212,65 @@
 <script>
 var sort = [0,0,0,0];
 
-function sortTable(option) {
-    if(sort[option] == 0)
-        sortAsc(option);
-    else
-        sortDesc(option);
-}
-
-function sortAsc(option){
-    sort[option] = 1;
-    var table, rows, switching, i, x, y, shouldSwitch;
+function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("carTable");
     switching = true;
-
+    //Set the sorting direction to ascending:
+    dir = "asc";
+    /*Make a loop that will continue until
+    no switching has been done:*/
     while (switching) {
+        //start by saying: no switching is done:
         switching = false;
         rows = table.rows;
+        /*Loop through all table rows (except the
+        first, which contains table headers):*/
         for (i = 1; i < (rows.length - 1); i++) {
+            //start by saying there should be no switching:
             shouldSwitch = false;
-            if(option == 0) {
-                x = document.getElementsByClassName("carLink")[i-1];
+            /*Get the two elements you want to compare,
+            one from current row and one from the next:*/
+            if (n == 0) {
+                x = document.getElementsByClassName("carLink")[i - 1];
                 y = document.getElementsByClassName("carLink")[i];
-            } else if(option == 2){
-                x = document.getElementsByClassName("carBadge")[i-1];
+            } else if (n == 2) {
+                x = document.getElementsByClassName("carBadge")[i - 1];
                 y = document.getElementsByClassName("carBadge")[i];
             } else {
-                x = rows[i].getElementsByTagName("TD")[option];
-                y = rows[i +1].getElementsByTagName("TD")[option];
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
             }
-            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                shouldSwitch = true;
-                break;
-            }
-    }
-    if (shouldSwitch) {
-        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-        switching = true;
-    }
-  }
-}
-function sortDesc(option){
-    sort[option] = 0;
-
-    var table, rows, switching, i, x, y, shouldSwitch;
-    table = document.getElementById("carTable");
-    switching = true;
-    while (switching) {
-        switching = false;
-        rows = table.rows;
-
-        for (i = 1; i < (rows.length - 1); i++) {
-
-            shouldSwitch = false;
-
-            if(option == 0) {
-                x = document.getElementsByClassName("carLink")[i-1];
-                y = document.getElementsByClassName("carLink")[i];
-            } else if(option == 2){
-                x = document.getElementsByClassName("carBadge")[i-1];
-                y = document.getElementsByClassName("carBadge")[i];
-            } else {
-                x = rows[i].getElementsByTagName("TD")[option];
-                y = rows[i +1].getElementsByTagName("TD")[option];
-            }
-            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                shouldSwitch = true;
-                break;
+            /*check if the two rows should switch place,
+            based on the direction, asc or desc:*/
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    //if so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    //if so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                }
             }
         }
         if (shouldSwitch) {
+            /*If a switch has been marked, make the switch
+            and mark that a switch has been done:*/
             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            witching = true;
+            switching = true;
+            //Each time a switch is done, increase this count by 1:
+            switchcount++;
+        } else {
+            /*If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again.*/
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
         }
     }
 }

@@ -165,17 +165,17 @@
             </ul>
                 <div id="myTabContent" class="tab-content">
                 <div class="tab-pane fade active show" id="cost">
-                    <div style="height:300px; width:960px;">
+                    <div style="position:relative; height:40vh; width:52vw;">
                         <canvas id="cost-chart"></canvas>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="mileage">            
-                    <div style="height:300px; width:960px;">
+                    <div style="position:relative; height:40vh; width:52vw;">
                         <canvas id="mileage-chart"></canvas>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="driver">            
-                    <div style="height:300px; width:960px;">
+                    <div style="position:relative; height:40vh; width:52vw;">
                         <canvas id="driver-chart"></canvas>
                     </div>
                 </div>
@@ -261,14 +261,14 @@
             ]
         },
         options: {
-            maintainAspectRatio: false,
             legend: { display: true },
             title: {
             display: true,
             text: 'Cost of all owned vehicles per month of the last 12 months'
 
-            }
-
+            },
+            responsive: true,
+            maintainAspectRatio: false
         }
     });
 
@@ -292,7 +292,6 @@
             ]
         },
         options: {
-            maintainAspectRatio: false,
             legend: { display: true },
             title: {
             display: true,
@@ -305,7 +304,8 @@
                 }
             }],
             },
-
+            responsive: true,
+            maintainAspectRatio: false
         }
     });
 
@@ -328,14 +328,14 @@
             ]
         },
         options: {
-            maintainAspectRatio: false,
             legend: { display: true },
             title: {
             display: true,
-            text: 'Recorded maintenance of this vehicle per month of the last 12 months'
+            text: 'Recorded mileage of this vehicle per month of the last 12 months'
 
-            }
-
+            },
+            responsive: true,
+            maintainAspectRatio: false
         }
     });
     </script>
