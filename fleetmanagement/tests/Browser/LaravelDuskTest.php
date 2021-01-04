@@ -83,7 +83,7 @@ class LaravelDuskTest extends DuskTestCase
                     ->value('#email', 'johndoe@fe.up.pt')
                     ->value('#password', '1234')
                     ->click('.btn')
-                    ->click('li.nav-item:nth-child(3) > a:nth-child(1)')
+                    ->click('#navbarOptions > li:nth-child(2) > a:nth-child(1)')
                     ->assertSee('DriverLicense')
                     ->click('.btn-primary')
                     ->value('#name', 'DriverFirstName')
@@ -238,7 +238,30 @@ class LaravelDuskTest extends DuskTestCase
                     ->click('.btn')
                     ->click('#carTable > tbody:nth-child(2) > tr:nth-child(7) > td:nth-child(1) > a:nth-child(1)')
                     ->assertSee("Dangerous")
-                    ->assertSee("Upcoming");
+                    ->assertDontSee("Upcoming");
+                });
+    }
+
+    public function testCanSeeAndAddAndDeleteUsers()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('http://ifleet.dusk.test/')
+                    ->value('#email', 'johndoe@fe.up.pt')
+                    ->value('#password', '1234')
+                    ->click('.btn')
+                    ->visit('http://ifleet.dusk.test/company')
+                    ->assertSee('Elisa Doe')
+                    ->click('.table > tbody:nth-child(6) > tr:nth-child(1) > td:nth-child(4) > form:nth-child(1) > button:nth-child(3) > i:nth-child(1)')
+                    ->acceptDialog()
+                    ->assertDontSee('Elisa Doe')
+                    ->click('button.btn:nth-child(1)')
+                    ->assertSee('Add another user to the company')
+                    ->value('#name', 'testname')
+                    ->value('#email', 'testmail@mail.com')
+                    ->value('#password', '12345678')
+                    ->value('#password_confirmation', '12345678')
+                    ->click('button.btn:nth-child(1)')
+                    ->assertSee('testname');
                 });
     }
 
@@ -249,10 +272,24 @@ class LaravelDuskTest extends DuskTestCase
                     ->value('#email', 'johndoe@fe.up.pt')
                     ->value('#password', '1234')
                     ->click('.btn')
-                    ->click('li.nav-item:nth-child(5) > a:nth-child(1)')
+                    ->click('li.nav-item:nth-child(4) > a:nth-child(1)')
                     ->click('a.active');
             $elements = $browser->driver->findElements(WebDriverBy::className('maintenanceID'));
-            $this->assertCount(49, $elements);
+            $this->assertCount(15, $elements);
+            });
+    }
+
+    public function testSeeTaxHistory()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('http://ifleet.dusk.test/')
+                    ->value('#email', 'johndoe@fe.up.pt')
+                    ->value('#password', '1234')
+                    ->click('.btn')
+                    ->click('li.nav-item:nth-child(4) > a:nth-child(1)')
+                    ->click('.nav > li:nth-child(3) > a:nth-child(1)');
+            $elements = $browser->driver->findElements(WebDriverBy::className('taxID'));
+            $this->assertCount(15, $elements);
             });
     }
     

@@ -76,7 +76,7 @@ echo "Cloning new repo"
 # Decide what branch to pull
 if [[ "$DEPLOY_VERSION" == "staging" ]]; 
 then
-    git clone --single-branch --branch development https://$GITLAB_ACCESS_USER:$GITLAB_ACCESS_TOKEN@gitlab.com/feup-tbs/ldso2021/t1g3.git
+    git clone --single-branch --branch staging https://$GITLAB_ACCESS_USER:$GITLAB_ACCESS_TOKEN@gitlab.com/feup-tbs/ldso2021/t1g3.git
 elif [[ "$DEPLOY_VERSION" == "production" ]];
 then
     git clone --single-branch --branch master https://$GITLAB_ACCESS_USER:$GITLAB_ACCESS_TOKEN@gitlab.com/feup-tbs/ldso2021/t1g3.git
